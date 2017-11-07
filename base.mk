@@ -219,13 +219,6 @@ EBTABLES += libebtc
 #FASTPOWERON
 FASTPOWERON := FastBoot
 
-#FM
-FM := qcom.fmradio
-FM += libqcomfm_jni
-FM += libfmjni
-FM += fm_helium
-FM += libfm-hci
-
 #GPS
 GPS_HARDWARE := gps.conf
 GPS_HARDWARE += gps.default
@@ -928,9 +921,6 @@ PRODUCT_PACKAGES += librecovery_updater_msm
 
 # vcard jar
 PRODUCT_PACKAGES += vcard
-
-# tcmiface for tcm support
-PRODUCT_PACKAGES += tcmiface
 
 # healthd libaray expanded for mode charger
 PRODUCT_PACKAGES += libhealthd.msm

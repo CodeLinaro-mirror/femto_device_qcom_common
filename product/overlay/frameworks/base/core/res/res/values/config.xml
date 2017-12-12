@@ -53,6 +53,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <item>"wigig0"</item>
         <item>"softap0"</item>
     </string-array>
+    <string-array translatable="false" name="config_tether_usb_regexs">
+        <item>"usb\\d"</item>
+        <item>"rndis\\d"</item>
+    </string-array>
+
 
 
 </resources>

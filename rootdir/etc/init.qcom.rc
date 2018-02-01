@@ -539,7 +539,7 @@ on property:persist.env.fastdorm.enabled=true
 service vendor.cnd /system/vendor/bin/cnd
     class main
     user system
-    group system wifi inet radio wakelock net_admin
+    group system wifi inet radio wakelock
 
 service dpmQmiMgr /system/vendor/bin/dpmQmiMgr
     class main

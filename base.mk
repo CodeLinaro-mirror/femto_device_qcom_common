@@ -1076,3 +1076,5 @@ else
   $(warning TODO: Need to replace legacy $(DEVICE_CONFIG_DIR)android_filesystem_config.h with config.fs)
   $(warning **********)
 endif
+
+ENABLE_VENDOR_RIL_SERVICE := true

@@ -48,6 +48,11 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/qcom/common/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml
 
+ifeq ($(TARGET_SUPPORTS_WEAR_ANDROID),true)
+PRODUCT_COPY_FILES += \
+    device/qcom/common/privapp-permissions-qti-wearable.xml:system/etc/permissions/privapp-permissions-qti-wearable.xml
+endif
+
 # Ipsec_tunnels feature
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.ipsec_tunnels.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.ipsec_tunnels.xml

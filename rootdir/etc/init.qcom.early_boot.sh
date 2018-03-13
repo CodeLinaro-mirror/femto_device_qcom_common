@@ -255,6 +255,7 @@ case "$target" in
                 if [ ! -e /dev/kgsl-3d0 ]; then
                     setprop persist.sys.force_sw_gles 1
                     setprop sdm.idle_time 0
+                    setprop vendor.display.idle_time 0
                 else
                     setprop persist.sys.force_sw_gles 0
                 fi
@@ -273,6 +274,7 @@ case "$target" in
                 if [ ! -e /dev/kgsl-3d0 ]; then
                     setprop persist.sys.force_sw_gles 1
                     setprop sdm.idle_time 0
+                    setprop vendor.display.idle_time 0
                 else
                     setprop persist.sys.force_sw_gles 0
                 fi
@@ -387,11 +389,14 @@ then
     if [ -f "$file" ]
     then
         setprop debug.gralloc.gfx_ubwc_disable 1
+        setprop vendor.gralloc.disable_ubwc 1
         cat $file | while read line; do
           case "$line" in
                     *"ubwc"*)
                     setprop debug.gralloc.enable_fb_ubwc 1
+                    setprop vendor.gralloc.enable_fb_ubwc 1
                     setprop debug.gralloc.gfx_ubwc_disable 0
+                    setprop vendor.gralloc.disable_ubwc 0
                 esac
         done
     fi

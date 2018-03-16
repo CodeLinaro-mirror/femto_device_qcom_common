@@ -308,13 +308,13 @@ case "$target" in
             esac
         fi
         ;;
-    "sdm670" | "msmpeafowl")
+    "sdm710" | "msmpeafowl")
         case "$soc_hwplatform" in
             *)
                 setprop ro.sf.lcd_density 560
                 sku_ver=`cat /sys/devices/platform/soc/aa00000.qcom,vidc1/sku_version` 2> /dev/null
                 if [ $sku_ver -eq 1 ]; then
-                    setprop media.sdm670.version 1
+                    setprop media.sdm710.version 1
                 fi
                 ;;
         esac

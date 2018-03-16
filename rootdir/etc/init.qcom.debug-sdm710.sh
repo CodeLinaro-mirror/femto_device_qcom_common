@@ -28,7 +28,7 @@
 
 # Function Enable stm events
 
-enable_sdm670_tracing_events()
+enable_sdm710_tracing_events()
 {
     # timer
     echo 1 > /sys/kernel/debug/tracing/events/timer/timer_expire_entry/enable
@@ -79,7 +79,7 @@ enable_sdm670_tracing_events()
 }
 
 # function to enable ftrace events
-enable_sdm670_ftrace()
+enable_sdm710_ftrace()
 {
     # bail out if its perf config
     if [ ! -d /sys/module/msm_rtb ]
@@ -94,11 +94,11 @@ enable_sdm670_ftrace()
     fi
 
     echo 0x2000000 > /sys/kernel/debug/tracing/buffer_size_kb
-    enable_sdm670_tracing_events
+    enable_sdm710_tracing_events
 }
 
 # function to enable ftrace event transfer to CoreSight STM
-enable_sdm670_stm()
+enable_sdm710_stm()
 {
     # bail out if its perf config
     if [ ! -d /sys/module/msm_rtb ]
@@ -121,10 +121,10 @@ enable_sdm670_stm()
     echo 1 > /sys/bus/coresight/devices/coresight-tmc-etr/enable_sink
     echo 1 > /sys/bus/coresight/devices/coresight-stm/enable_source
     echo 0 > /sys/bus/coresight/devices/coresight-stm/hwevent_enable
-    enable_sdm670_tracing_events
+    enable_sdm710_tracing_events
 }
 
-config_sdm670_dcc_gcc_regs()
+config_sdm710_dcc_gcc_regs()
 {
     echo 0x100000   1 > $DCC_PATH/config
     echo 0x100004   1 > $DCC_PATH/config
@@ -263,7 +263,184 @@ config_sdm670_dcc_gcc_regs()
     echo 0xC2A2150  1 > $DCC_PATH/config
     echo 0xC2A2154  1 > $DCC_PATH/config
 }
-config_sdm670_dcc_noc_err_regs()
+config_sdm710_dcc_noc_err_regs()
+{
+    #CNOC Register
+    echo 0x01500008 1 > $DCC_PATH/config
+    echo 0x01500010 1 > $DCC_PATH/config
+    echo 0x01500020 1 > $DCC_PATH/config
+    echo 0x01500024 1 > $DCC_PATH/config
+    echo 0x01500028 1 > $DCC_PATH/config
+    echo 0x0150002c 1 > $DCC_PATH/config
+    echo 0x01500030 1 > $DCC_PATH/config
+    echo 0x01500034 1 > $DCC_PATH/config
+    echo 0x01500038 1 > $DCC_PATH/config
+    echo 0x0150003c 1 > $DCC_PATH/config
+    echo 0x01500248 1 > $DCC_PATH/config
+    echo 0x0150024c 1 > $DCC_PATH/config
+    #AGGNOC1 registers
+    echo 0x016e0240 1 > $DCC_PATH/config
+    echo 0x016e0248 1 > $DCC_PATH/config
+    echo 0x016e0288 1 > $DCC_PATH/config
+    echo 0x016e0290 1 > $DCC_PATH/config
+    echo 0x016e0300 1 > $DCC_PATH/config
+    echo 0x016e0304 1 > $DCC_PATH/config
+    echo 0x016e0308 1 > $DCC_PATH/config
+    echo 0x016e030c 1 > $DCC_PATH/config
+    echo 0x016e0408 1 > $DCC_PATH/config
+    echo 0x016e0410 1 > $DCC_PATH/config
+    echo 0x016e0420 1 > $DCC_PATH/config
+    echo 0x016e0424 1 > $DCC_PATH/config
+    echo 0x016e0428 1 > $DCC_PATH/config
+    echo 0x016e042c 1 > $DCC_PATH/config
+    echo 0x016e0430 1 > $DCC_PATH/config
+    echo 0x016e0434 1 > $DCC_PATH/config
+    echo 0x016e0438 1 > $DCC_PATH/config
+    echo 0x016e043c 1 > $DCC_PATH/config
+    #AGGNOC2 registers
+    echo 0x01700240 1 > $DCC_PATH/config
+    echo 0x01700248 1 > $DCC_PATH/config
+    echo 0x01700288 1 > $DCC_PATH/config
+    echo 0x01700290 1 > $DCC_PATH/config
+    echo 0x01700300 1 > $DCC_PATH/config
+    echo 0x01700304 1 > $DCC_PATH/config
+    echo 0x01700308 1 > $DCC_PATH/config
+    echo 0x0170030c 1 > $DCC_PATH/config
+    echo 0x01700310 1 > $DCC_PATH/config
+    echo 0x01700c08 1 > $DCC_PATH/config
+    echo 0x01700c10 1 > $DCC_PATH/config
+    echo 0x01700c20 1 > $DCC_PATH/config
+    echo 0x01700c24 1 > $DCC_PATH/config
+    echo 0x01700c28 1 > $DCC_PATH/config
+    echo 0x01700c2c 1 > $DCC_PATH/config
+    echo 0x01700c30 1 > $DCC_PATH/config
+    echo 0x01700c34 1 > $DCC_PATH/config
+    echo 0x01700c38 1 > $DCC_PATH/config
+    echo 0x01700c3c 1 > $DCC_PATH/config
+    #DC_NOC
+    echo 0x014e0008 1 > $DCC_PATH/config
+    echo 0x014e0010 1 > $DCC_PATH/config
+    echo 0x014e0020 1 > $DCC_PATH/config
+    echo 0x014e0024 1 > $DCC_PATH/config
+    echo 0x014e0028 1 > $DCC_PATH/config
+    echo 0x014e002c 1 > $DCC_PATH/config
+    echo 0x014e0030 1 > $DCC_PATH/config
+    echo 0x014e0034 1 > $DCC_PATH/config
+    echo 0x014e0038 1 > $DCC_PATH/config
+    echo 0x014e003c 1 > $DCC_PATH/config
+    echo 0x014e0240 1 > $DCC_PATH/config
+    echo 0x014e0248 1 > $DCC_PATH/config
+    echo 0x014e0288 1 > $DCC_PATH/config
+    echo 0x014e028c 1 > $DCC_PATH/config
+    echo 0x014e0290 1 > $DCC_PATH/config
+    echo 0x014e0294 1 > $DCC_PATH/config
+    echo 0x014e0300 1 > $DCC_PATH/config
+    echo 0x014e0304 1 > $DCC_PATH/config
+    echo 0x014e0308 1 > $DCC_PATH/config
+    echo 0x014e030c 1 > $DCC_PATH/config
+    echo 0x014e0310 1 > $DCC_PATH/config
+    echo 0x014e0314 1 > $DCC_PATH/config
+    #MCCC_BROADCAST
+    echo 0x01350110 1 > $DCC_PATH/config
+    echo 0x01350114 1 > $DCC_PATH/config
+    echo 0x01350118 1 > $DCC_PATH/config
+    echo 0x0135011c 1 > $DCC_PATH/config
+    #RAMBLUR_PIMEM_ESR
+    echo 0x0061007c 1 > $DCC_PATH/config
+    #LLCC_BEAC Registers
+    echo 0x01148058 1 > $DCC_PATH/config
+    echo 0x0114805c 1 > $DCC_PATH/config
+    echo 0x01148060 1 > $DCC_PATH/config
+    echo 0x01148064 1 > $DCC_PATH/config
+    echo 0x011c2028 1 > $DCC_PATH/config
+    echo 0x011c8058 1 > $DCC_PATH/config
+    echo 0x011c805c 1 > $DCC_PATH/config
+    echo 0x011c8060 1 > $DCC_PATH/config
+    echo 0x011c8064 1 > $DCC_PATH/config
+    echo 0x011e6418 1 > $DCC_PATH/config
+    #CABO registers
+    echo 0x01161410 1 > $DCC_PATH/config
+    echo 0x01161414 1 > $DCC_PATH/config
+    echo 0x01161418 1 > $DCC_PATH/config
+    echo 0x01161424 1 > $DCC_PATH/config
+    echo 0x01161430 1 > $DCC_PATH/config
+    echo 0x01163410 1 > $DCC_PATH/config
+    echo 0x01169180 1 > $DCC_PATH/config
+    echo 0x01169184 1 > $DCC_PATH/config
+    echo 0x011691a0 1 > $DCC_PATH/config
+    echo 0x011691c0 1 > $DCC_PATH/config
+    echo 0x011691e0 1 > $DCC_PATH/config
+    echo 0x011e1410 1 > $DCC_PATH/config
+    echo 0x011e1414 1 > $DCC_PATH/config
+    echo 0x011e1418 1 > $DCC_PATH/config
+    echo 0x011e1424 1 > $DCC_PATH/config
+    echo 0x011e1430 1 > $DCC_PATH/config
+    echo 0x011e3410 1 > $DCC_PATH/config
+    echo 0x011e9180 1 > $DCC_PATH/config
+    echo 0x011e9184 1 > $DCC_PATH/config
+    echo 0x011e91a0 1 > $DCC_PATH/config
+    echo 0x011e91c0 1 > $DCC_PATH/config
+    echo 0x011e91e0 1 > $DCC_PATH/config
+    #LLCC0_BERC Registers
+    echo 0x01138004 1 > $DCC_PATH/config
+    echo 0x01138010 1 > $DCC_PATH/config
+    echo 0x01138014 1 > $DCC_PATH/config
+    #LLCC0_DRP
+    echo 0x0114201c 1 > $DCC_PATH/config
+    #LLC1_BERC
+    echo  0x011b8004 1 > $DCC_PATH/config
+    echo  0x011b8010 1 > $DCC_PATH/config
+    echo  0x011b8014 1 > $DCC_PATH/config
+    # LLCC1_DRP
+    echo  0x011c201c 1 > $DCC_PATH/config
+    #DDRPHY_CH0_CA_DDRPHY Registers
+    echo 0x01400740  1 > $DCC_PATH/config
+    #DDRCC_CH01 Registers
+    echo 0x01406048  1 > $DCC_PATH/config
+    echo 0x01406054  1 > $DCC_PATH/config
+    echo 0x01406164  1 > $DCC_PATH/config
+    echo 0x01406170  1 > $DCC_PATH/config
+    echo 0x01406270  1 > $DCC_PATH/config
+    #SHRM_CSR_SHRM_SPROC_CTRL
+    echo 0x013d1000  1 > $DCC_PATH/config
+    #WCSS_HM_A_NOC
+    echo 0x18980008  1 > $DCC_PATH/config
+    echo 0x1898000C  1 > $DCC_PATH/config
+    echo 0x18980014  1 > $DCC_PATH/config
+    echo 0x18980018  1 > $DCC_PATH/config
+    echo 0x18980020  1 > $DCC_PATH/config
+    echo 0x18980024  1 > $DCC_PATH/config
+    echo 0x18980028  1 > $DCC_PATH/config
+    echo 0x18980038  1 > $DCC_PATH/config
+    echo 0x18980208  1 > $DCC_PATH/config
+    echo 0x1898020C  1 > $DCC_PATH/config
+    echo 0x18980210  1 > $DCC_PATH/config
+    echo 0x18980214  1 > $DCC_PATH/config
+    echo 0x18980250  1 > $DCC_PATH/config
+    echo 0x18980258  1 > $DCC_PATH/config
+    #LPASS_AHBI_ABT
+    echo 0x62CF600C  1 > $DCC_PATH/config
+    echo 0x62CF6010  1 > $DCC_PATH/config
+    echo 0x62CF6014  1 > $DCC_PATH/config
+    echo 0x62CF601C  1 > $DCC_PATH/config
+    echo 0x62CF6020  1 > $DCC_PATH/config
+    echo 0x62CF6028  1 > $DCC_PATH/config
+    echo 0x62CF602C  1 > $DCC_PATH/config
+    echo 0x62CF6030  1 > $DCC_PATH/config
+    echo 0x62CF6034  1 > $DCC_PATH/config
+    echo 0x62D4300C  1 > $DCC_PATH/config
+    echo 0x62D43010  1 > $DCC_PATH/config
+    echo 0x62D43014  1 > $DCC_PATH/config
+    echo 0x62D4301C  1 > $DCC_PATH/config
+    echo 0x62D43020  1 > $DCC_PATH/config
+    echo 0x62D43028  1 > $DCC_PATH/config
+    echo 0x62D4302C  1 > $DCC_PATH/config
+    echo 0x62D43030  1 > $DCC_PATH/config
+    echo 0x62D43034  1 > $DCC_PATH/config
+}
+
+config_sdm710_dcc_noc_err_regs()
+>>>>>>> d074e32... Rename sdm670 to sdm710:rootdir/etc/init.qcom.debug-sdm710.sh
 {
     echo 0x16E0240  1 > $DCC_PATH/config
     echo 0x16E0248  1 > $DCC_PATH/config
@@ -489,7 +666,7 @@ config_sdm670_dcc_noc_err_regs()
     echo 0x62D43034 1 > $DCC_PATH/config
 }
 
-config_sdm670_dcc_gladiator()
+config_sdm710_dcc_gladiator()
 {
     echo 0x7840000 1 > $DCC_PATH/config
     echo 0x7842500 1 > $DCC_PATH/config
@@ -504,7 +681,7 @@ config_sdm670_dcc_gladiator()
     echo 0x784100C 1 > $DCC_PATH/config
     echo 1 > $DCC_PATH/loop
 }
-config_sdm670_dcc_cprh()
+config_sdm710_dcc_cprh()
 {
     #CPRH
     echo 0x17DC3A84 2 > $DCC_PATH/config
@@ -515,7 +692,7 @@ config_sdm670_dcc_cprh()
     echo 0x17D2000C 1 > $DCC_PATH/config
     echo 0x17D20018 1 > $DCC_PATH/config
 }
-config_sdm670_dcc_pcu_rsc_apps()
+config_sdm710_dcc_pcu_rsc_apps()
 {
     #PCU APPS
     echo 0x17E00024 1 > $DCC_PATH/config
@@ -590,7 +767,7 @@ config_sdm670_dcc_pcu_rsc_apps()
     echo 0x179E1000 1 > $DCC_PATH/config
     echo 0x179E1004 1 > $DCC_PATH/config
  }
- config_sdm670_dcc_pdc_apps()
+ config_sdm710_dcc_pdc_apps()
  {
     #PDC APPS
     echo 0x0B201020 1 > $DCC_PATH/config
@@ -626,7 +803,7 @@ config_sdm670_dcc_pcu_rsc_apps()
     echo 0x0B204514 1 > $DCC_PATH/config
     echo 0x0B204520 1 > $DCC_PATH/config
  }
- config_sdm670_dcc_pdc_rcs_lpass()
+ config_sdm710_dcc_pdc_rcs_lpass()
  {
     #PDC LPASS
     echo 0x0B251020 1 > $DCC_PATH/config
@@ -750,7 +927,7 @@ config_sdm670_dcc_pcu_rsc_apps()
     echo 0x624B0408 1 > $DCC_PATH/config
     echo 0x624B0010 1 > $DCC_PATH/config
 }
-config_sdm670_dcc_pdc_rsc_modem()
+config_sdm710_dcc_pdc_rsc_modem()
 {
     #PDC Modem
     echo 0x0B2B4520 1 > $DCC_PATH/config
@@ -834,7 +1011,7 @@ config_sdm670_dcc_pdc_rsc_modem()
     echo 0x04130404 1 > $DCC_PATH/config
     echo 0x04130408 1 > $DCC_PATH/config
 }
-config_sdm670_dcc_pdc_rsc_cdsp()
+config_sdm710_dcc_pdc_rsc_cdsp()
 {
     #PDC CDSP
     echo 0x0B2A4520 1 > $DCC_PATH/config
@@ -918,7 +1095,7 @@ config_sdm670_dcc_pdc_rsc_cdsp()
     echo 0x083B0408 1 > $DCC_PATH/config
     echo 0x083B0400 1 > $DCC_PATH/config
 }
-config_sdm670_dcc_pdc_display()
+config_sdm710_dcc_pdc_display()
 {
     #PDC Display
     echo 0x0B291020 1 > $DCC_PATH/config
@@ -943,7 +1120,7 @@ config_sdm670_dcc_pdc_display()
     echo 0x0B294510 1 > $DCC_PATH/config
     echo 0x0B294514 1 > $DCC_PATH/config
 }
-config_sdm670_dcc_aop_rpmh()
+config_sdm710_dcc_aop_rpmh()
 {
     #PDC AOP
     echo 0x0B264520 1 > $DCC_PATH/config
@@ -1010,7 +1187,7 @@ config_sdm670_dcc_aop_rpmh()
     echo 0x0C207244 1 > $DCC_PATH/config
     echo 0x0C20F000 1 > $DCC_PATH/config
 }
-config_sdm670_dcc_lmh()
+config_sdm710_dcc_lmh()
 {
     #LMH-Gold Thermal
     echo 0x17D91008 1 > $DCC_PATH/config
@@ -1050,7 +1227,7 @@ config_sdm670_dcc_lmh()
     echo 0x17870730 1 > $DCC_PATH/config
     echo 0x17871480 1 > $DCC_PATH/config
  }
- config_sdm670_dcc_ipm_apps()
+ config_sdm710_dcc_ipm_apps()
  {
     #LLCC
     echo 0x01301000 1 > $DCC_PATH/config
@@ -1068,7 +1245,7 @@ config_sdm670_dcc_lmh()
     echo 0x17810048 2 > $DCC_PATH/config
     echo 0x17990044 1 > $DCC_PATH/config
 }
-config_sdm670_dcc_osm()
+config_sdm710_dcc_osm()
 {
     #OSM
     echo 0x17D45F00 1 > $DCC_PATH/config
@@ -1106,7 +1283,7 @@ config_sdm670_dcc_osm()
     echo 0x17D42D88 1 > $DCC_PATH/config
 }
 
-config_sdm670_dcc_shrm()
+config_sdm710_dcc_shrm()
 {
     #SHRM DDR
     echo 0x069EA00C 0x00600007 1 > $DCC_PATH/config_write
@@ -1172,7 +1349,7 @@ config_sdm670_dcc_shrm()
     echo 0x069EA008 0x00000007 1 > $DCC_PATH/config_write
     echo 0x013E7E00 31 > $DCC_PATH/config
 }
-config_sdm670_dcc_ddr()
+config_sdm710_dcc_ddr()
 {
    # DDR_SS
     echo 0x01132100 1 > $DCC_PATH/config
@@ -1244,7 +1421,7 @@ config_sdm670_dcc_ddr()
     echo 0x011E04B8 1 > $DCC_PATH/config
 }
 
-config_sdm670_dcc_ecc_llc()
+config_sdm710_dcc_ecc_llc()
 {
     #LLC
     echo 0x1120344 1 > $DCC_PATH/config
@@ -1381,7 +1558,7 @@ config_sdm670_dcc_ecc_llc()
     echo 0x12C208C 1 > $DCC_PATH/config
 }
 
-config_sdm670_dcc_cabo_llcc_shrm()
+config_sdm710_dcc_cabo_llcc_shrm()
 {
     #CABO,LLCC,SHRM CSR & MEMNOC
     echo 0x1160080 1 > $DCC_PATH/config
@@ -1497,17 +1674,17 @@ config_sdm670_dcc_cabo_llcc_shrm()
     echo 0x139b010 1 > $DCC_PATH/config
     echo 0x139c010 1 > $DCC_PATH/config
 }
-config_sdm670_dcc_cx_mx()
+config_sdm710_dcc_cx_mx()
 {
     #CX and MX voltage
     echo 0x0C201244 1 > $DCC_PATH/config
     echo 0x0C202244 1 > $DCC_PATH/config
 }
 
-# Function SDM670 DCC configuration
-enable_sdm670_dcc_config()
+# Function SDM710 DCC configuration
+enable_sdm710_dcc_config()
 {
-    echo "enabling DCC config for SDM670"
+    echo "enabling DCC config for sdm710"
     DCC_PATH="/sys/bus/platform/devices/10a2000.dcc_v2"
 
     if [ ! -d $DCC_PATH ]; then
@@ -1520,38 +1697,38 @@ enable_sdm670_dcc_config()
     echo sram > $DCC_PATH/data_sink
     echo 1 > $DCC_PATH/config_reset
     echo 2 > $DCC_PATH/curr_list
-    config_sdm670_dcc_gladiator
-    config_sdm670_dcc_cprh
-    config_sdm670_dcc_pcu_rsc_apps
-    #config_sdm670_dcc_pdc_apps
-    #config_sdm670_dcc_pdc_rcs_lpass
-    #config_sdm670_dcc_pdc_rsc_modem
-    #config_sdm670_dcc_pdc_rsc_cdsp
-    #config_sdm670_dcc_pdc_display
-    #config_sdm670_dcc_aop_rpmh
-    #config_sdm670_dcc_lmh
-    #config_sdm670_dcc_ipm_apps
-    config_sdm670_dcc_osm
-    #config_sdm670_dcc_shrm
-    config_sdm670_dcc_ddr
-    #config_sdm670_dcc_ecc_llc
-    #config_sdm670_dcc_cabo_llcc_shrm
-    config_sdm670_dcc_cx_mx
-    #config_sdm670_dcc_noc_err_regs
-    #config_sdm670_dcc_gcc_regs
+    config_sdm710_dcc_gladiator
+    config_sdm710_dcc_cprh
+    config_sdm710_dcc_pcu_rsc_apps
+    #config_sdm710_dcc_pdc_apps
+    #config_sdm710_dcc_pdc_rcs_lpass
+    #config_sdm710_dcc_pdc_rsc_modem
+    #config_sdm710_dcc_pdc_rsc_cdsp
+    #config_sdm710_dcc_pdc_display
+    #config_sdm710_dcc_aop_rpmh
+    #config_sdm710_dcc_lmh
+    #config_sdm710_dcc_ipm_apps
+    config_sdm710_dcc_osm
+    #config_sdm710_dcc_shrm
+    config_sdm710_dcc_ddr
+    #config_sdm710_dcc_ecc_llc
+    #config_sdm710_dcc_cabo_llcc_shrm
+    config_sdm710_dcc_cx_mx
+    #config_sdm710_dcc_noc_err_regs
+    #config_sdm710_dcc_gcc_regs
 
     #Apply configuration and enable DCC
     echo  1 > $DCC_PATH/enable
 }
 
 
-enable_sdm670_stm_hw_events()
+enable_sdm710_stm_hw_events()
 {
    #TODO: Add HW events
 
 }
 
-enable_sdm670_core_hang_config()
+enable_sdm710_core_hang_config()
 {
     CORE_PATH_SILVER="/sys/devices/system/cpu/hang_detect_silver"
     CORE_PATH_GOLD="/sys/devices/system/cpu/hang_detect_gold"
@@ -1569,13 +1746,13 @@ enable_sdm670_core_hang_config()
     echo 0x1 > $CORE_PATH_GOLD/enable
 }
 
-enable_sdm670_osm_wdog_status_config()
+enable_sdm710_osm_wdog_status_config()
 {
     echo 1 > /sys/kernel/debug/osm/pwrcl_clk/wdog_trace_enable
     echo 1 > /sys/kernel/debug/osm/perfcl_clk/wdog_trace_enable
 }
 
-enable_sdm670_gladiator_hang_config()
+enable_sdm710_gladiator_hang_config()
 {
     GLADIATOR_PATH="/sys/devices/system/cpu/gladiator_hang_detect"
     if [ ! -d $GLADIATOR_PATH ]; then
@@ -1599,16 +1776,16 @@ enable_sdm670_gladiator_hang_config()
 ftrace_disable=`getprop persist.debug.ftrace_events_disable`
 srcenable="enable"
 sinkenable="curr_sink"
-enable_sdm670_debug()
+enable_sdm710_debug()
 {
-    echo "sdm670 debug"
-    enable_sdm670_dcc_config
-    enable_sdm670_gladiator_hang_config
-    enable_sdm670_osm_wdog_status_config
-    enable_sdm670_core_hang_config
-    enable_sdm670_stm
+    echo "sdm710 debug"
+    enable_sdm710_dcc_config
+    enable_sdm710_gladiator_hang_config
+    enable_sdm710_osm_wdog_status_config
+    enable_sdm710_core_hang_config
+    enable_sdm710_stm
     if [ "$ftrace_disable" != "Yes" ]; then
-        enable_sdm670_ftrace
+        enable_sdm710_ftrace
     fi
-    enable_sdm670_stm_hw_events
+    enable_sdm710_stm_hw_events
 }

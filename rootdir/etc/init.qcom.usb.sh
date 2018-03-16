@@ -118,7 +118,7 @@ if [ "$usb_config" == "" ]; then #USB persist config not set, select default con
 	              "msm8998" | "sdm660" | "apq8098_latv")
 		          setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb
 		      ;;
-	              "sdm845" | "sdm670")
+	              "sdm845" | "sdm710")
 		          setprop persist.vendor.usb.config diag,serial_cdev,rmnet,dpl,adb
 		      ;;
 	              *)

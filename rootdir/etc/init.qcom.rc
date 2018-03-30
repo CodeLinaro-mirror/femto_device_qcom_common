@@ -287,6 +287,12 @@ on post-fs-data
     mkdir /data/vendor/netmgr 0770 radio radio
     chmod 0770 /data/vendor/netmgr
 
+    # Create netmgr recovery folder
+    mkdir /data/vendor/netmgr/recovery 0700 radio radio
+    chmod 0770 /data/vendor/netmgr/recovery
+    write /data/vendor/netmgr/recovery/recovery_info ""
+    chown radio radio /data/vendor/netmgr/recovery/recovery_info
+
     #create ipacm log dir
     mkdir /data/vendor/ipa 0770 radio radio
     chmod 0770 /data/vendor/ipa

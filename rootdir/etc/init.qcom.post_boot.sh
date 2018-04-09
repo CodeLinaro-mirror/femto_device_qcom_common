@@ -430,7 +430,7 @@ case "$target" in
                 echo 100000 > /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor
                 echo 1497600 > /sys/module/cpu_boost/parameters/input_boost_freq
                 echo 40 > /sys/module/cpu_boost/parameters/input_boost_ms
-                setprop ro.qualcomm.perf.cores_online 2
+                setprop ro.vendor.perf.cores_online 2
             ;;
             *)
                 echo "ondemand" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
@@ -2130,7 +2130,7 @@ case "$target" in
         echo 300000 > /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq
         echo 300000 > /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq
         echo 1 > /sys/module/msm_thermal/core_control/enabled
-        setprop ro.qualcomm.perf.cores_online 2
+        setprop ro.vendor.perf.cores_online 2
         chown -h  system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
         chown -h system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
         chown -h root.system /sys/devices/system/cpu/mfreq
@@ -2860,20 +2860,20 @@ case "$target" in
         start mpdecision
     ;;
     "msm8916")
-        setprop sys.post_boot.parsed 1
+        setprop vendor.post_boot.parsed 1
     ;;
     "msm8909")
-        setprop sys.post_boot.parsed 1
+        setprop vendor.post_boot.parsed 1
     ;;
     "msm8952")
-        setprop sys.post_boot.parsed 1
+        setprop vendor.post_boot.parsed 1
     ;;
     "msm8937" | "msm8953")
         echo 128 > /sys/block/mmcblk0/bdi/read_ahead_kb
         echo 128 > /sys/block/mmcblk0/queue/read_ahead_kb
         echo 128 > /sys/block/dm-0/queue/read_ahead_kb
         echo 128 > /sys/block/dm-1/queue/read_ahead_kb
-        setprop sys.post_boot.parsed 1
+        setprop vendor.post_boot.parsed 1
         start gamed
     ;;
     "msm8974")
@@ -2881,7 +2881,7 @@ case "$target" in
         echo 512 > /sys/block/mmcblk0/bdi/read_ahead_kb
     ;;
     "msm8994" | "msm8992" | "msm8996" | "msm8998" | "sdm660" | "apq8098_latv" | "sdm845" | "sdm670")
-        setprop sys.post_boot.parsed 1
+        setprop vendor.post_boot.parsed 1
     ;;
     "apq8084")
         rm /data/system/perfd/default_values

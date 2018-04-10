@@ -138,33 +138,6 @@ case "$usb_config" in
   * ) ;; #USB persist config exists, do nothing
 esac
 
-# set USB controller's device node
-case "$target" in
-    "msm8996")
-        setprop sys.usb.controller "6a00000.dwc3"
-        setprop vendor.usb.rndis.func.name "rndis_bam"
-	setprop vendor.usb.rmnet.func.name "rmnet_bam"
-	;;
-    "msm8998" | "apq8098_latv")
-        setprop sys.usb.controller "a800000.dwc3"
-        setprop vendor.usb.rndis.func.name "gsi"
-	setprop vendor.usb.rmnet.func.name "gsi"
-	;;
-    "sdm660")
-        setprop sys.usb.controller "a800000.dwc3"
-        setprop vendor.usb.rndis.func.name "rndis_bam"
-	setprop vendor.usb.rmnet.func.name "rmnet_bam"
-	echo 15916 > /sys/module/usb_f_qcrndis/parameters/rndis_dl_max_xfer_size
-        ;;
-    "sdm845" | "sdm670")
-        setprop sys.usb.controller "a600000.dwc3"
-        setprop vendor.usb.rndis.func.name "gsi"
-        setprop vendor.usb.rmnet.func.name "gsi"
-        ;;
-    *)
-	;;
-esac
-
 # check configfs is mounted or not
 if [ -d /config/usb_gadget ]; then
 	# Chip-serial is used for unique MSM identification in Product string
@@ -180,17 +153,6 @@ if [ -d /config/usb_gadget ]; then
 		serialno=1234567
 		echo $serialno > /config/usb_gadget/g1/strings/0x409/serialnumber
 	fi
-
-	persist_comp=`getprop persist.sys.usb.config`
-	comp=`getprop sys.usb.config`
-	echo $persist_comp
-	echo $comp
-	if [ "$comp" != "$persist_comp" ]; then
-		echo "setting sys.usb.config"
-		setprop sys.usb.config $persist_comp
-	fi
-
-	setprop sys.usb.configfs 1
 fi
 
 #

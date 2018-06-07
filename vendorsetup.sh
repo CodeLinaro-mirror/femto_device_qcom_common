@@ -28,3 +28,4 @@
 #
 
 add_lunch_combo sdm845-userdebug
+add_lunch_combo sdm710-userdebug

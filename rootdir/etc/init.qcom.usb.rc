@@ -26,7 +26,10 @@
 #
 
 # controller name can be overridden from boot command line
-on init && on property:ro.boot.usbcontroller=*
+on init
+    setprop sys.usb.controller ${ro.boot.usbcontroller}
+
+on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
 
 on charger

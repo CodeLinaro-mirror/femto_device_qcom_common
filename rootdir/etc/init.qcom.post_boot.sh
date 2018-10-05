@@ -2033,6 +2033,9 @@ case "$target" in
       # Limit the min frequency to 720MHz
       echo 720000 > /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq
 
+      # Set Memory parameters
+      configure_memory_parameters
+
       # Enable bus-dcvs
       for cpubw in /sys/class/devfreq/*qcom,cpubw*
             do

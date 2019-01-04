@@ -911,7 +911,9 @@ PRODUCT_PACKAGES += android.hardware.drm@1.0-impl
 PRODUCT_PACKAGES += android.hardware.drm@1.0-service
 PRODUCT_PACKAGES += android.hardware.drm@1.0-service.widevine
 PRODUCT_PACKAGES += android.hardware.drm@1.1-service.widevine
+PRODUCT_PACKAGES += android.hardware.drm@1.2-service.widevine
 PRODUCT_PACKAGES += android.hardware.drm@1.1-service.clearkey
+PRODUCT_PACKAGES += android.hardware.drm@1.2-service.clearkey
 
 # Live Wallpapers
 PRODUCT_PACKAGES += \

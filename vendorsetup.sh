@@ -27,5 +27,5 @@
 #  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-add_lunch_combo sdm845-userdebug
-add_lunch_combo sdm710-userdebug
+#add_lunch_combo sdm845-userdebug
+#add_lunch_combo sdm710-userdebug

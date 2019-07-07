@@ -2320,6 +2320,7 @@ case "$target" in
         echo 79000 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/max_freq_hysteresis
         echo 300000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
         echo 1 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/ignore_hispeed_on_notif
+        echo 200 > /proc/sys/vm/dirty_expire_centisecs
         # online CPU2
         echo 1 > /sys/devices/system/cpu/cpu2/online
         # configure governor settings for big cluster

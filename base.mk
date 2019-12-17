@@ -1100,3 +1100,4 @@ else
 endif
 
 ENABLE_VENDOR_RIL_SERVICE := true
+PRODUCT_PACKAGES += android.hardware.health@2.0-service

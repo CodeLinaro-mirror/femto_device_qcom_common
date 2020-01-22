@@ -359,6 +359,16 @@ config_bengal_dcc_gpu()
     echo 0x5991540 > $DCC_PATH/config
     echo 0x5995000 > $DCC_PATH/config
     echo 0x5995004 > $DCC_PATH/config
+
+    echo 0x599101C > $DCC_PATH/config
+    echo 0x5991020 > $DCC_PATH/config
+    echo 0x5990000 > $DCC_PATH/config
+    echo 0x5990100 > $DCC_PATH/config
+    echo 0x5991508 > $DCC_PATH/config
+    echo 0x59910A4 > $DCC_PATH/config
+    echo 0x5991578 > $DCC_PATH/config
+    echo 0x5990010 > $DCC_PATH/config
+    echo 0x5990110 > $DCC_PATH/config
 }
 
 config_bengal_dcc_gcc_mm()

@@ -871,7 +871,6 @@ PRODUCT_PACKAGES := \
     CellBroadcastReceiver \
     CertInstaller \
     DrmProvider \
-    Email \
     Gallery2 \
     LatinIME \
     Music \
@@ -879,33 +878,34 @@ PRODUCT_PACKAGES := \
     Phone \
     Provision \
     Protips \
-    QuickSearchBox \
     Settings \
     Sync \
     SystemUI \
     Updater \
     CalendarProvider \
     SyncProvider \
-    SoundRecorder \
     IM \
     VoiceDialer \
-    FM2 \
-    FMRecord \
     SnapdragonGallery \
     SnapdragonMusic \
     VideoEditor \
-    SnapdragonLauncher \
     a4wpservice \
-    wipowerservice \
-    Mms \
-    QtiDialer
+    wipowerservice
 
 ifeq ($(TARGET_HAS_LOW_RAM),true)
-    DELAUN := Launcher3Go
+#    DELAUN := Launcher3Go
 else
     # Live Wallpapers
     PRODUCT_PACKAGES += \
             LiveWallpapers \
+	    Mms \
+	    QuickSearchBox \
+	    SoundRecorder \
+	    FM2 \
+	    Email \
+	    FMRecord \
+	    SnapdragonLauncher \
+	    QtiDialer \
             LiveWallpapersPicker \
             VisualizationWallpapers
 

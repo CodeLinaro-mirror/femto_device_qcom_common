@@ -888,6 +888,7 @@ PRODUCT_PACKAGES := \
     VoiceDialer \
     SnapdragonGallery \
     SnapdragonMusic \
+	SoundRecorder \
     VideoEditor \
     a4wpservice \
     wipowerservice
@@ -900,7 +901,6 @@ else
             LiveWallpapers \
 	    Mms \
 	    QuickSearchBox \
-	    SoundRecorder \
 	    FM2 \
 	    Email \
 	    FMRecord \

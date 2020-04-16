@@ -46,6 +46,9 @@ else
     soc_hwver=`cat /sys/devices/system/soc/soc0/platform_version` 2> /dev/null
 fi
 
+# Store soc_id in ro.vendor.qti.soc_id
+setprop ro.vendor.qti.soc_id $soc_hwid
+
 if [ -f /sys/class/drm/card0-DSI-1/modes ]; then
     echo "detect" > /sys/class/drm/card0-DSI-1/status
     mode_file=/sys/class/drm/card0-DSI-1/modes

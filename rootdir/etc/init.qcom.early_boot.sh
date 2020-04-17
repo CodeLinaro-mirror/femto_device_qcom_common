@@ -299,6 +299,17 @@ case "$target" in
                 ;;
         esac
         ;;
+     "sdm710")
+        case "$soc_hwplatform" in
+            *)
+                if [ $fb_width -le 1600 ]; then
+                    setprop vendor.display.lcd_density 560
+                else
+                    setprop vendor.display.lcd_density 640
+                fi
+                ;;
+        esac
+        ;;
     "msmnile")
         case "$soc_hwplatform" in
             *)

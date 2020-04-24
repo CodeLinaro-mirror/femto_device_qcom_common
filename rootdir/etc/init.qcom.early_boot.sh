@@ -29,6 +29,22 @@
 
 export PATH=/vendor/bin
 
+target_type=`getprop ro.hardware.type`
+if [ "$target_type" == "automotive" ]; then
+    cd /sys/devices/system/memory/
+    n=1
+    addr=`cat aligned_blocks_addr | cut -d ',' -f $n`
+    num=`cat aligned_blocks_num | cut -d ',' -f $n`
+    while [ -n "$addr" ]
+    do
+        echo $addr > probe
+        echo online > memory$num/state
+        let n++
+        addr=`cat aligned_blocks_addr | cut -d ',' -f $n`
+        num=`cat aligned_blocks_num | cut -d ',' -f $n`
+    done
+fi
+
 # Set platform variables
 if [ -f /sys/devices/soc0/hw_platform ]; then
     soc_hwplatform=`cat /sys/devices/soc0/hw_platform` 2> /dev/null
@@ -355,9 +371,10 @@ case "$target" in
         esac
         ;;
     "bengal")
-        case "$soc_hwplatform" in
+        case "$soc_hwid" in
             441)
                 setprop vendor.media.target.version 2
+                setprop vendor.gralloc.disable_ubwc 1
                 ;;
             *)
                 sku_ver=`cat /sys/devices/platform/soc/5a00000.qcom,vidc/sku_version` 2> /dev/null
@@ -481,7 +498,11 @@ then
                 esac
         done
     fi
-else
+fi
+
+
+drm_driver=/sys/class/drm/card0
+if [ -e "$drm_driver" ]; then
     set_perms /sys/devices/virtual/hdcp/msm_hdcp/min_level_change system.graphics 0660
 fi
 

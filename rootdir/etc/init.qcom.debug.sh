@@ -2564,7 +2564,7 @@ case "$coresight_config" in
             ;;
             "lito")
                 soc_id=`cat /sys/devices/soc0/soc_id`
-                if [ "$soc_id" == "434" ]; then
+                if [[ "$soc_id" == "459" || "$soc_id" == "434" ]]; then
                     echo "Enabling DCC/STM/Debug events for lagoon"
                     enable_lagoon_debug
                     setprop ro.dbg.coresight.stm_cfg_done 1

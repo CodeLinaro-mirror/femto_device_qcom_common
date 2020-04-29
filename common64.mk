@@ -20,12 +20,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     sys.vendor.shutdown.waittime=500 \
     ro.build.shutdown_timeout=0
 
-ifneq ($(BOARD_FRP_PARTITION_NAME),)
-    PRODUCT_PROPERTY_OVERRIDES += ro.frp.pst=/dev/block/bootdevice/by-name/$(BOARD_FRP_PARTITION_NAME)
-else
-    PRODUCT_PROPERTY_OVERRIDES += ro.frp.pst=/dev/block/bootdevice/by-name/config
-endif
-
 # whitelisted app
 PRODUCT_COPY_FILES += \
     device/qcom/common/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml

@@ -198,7 +198,7 @@ case "$platform" in
         # 196608 is decimal for 0x30000 to report version 3.0
         # 196609 is decimal for 0x30001 to report version 3.1
         case "$soc_hwid" in
-            233|239|240|241|242|243|263|268|269|270|271)
+            233|239|240|241|242|243|263|268|269|270|271|331)
                 setprop ro.opengles.version 196609
                 if [ $soc_hwid -ge "239" ] && [ $soc_hwid -le "243" ]
                 then
@@ -207,6 +207,11 @@ case "$platform" in
                 if [ $soc_hwid -ge "268" ] && [ $soc_hwid -le "271" ]
                 then
                     setprop media.msm8929hw 1
+                fi
+                if [ $soc_hwid == "331" ]
+                then
+                    setprop media.msm8905.version 1
+                    setprop media.settings.xml /etc/media_profiles_8905.xml
                 fi
                 ;;
             *)

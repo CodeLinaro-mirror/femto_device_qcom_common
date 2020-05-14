@@ -103,6 +103,7 @@ if [ $feature_id == 6 ]; then
 	echo 3 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
 	echo {class:ddr, res:capped, val: 1016} > /sys/kernel/debug/aop_send_message
 	setprop vendor.sku_identified 1
+	setprop vendor.sku_name "SA6145"
 elif [ $feature_id == 5 ]; then
 	echo "SKU Configured : SA6150"
 	echo 748800 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
@@ -128,6 +129,7 @@ elif [ $feature_id == 5 ]; then
 	echo 2 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
 	echo {class:ddr, res:capped, val: 1333} > /sys/kernel/debug/aop_send_message
 	setprop vendor.sku_identified 1
+	setprop vendor.sku_name "SA6150"
 elif [ $feature_id == 4 ] || [ $feature_id == 3 ]; then
 	echo "SKU Configured : SA6155"
 	echo 748800 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
@@ -153,8 +155,9 @@ elif [ $feature_id == 4 ] || [ $feature_id == 3 ]; then
 	echo 0 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
 	echo {class:ddr, res:capped, val: 1555} > /sys/kernel/debug/aop_send_message
 	setprop vendor.sku_identified 1
+	setprop vendor.sku_name "SA6155"
 else
-	echo "unknown feature_id value" $feature_id
+	echo "SKU Configured : SA6155"
 	echo 748800 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
 	echo 748800 > /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
 	echo 748800 > /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq
@@ -178,6 +181,7 @@ else
 	echo 0 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
 	echo {class:ddr, res:capped, val: 1555} > /sys/kernel/debug/aop_send_message
         setprop vendor.sku_identified 1
+	setprop vendor.sku_name "SA6155"
 fi
 }
 

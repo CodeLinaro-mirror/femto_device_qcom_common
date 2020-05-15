@@ -5971,6 +5971,15 @@ case "$console_config" in
         ;;
 esac
 
+#Adding  for gvm
+product=`getprop ro.build.product`
+case "$product" in
+        "msmnile_gvmgh")
+        setprop sys.usb.config none
+        setprop sys.usb.config adb
+     ;;
+esac
+
 # Parse misc partition path and set property
 misc_link=$(ls -l /dev/block/bootdevice/by-name/misc)
 real_path=${misc_link##*>}

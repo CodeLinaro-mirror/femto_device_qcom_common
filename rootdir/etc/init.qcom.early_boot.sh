@@ -1,6 +1,6 @@
 #! /vendor/bin/sh
 
-# Copyright (c) 2012-2013,2016,2018 The Linux Foundation. All rights reserved.
+# Copyright (c) 2012-2013,2016,2018-2020 The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -28,6 +28,22 @@
 #
 
 export PATH=/vendor/bin
+
+target_type=`getprop ro.hardware.type`
+if [ "$target_type" == "automotive" ]; then
+    cd /sys/devices/system/memory/
+    n=1
+    addr=`cat aligned_blocks_addr | cut -d ',' -f $n`
+    num=`cat aligned_blocks_num | cut -d ',' -f $n`
+    while [ -n "$addr" ]
+    do
+        echo $addr > probe
+        echo online > memory$num/state
+        let n++
+        addr=`cat aligned_blocks_addr | cut -d ',' -f $n`
+        num=`cat aligned_blocks_num | cut -d ',' -f $n`
+    done
+fi
 
 # Set platform variables
 if [ -f /sys/devices/soc0/hw_platform ]; then

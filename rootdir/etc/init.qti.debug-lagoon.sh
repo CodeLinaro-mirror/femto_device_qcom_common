@@ -87,6 +87,12 @@ enable_tracing_events_lagoon()
     echo 1 > /sys/kernel/debug/tracing/events/iommu/map_sg/enable
     echo 1 > /sys/kernel/debug/tracing/events/iommu/unmap/enable
 
+    #enable preemption and irq off traces 500 ms for preemption and 100 ms for irq off
+    echo 500000000 > /proc/sys/kernel/preemptoff_tracing_threshold_ns
+    echo 1 > /sys/kernel/debug/tracing/events/sched/sched_preempt_disable/enable
+    echo 100000000 > /proc/sys/kernel/irqsoff_tracing_threshold_ns
+    echo 1 > /sys/kernel/debug/tracing/events/preemptirq/irqs_disable/enable
+
     echo 1 > /sys/kernel/debug/tracing/tracing_on
 }
 
@@ -598,9 +604,7 @@ config_lagoon_dcc_rsc_tcs()
 config_lagoon_dcc_lpass_rsc(){
     #Audio PDC
     echo 0xb250010 > $DCC_PATH/config
-
     echo 0xb250900 > $DCC_PATH/config
-
     echo 0xb251020 > $DCC_PATH/config
     echo 0xb251024 > $DCC_PATH/config
     echo 0xb251030 > $DCC_PATH/config
@@ -623,32 +627,40 @@ config_lagoon_dcc_lpass_rsc(){
     echo 0x8384004 5 > $DCC_PATH/config
     echo 0x08300304 > $DCC_PATH/config
 
-    #RSCp
-    echo 0x62900010 3 > $DCC_PATH/config
-    echo 0x62900030 > $DCC_PATH/config
-    echo 0x62900038 > $DCC_PATH/config
-    echo 0x62900040 > $DCC_PATH/config
-    echo 0x62900048 > $DCC_PATH/config
-    echo 0x629000D0 > $DCC_PATH/config
-    echo 0x62900208 3 > $DCC_PATH/config
-    echo 0x62900228 3 > $DCC_PATH/config
-    echo 0x62900248 3 > $DCC_PATH/config
-    echo 0x62900268 3 > $DCC_PATH/config
-    echo 0x62900288 3 > $DCC_PATH/config
-    echo 0x629002A8 3 > $DCC_PATH/config
-    echo 0x62900400 3 > $DCC_PATH/config
-    echo 0x62900D04 > $DCC_PATH/config
+    echo 0xC2A2040 > $DCC_PATH/config
+    #LPASS RSC
+    echo 0x3500010 3 > $DCC_PATH/config
+    echo 0x3500030 > $DCC_PATH/config
+    echo 0x3500038 > $DCC_PATH/config
+    echo 0x3500040 > $DCC_PATH/config
+    echo 0x3500048 > $DCC_PATH/config
+    echo 0x35000d0 > $DCC_PATH/config
+    echo 0x3500208 3 > $DCC_PATH/config
+    echo 0x3500228 3 > $DCC_PATH/config
+    echo 0x3500248 3 > $DCC_PATH/config
+    echo 0x3500268 3 > $DCC_PATH/config
+    echo 0x3500288 3 > $DCC_PATH/config
+    echo 0x35002a8 3 > $DCC_PATH/config
+    echo 0x3500400 3 > $DCC_PATH/config
+    echo 0x3500d04 > $DCC_PATH/config
 
-    #RSCc
-    echo 0x624B0010 3 > $DCC_PATH/config
-    echo 0x624B0208 3 > $DCC_PATH/config
-    echo 0x624B0228 3 > $DCC_PATH/config
-    echo 0x624B0248 3 > $DCC_PATH/config
-    echo 0x624B0268 3 > $DCC_PATH/config
-    echo 0x624B0288 3 > $DCC_PATH/config
-    echo 0x624B02A8 3 > $DCC_PATH/config
-    echo 0x624B0400 3 > $DCC_PATH/config
+    #LPASS RSCc
+    echo 0x30b0010 3 > $DCC_PATH/config
+    echo 0x30b0208 3 > $DCC_PATH/config
+    echo 0x30b0228 3 > $DCC_PATH/config
+    echo 0x30b0248 3 > $DCC_PATH/config
+    echo 0x30b0268 3 > $DCC_PATH/config
+    echo 0x30b0288 3 > $DCC_PATH/config
+    echo 0x30b02a8 3 > $DCC_PATH/config
+    echo 0x30b0400 3 > $DCC_PATH/config
 
+    #Core status and NMI for modem / Lpass / Turing
+    echo 0x8300044 > $DCC_PATH/config
+    echo 0x8302028 > $DCC_PATH/config
+    echo 0x3002028 > $DCC_PATH/config
+    echo 0x3000044 > $DCC_PATH/config
+    echo 0x4082028 > $DCC_PATH/config
+    echo 0x4080044 > $DCC_PATH/config
 }
 
 config_lagoon_dcc_mss_rsc(){
@@ -825,72 +837,6 @@ config_lagoon_dcc_pimem()
 
 config_lagoon_dcc_misc()
 {
-    echo 0xC2A2040 > $DCC_PATH/config
-    #LPASS RSC
-    echo 0x3500010 > $DCC_PATH/config
-    echo 0x3500014 > $DCC_PATH/config
-    echo 0x3500018 > $DCC_PATH/config
-    echo 0x3500030 > $DCC_PATH/config
-    echo 0x3500038 > $DCC_PATH/config
-    echo 0x3500040 > $DCC_PATH/config
-    echo 0x3500048 > $DCC_PATH/config
-    echo 0x35000d0 > $DCC_PATH/config
-    echo 0x3500208 > $DCC_PATH/config
-    echo 0x350020c > $DCC_PATH/config
-    echo 0x3500210 > $DCC_PATH/config
-    echo 0x3500228 > $DCC_PATH/config
-    echo 0x350022c > $DCC_PATH/config
-    echo 0x3500230 > $DCC_PATH/config
-    echo 0x3500248 > $DCC_PATH/config
-    echo 0x350024c > $DCC_PATH/config
-    echo 0x3500250 > $DCC_PATH/config
-    echo 0x3500268 > $DCC_PATH/config
-    echo 0x350026c > $DCC_PATH/config
-    echo 0x3500270 > $DCC_PATH/config
-    echo 0x3500288 > $DCC_PATH/config
-    echo 0x350028c > $DCC_PATH/config
-    echo 0x3500290 > $DCC_PATH/config
-    echo 0x35002a8 > $DCC_PATH/config
-    echo 0x35002ac > $DCC_PATH/config
-    echo 0x35002b0 > $DCC_PATH/config
-    echo 0x3500400 > $DCC_PATH/config
-    echo 0x3500404 > $DCC_PATH/config
-    echo 0x3500408 > $DCC_PATH/config
-    echo 0x3500d04 > $DCC_PATH/config
-
-    #LPASS RSCc
-    echo 0x30b0010 > $DCC_PATH/config
-    echo 0x30b0014 > $DCC_PATH/config
-    echo 0x30b0018 > $DCC_PATH/config
-    echo 0x30b0208 > $DCC_PATH/config
-    echo 0x30b020c > $DCC_PATH/config
-    echo 0x30b0210 > $DCC_PATH/config
-    echo 0x30b0228 > $DCC_PATH/config
-    echo 0x30b022c > $DCC_PATH/config
-    echo 0x30b0230 > $DCC_PATH/config
-    echo 0x30b0248 > $DCC_PATH/config
-    echo 0x30b024c > $DCC_PATH/config
-    echo 0x30b0250 > $DCC_PATH/config
-    echo 0x30b0268 > $DCC_PATH/config
-    echo 0x30b026c > $DCC_PATH/config
-    echo 0x30b0270 > $DCC_PATH/config
-    echo 0x30b0288 > $DCC_PATH/config
-    echo 0x30b028c > $DCC_PATH/config
-    echo 0x30b0290 > $DCC_PATH/config
-    echo 0x30b02a8 > $DCC_PATH/config
-    echo 0x30b02ac > $DCC_PATH/config
-    echo 0x30b02b0 > $DCC_PATH/config
-    echo 0x30b0400 > $DCC_PATH/config
-    echo 0x30b0404 > $DCC_PATH/config
-    echo 0x30b0408 > $DCC_PATH/config
-
-    #Core status and NMI for modem / Lpass / Turing
-    echo 0x8300044 > $DCC_PATH/config
-    echo 0x8302028 > $DCC_PATH/config
-    echo 0x3002028 > $DCC_PATH/config
-    echo 0x3000044 > $DCC_PATH/config
-    echo 0x4082028 > $DCC_PATH/config
-    echo 0x4080044 > $DCC_PATH/config
 }
 
 config_lagoon_dcc_gic()

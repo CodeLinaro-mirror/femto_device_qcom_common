@@ -775,7 +775,6 @@ PRODUCT_PACKAGES := \
     netutils-wrapper-1.0 \
     Phone \
     Provision \
-    Protips \
     QuickSearchBox \
     Settings \
     Sync \

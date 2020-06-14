@@ -44,7 +44,12 @@ QSD8K_BOARD_PLATFORMS := qsd8k
 
 TARGET_USE_VENDOR_CAMERA_EXT := true
 TARGET_USE_QTI_BT_STACK := true
-BOARD_HAVE_QCOM_FM := true
+
+ifeq ($(strip $(TARGET_BOARD_AUTO)),true)
+BOARD_HAVE_QCOM_FM ?= false
+else
+BOARD_HAVE_QCOM_FM ?= true
+endif
 
 #Enable suspend during charger mode
 BOARD_CHARGER_ENABLE_SUSPEND := true

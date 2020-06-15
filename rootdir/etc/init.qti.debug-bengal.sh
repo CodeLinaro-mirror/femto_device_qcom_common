@@ -127,6 +127,9 @@ enable_bengal_stm_events()
     fi
 
     echo $etr_size > /sys/bus/coresight/devices/coresight-tmc-etr/buffer_size
+    if uname -m | grep "armv7l"; then
+        echo 0x1000000 > /sys/bus/coresight/devices/coresight-tmc-etr/buffer_size
+    fi
     echo 1 > /sys/bus/coresight/devices/coresight-tmc-etr/$sinkenable
     echo 1 > /sys/bus/coresight/devices/coresight-stm/$srcenable
     echo 1 > /sys/kernel/debug/tracing/tracing_on

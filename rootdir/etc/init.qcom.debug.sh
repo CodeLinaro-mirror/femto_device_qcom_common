@@ -1,4 +1,4 @@
-#! /vendor/bin/sh
+﻿#! /vendor/bin/sh
 
 # Copyright (c) 2014-2017, 2019-2020, The Linux Foundation. All rights reserved.
 #
@@ -38,6 +38,7 @@ source $HERE/init.qti.debug-trinket.sh
 source $HERE/init.qti.debug-atoll.sh
 source $HERE/init.qti.debug-lagoon.sh
 source $HERE/init.qti.debug-bengal.sh
+source $HERE/init.qti.debug-scuba.sh
 
 enable_tracing_events()
 {
@@ -1286,56 +1287,56 @@ enable_sdm660_dcc_config()
 
     echo 0xC8C00F0 10 > $DCC_PATH/config
 
-    echo 0xC8C4000 > $DCC_PATH/config	 #MMSS_PLL_VOTE_RPM
+    echo 0xC8C4000 > $DCC_PATH/config    #MMSS_PLL_VOTE_RPM
 
     echo 0xC8CD000 2 > $DCC_PATH/config
 
-    echo  0x1030560 1 > $DCC_PATH/config 	##BIMC_S_DDR0_SCMO_RCH_STATUS
-    echo  0x10305a0 1 > $DCC_PATH/config 	##BIMC_S_DDR0_SCMO_WCH_STATUS
-    echo  0x103c560 1 > $DCC_PATH/config 	##BIMC_S_DDR1_SCMO_RCH_STATUS
-    echo  0x103c5a0 1 > $DCC_PATH/config 	##BIMC_S_DDR1_SCMO_WCH_STATUS
-    echo  0x1030520 1 > $DCC_PATH/config 	##BIMC_S_DDR0_SCMO_CMD_BUF_STATUS
-    echo  0x103c520 1 > $DCC_PATH/config 	##BIMC_S_DDR1_SCMO_CMD_BUF_STATUS
-    echo  0x103408c 1 > $DCC_PATH/config 	##BIMC_S_DDR0_DPE_DRAM_STATUS_0
-    echo  0x104008c 1 > $DCC_PATH/config 	##BIMC_S_DDR1_DPE_DRAM_STATUS_0
-    echo  0x103409c 1 > $DCC_PATH/config 	##BIMC_S_DDR0_DPE_MEMC_STATUS_0
-    echo  0x104009c 1 > $DCC_PATH/config 	##BIMC_S_DDR1_DPE_MEMC_STATUS_0
-    echo  0xffd220  1 > $DCC_PATH/config 	##MCCC_MCCC_CLK_PERIOD
-    echo  0x108f094 1 > $DCC_PATH/config 	##DDR_CC_MCCC_DDRCC_MCCC_TOP_STATUS
-    echo  0xffd200  1 > $DCC_PATH/config 	##MCCC_MCCC_FREQ_SWITCH_UPDATE
-    echo  0xffd02c  1 > $DCC_PATH/config 	##MCCC_MCCC_CH0_FSC_STATUS0
-    echo  0xffd038  1 > $DCC_PATH/config 	##MCCC_MCCC_CH0_FSC_STATUS3
-    echo  0xffd12c  1 > $DCC_PATH/config 	##MCCC_MCCC_CH1_FSC_STATUS0
-    echo  0xffd138  1 > $DCC_PATH/config 	##MCCC_MCCC_CH1_FSC_STATUS3
-    echo  0x1086020 1 > $DCC_PATH/config 	##CH0_DDRCC_PLLCTRL_GCC_CTRL
-    echo  0x1086028 1 > $DCC_PATH/config 	##CH0_DDRCC_PLLCTRL_CLK_SWITCH_STATUS
-    echo  0x1086030 1 > $DCC_PATH/config 	##CH0_DDRCC_PLLCTRL_STATUS
-    echo  0x1086124 1 > $DCC_PATH/config 	##CH0_DDRCC_PLL0_STATUS
-    echo  0x1086164 1 > $DCC_PATH/config 	##CH0_DDRCC_PLL1_STATUS
-    echo  0x10861dc 1 > $DCC_PATH/config 	##CH0_DDRCC_DLL0_STATUS
-    echo  0x10861ec 1 > $DCC_PATH/config 	##CH0_DDRCC_DLL1_STATUS
-    echo  0x1035070 1 > $DCC_PATH/config 	##BIMC_S_DDR0_SHKE_MREG_RDATA_STATUS
-    echo  0x1041070 1 > $DCC_PATH/config 	##BIMC_S_DDR1_SHKE_MREG_RDATA_STATUS
-    echo  0x10340b8 1 > $DCC_PATH/config 	##BIMC_S_DDR0_DPE_INTERRUPT_STATUS
-    echo  0x103408c 1 > $DCC_PATH/config 	##BIMC_S_DDR0_DPE_DRAM_STATUS_0
-    echo  0x1035074 1 > $DCC_PATH/config 	##BIMC_S_DDR0_SHKE_DRAM_STATUS
+    echo  0x1030560 1 > $DCC_PATH/config    ##BIMC_S_DDR0_SCMO_RCH_STATUS
+    echo  0x10305a0 1 > $DCC_PATH/config    ##BIMC_S_DDR0_SCMO_WCH_STATUS
+    echo  0x103c560 1 > $DCC_PATH/config    ##BIMC_S_DDR1_SCMO_RCH_STATUS
+    echo  0x103c5a0 1 > $DCC_PATH/config    ##BIMC_S_DDR1_SCMO_WCH_STATUS
+    echo  0x1030520 1 > $DCC_PATH/config    ##BIMC_S_DDR0_SCMO_CMD_BUF_STATUS
+    echo  0x103c520 1 > $DCC_PATH/config    ##BIMC_S_DDR1_SCMO_CMD_BUF_STATUS
+    echo  0x103408c 1 > $DCC_PATH/config    ##BIMC_S_DDR0_DPE_DRAM_STATUS_0
+    echo  0x104008c 1 > $DCC_PATH/config    ##BIMC_S_DDR1_DPE_DRAM_STATUS_0
+    echo  0x103409c 1 > $DCC_PATH/config    ##BIMC_S_DDR0_DPE_MEMC_STATUS_0
+    echo  0x104009c 1 > $DCC_PATH/config    ##BIMC_S_DDR1_DPE_MEMC_STATUS_0
+    echo  0xffd220  1 > $DCC_PATH/config    ##MCCC_MCCC_CLK_PERIOD
+    echo  0x108f094 1 > $DCC_PATH/config    ##DDR_CC_MCCC_DDRCC_MCCC_TOP_STATUS
+    echo  0xffd200  1 > $DCC_PATH/config    ##MCCC_MCCC_FREQ_SWITCH_UPDATE
+    echo  0xffd02c  1 > $DCC_PATH/config    ##MCCC_MCCC_CH0_FSC_STATUS0
+    echo  0xffd038  1 > $DCC_PATH/config    ##MCCC_MCCC_CH0_FSC_STATUS3
+    echo  0xffd12c  1 > $DCC_PATH/config    ##MCCC_MCCC_CH1_FSC_STATUS0
+    echo  0xffd138  1 > $DCC_PATH/config    ##MCCC_MCCC_CH1_FSC_STATUS3
+    echo  0x1086020 1 > $DCC_PATH/config    ##CH0_DDRCC_PLLCTRL_GCC_CTRL
+    echo  0x1086028 1 > $DCC_PATH/config    ##CH0_DDRCC_PLLCTRL_CLK_SWITCH_STATUS
+    echo  0x1086030 1 > $DCC_PATH/config    ##CH0_DDRCC_PLLCTRL_STATUS
+    echo  0x1086124 1 > $DCC_PATH/config    ##CH0_DDRCC_PLL0_STATUS
+    echo  0x1086164 1 > $DCC_PATH/config    ##CH0_DDRCC_PLL1_STATUS
+    echo  0x10861dc 1 > $DCC_PATH/config    ##CH0_DDRCC_DLL0_STATUS
+    echo  0x10861ec 1 > $DCC_PATH/config    ##CH0_DDRCC_DLL1_STATUS
+    echo  0x1035070 1 > $DCC_PATH/config    ##BIMC_S_DDR0_SHKE_MREG_RDATA_STATUS
+    echo  0x1041070 1 > $DCC_PATH/config    ##BIMC_S_DDR1_SHKE_MREG_RDATA_STATUS
+    echo  0x10340b8 1 > $DCC_PATH/config    ##BIMC_S_DDR0_DPE_INTERRUPT_STATUS
+    echo  0x103408c 1 > $DCC_PATH/config    ##BIMC_S_DDR0_DPE_DRAM_STATUS_0
+    echo  0x1035074 1 > $DCC_PATH/config    ##BIMC_S_DDR0_SHKE_DRAM_STATUS
 
     ##BIMC_S_DDR0_SHKE_PERIODIC_MRR_RDATA
     echo 0x10350b0 4 > $DCC_PATH/config
 
-    echo  0x10400b8 1 > $DCC_PATH/config 	##BIMC_S_DDR1_DPE_INTERRUPT_STATUS
-    echo  0x1041074 1 > $DCC_PATH/config 	##BIMC_S_DDR1_SHKE_DRAM_STATUS
+    echo  0x10400b8 1 > $DCC_PATH/config    ##BIMC_S_DDR1_DPE_INTERRUPT_STATUS
+    echo  0x1041074 1 > $DCC_PATH/config    ##BIMC_S_DDR1_SHKE_DRAM_STATUS
 
     ##BIMC_S_DDR1_SHKE_PERIODIC_MRR_RDATA
     echo  0x10410b0 4 > $DCC_PATH/config
 
-    echo  0x1008100 1 > $DCC_PATH/config 	##BIMC_M_APP_MPORT_INTERRUPT_STATUS
-    echo  0x1020100 1 > $DCC_PATH/config 	##BIMC_M_CDSP_MPORT_INTERRUPT_STATUS
-    echo  0x100c100 1 > $DCC_PATH/config 	##BIMC_M_GPU_MPORT_INTERRUPT_STATUS
-    echo  0x101c100 1 > $DCC_PATH/config 	##BIMC_M_MDSP_MPORT_INTERRUPT_STATUS
-    echo  0x1010100 1 > $DCC_PATH/config 	##BIMC_M_MMSS_MPORT_INTERRUPT_STATUS
-    echo  0x1018100 1 > $DCC_PATH/config 	##BIMC_M_PIMEM_MPORT_INTERRUPT_STATUS
-    echo  0x1014100 1 > $DCC_PATH/config 	##BIMC_M_SYS_MPORT_INTERRUPT_STATUS
+    echo  0x1008100 1 > $DCC_PATH/config    ##BIMC_M_APP_MPORT_INTERRUPT_STATUS
+    echo  0x1020100 1 > $DCC_PATH/config    ##BIMC_M_CDSP_MPORT_INTERRUPT_STATUS
+    echo  0x100c100 1 > $DCC_PATH/config    ##BIMC_M_GPU_MPORT_INTERRUPT_STATUS
+    echo  0x101c100 1 > $DCC_PATH/config    ##BIMC_M_MDSP_MPORT_INTERRUPT_STATUS
+    echo  0x1010100 1 > $DCC_PATH/config    ##BIMC_M_MMSS_MPORT_INTERRUPT_STATUS
+    echo  0x1018100 1 > $DCC_PATH/config    ##BIMC_M_PIMEM_MPORT_INTERRUPT_STATUS
+    echo  0x1014100 1 > $DCC_PATH/config    ##BIMC_M_SYS_MPORT_INTERRUPT_STATUS
 
 
 
@@ -2585,8 +2586,20 @@ case "$coresight_config" in
                 setprop ro.dbg.coresight.stm_cfg_done 1
             ;;
             "bengal")
-                echo "Enabling DCC/STM/Debug events for bengal"
-                enable_bengal_debug
+                soc_id=`cat /sys/devices/soc0/soc_id`
+                if [ "$soc_id" == "441" ]; then
+                    echo "Enabling DCC/STM/Debug events for scuba"
+                    enable_scuba_debug
+                    setprop ro.dbg.coresight.stm_cfg_done 1
+                else
+                    echo "Enabling DCC/STM/Debug events for bengal"
+                    enable_bengal_debug
+                    setprop ro.dbg.coresight.stm_cfg_done 1
+                fi
+            ;;
+            "scuba")
+                echo "Enabling DCC/STM/Debug events for scuba"
+                enable_scuba_debug
                 setprop ro.dbg.coresight.stm_cfg_done 1
             ;;
             *)

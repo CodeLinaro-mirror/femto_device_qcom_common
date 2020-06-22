@@ -108,6 +108,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="carrier_supports_multianchor_conference" value="false"/>
         <!-- Config for Call Composer Feature support  -->
         <boolean name="carrier_call_composer_supported_bool" value="false"/>
+        <!-- Config for explicit call transfer support for an IMS call -->
+        <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
     </carrier_config>
 
     <carrier_config mcc="001" mnc="01">
@@ -1478,6 +1480,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="config_disable_clir_over_ut" value="true" />
         <boolean name="hide_enabled_5g_bool" value="false" />
         <boolean name="call_barring_visibility_bool" value="false" />
+        <boolean name="allow_add_call_during_video_call" value="false" />
+        <boolean name="allow_hold_video_call_bool" value="false" />
     </carrier_config>
 
     <carrier_config mcc="460" mnc="02">
@@ -1624,6 +1628,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="config_disable_clir_over_ut" value="true" />
         <boolean name="hide_enabled_5g_bool" value="false" />
         <boolean name="call_barring_visibility_bool" value="false" />
+        <boolean name="allow_add_call_during_video_call" value="false" />
+        <boolean name="allow_hold_video_call_bool" value="false" />
     </carrier_config>
 
     <carrier_config mcc="460" mnc="07">
@@ -1753,6 +1759,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="config_disable_clir_over_ut" value="true" />
         <boolean name="hide_enabled_5g_bool" value="false" />
         <boolean name="call_barring_visibility_bool" value="false" />
+        <boolean name="allow_add_call_during_video_call" value="false" />
+        <boolean name="allow_hold_video_call_bool" value="false" />
     </carrier_config>
 
     <carrier_config mcc="460" mnc="10">
@@ -1834,6 +1842,20 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
     </carrier_config>
 
     <carrier_config mcc="310" mnc="00">
+        <boolean name="rtt_supported_bool" value="true" />
+        <boolean name="rtt_auto_upgrade_bool" value="true" />
+        <boolean name="rtt_supported_for_vt_bool" value="true"/>
+        <boolean name="rtt_upgrade_supported_bool" value="true"/>
+        <boolean name="rtt_downgrade_supported_bool" value="true"/>
+        <boolean name="carrier_volte_available_bool" value="true" />
+        <boolean name="carrier_vt_available_bool" value="true" />
+        <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="allow_emergency_video_calls_bool" value="true" />
+        <boolean name="carrier_volte_tty_supported_bool" value="true" />
+        <boolean name="carrier_call_composer_supported_bool" value="true"/>
+    </carrier_config>
+
+    <carrier_config mcc="310" mnc="01">
         <boolean name="rtt_supported_bool" value="true" />
         <boolean name="rtt_auto_upgrade_bool" value="true" />
         <boolean name="rtt_supported_for_vt_bool" value="true"/>

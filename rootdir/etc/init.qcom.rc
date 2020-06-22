@@ -86,7 +86,6 @@ on early-boot
     write /sys/devices/virtual/cvp/cvp/boot 1
     exec u:r:vendor_qti_init_shell:s0 -- /vendor/bin/init.qcom.early_boot.sh
     exec u:r:vendor_qti_init_shell:s0 -- /vendor/bin/init.qti.can.sh
-    exec u:r:vendor_qti_init_shell:s0 -- /vendor/bin/init.qti.display_boot.sh
     setprop ro.sf.lcd_density ${vendor.display.lcd_density}
 
     chown system system /mnt/vendor/persist/data/pfm/licenses
@@ -670,12 +669,6 @@ service ssgqmigd /vendor/bin/ssgqmigd
     user radio
     group radio gps system
     socket ssgqmig seqpacket 0660 radio inet
-
-service ssgtzd /vendor/bin/ssgtzd
-    class late_start
-    user system
-    group system
-    socket ssgtzd stream 0660 system inet
 
 service mlid /vendor/bin/mlid
     class late_start

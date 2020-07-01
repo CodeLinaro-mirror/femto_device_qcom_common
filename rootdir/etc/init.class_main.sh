@@ -79,6 +79,7 @@ case "$baseband" in
             if [ "$netmgr" = "true" ]; then
                 start netmgrd
             fi
+            start port-bridge
             ;;
         *)
             if [ "$netmgr" = "true" ]; then

@@ -1268,50 +1268,49 @@ case "$target" in
 		echo 200000000 > /sys/class/kgsl/kgsl-3d0/devfreq/min_freq
 		echo performance > /sys/class/kgsl/kgsl-3d0/devfreq/governor
 	else
-        #if the kernel version >=4.9,use the schedutil governor
-        KernelVersionStr=`cat /proc/sys/kernel/osrelease`
-        KernelVersionS=${KernelVersionStr:2:2}
-        KernelVersionA=${KernelVersionStr:0:1}
-        KernelVersionB=${KernelVersionS%.*}
-        if [ $KernelVersionA -ge 4 ] && [ $KernelVersionB -ge 9 ]; then
-            echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-            echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/rate_limit_us
-            echo 800000 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_freq
-            echo -10 > /sys/devices/system/cpu/cpu0/sched_load_boost
-            echo -10 > /sys/devices/system/cpu/cpu1/sched_load_boost
-            echo -10 > /sys/devices/system/cpu/cpu2/sched_load_boost
-            echo -10 > /sys/devices/system/cpu/cpu3/sched_load_boost
-            echo 80 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_load
-        else
-            echo "interactive" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-            echo 800000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-            echo "30000 1094400:50000" > /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
-            echo 90 > /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
-            echo 30000 > /sys/devices/system/cpu/cpufreq/interactive/timer_rate
-            echo 998400 > /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
-            echo 0 > /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
-            echo "1 800000:85 998400:90 1094400:80" > /sys/devices/system/cpu/cpufreq/interactive/target_loads
-            echo 50000 > /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
-            echo 50000 > /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor
-        fi
-    fi
+		#if the kernel version >=4.9,use the schedutil governor
+		KernelVersionStr=`cat /proc/sys/kernel/osrelease`
+		KernelVersionS=${KernelVersionStr:2:2}
+		KernelVersionA=${KernelVersionStr:0:1}
+		KernelVersionB=${KernelVersionS%.*}
+		if [ $KernelVersionA -ge 4 ] && [ $KernelVersionB -ge 9 ]; then
+			echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+			echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/rate_limit_us
+			echo 1048576 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_freq
+			echo 10 > /sys/devices/system/cpu/cpu0/sched_load_boost
+			echo 10 > /sys/devices/system/cpu/cpu1/sched_load_boost
+			echo 10 > /sys/devices/system/cpu/cpu2/sched_load_boost
+			echo 10 > /sys/devices/system/cpu/cpu3/sched_load_boost
+			echo 80 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_load
+			echo 1 > /sys/devices/system/cpu/cpu0/core_ctl/enable
+			echo 2 > /sys/devices/system/cpu/cpu0/core_ctl/min_cpus
+			echo 4 > /sys/devices/system/cpu/cpu0/core_ctl/max_cpus
+			echo 300 > /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms
+			echo 800000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+			echo 100 > /proc/sys/vm/swappiness
+			# Bring up all cores online
+			echo 1 > /sys/devices/system/cpu/cpu1/online
+			echo 1 > /sys/devices/system/cpu/cpu2/online
+			echo 1 > /sys/devices/system/cpu/cpu3/online
+		else
+			echo "interactive" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+			echo 800000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+			echo "30000 1094400:50000" > /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
+			echo 90 > /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
+			echo 30000 > /sys/devices/system/cpu/cpufreq/interactive/timer_rate
+			echo 998400 > /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
+			echo 0 > /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
+			echo "1 800000:85 998400:90 1094400:80" > /sys/devices/system/cpu/cpufreq/interactive/target_loads
+			echo 50000 > /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
+			echo 50000 > /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor
+		fi
+	fi
 
         # enable thermal core_control now
 	if [ "$ProductName" != "msm8909w" ]; then
 		echo 1 > /sys/module/msm_thermal/core_control/enabled
 	fi
 
-
-	if [ "$ProductName" == "msm8909w" ] || [ "$ProductName" == "msm8909_512" ]; then
-		# Post boot, have cpu0 and cpu1 online. Make all other cores go offline
-		echo 0 > /sys/devices/system/cpu/cpu2/online
-		echo 0 > /sys/devices/system/cpu/cpu3/online
-	else
-		# Bring up all cores online
-		echo 1 > /sys/devices/system/cpu/cpu1/online
-		echo 1 > /sys/devices/system/cpu/cpu2/online
-		echo 1 > /sys/devices/system/cpu/cpu3/online
-	fi
 
 	echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
 

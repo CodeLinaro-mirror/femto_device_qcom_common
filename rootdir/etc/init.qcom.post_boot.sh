@@ -737,9 +737,9 @@ else
             echo 1 > /sys/module/lowmemorykiller/parameters/oom_reaper
         fi
 
-        if [ "$ProductName" != "bengal_32" ]; then
-            #bengal_32 has appcompaction enabled. So not needed
-            # Set PPR parametersi for other targets
+        if [[ "$ProductName" != "bengal"* ]]; then
+            #bengal has appcompaction enabled. So not needed
+            # Set PPR parameters for other targets
             if [ -f /sys/devices/soc0/soc_id ]; then
                 soc_id=`cat /sys/devices/soc0/soc_id`
             else
@@ -3077,7 +3077,7 @@ case "$target" in
         fi
 
         case "$soc_id" in
-                 "394" )
+                 "394" | "467" | "468" )
 
             # Core control parameters on big
             echo 2 > /sys/devices/system/cpu/cpu4/core_ctl/min_cpus
@@ -4038,6 +4038,10 @@ case "$target" in
             echo -6 > /sys/devices/system/cpu/cpu2/sched_load_boost
             echo -6 > /sys/devices/system/cpu/cpu3/sched_load_boost
             echo 85 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_load
+
+            # configure input boost settings
+            echo "0:1017600" > /sys/devices/system/cpu/cpu_boost/input_boost_freq
+            echo 80 > /sys/devices/system/cpu/cpu_boost/input_boost_ms
 
             # Set Memory parameters
             configure_memory_parameters

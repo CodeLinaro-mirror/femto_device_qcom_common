@@ -737,9 +737,9 @@ else
             echo 1 > /sys/module/lowmemorykiller/parameters/oom_reaper
         fi
 
-        if [ "$ProductName" != "bengal_32" ]; then
-            #bengal_32 has appcompaction enabled. So not needed
-            # Set PPR parametersi for other targets
+        if [[ "$ProductName" != "bengal"* ]]; then
+            #bengal has appcompaction enabled. So not needed
+            # Set PPR parameters for other targets
             if [ -f /sys/devices/soc0/soc_id ]; then
                 soc_id=`cat /sys/devices/soc0/soc_id`
             else
@@ -3077,7 +3077,7 @@ case "$target" in
         fi
 
         case "$soc_id" in
-                 "394" )
+                 "394" | "467" | "468" )
 
             # Core control parameters on big
             echo 2 > /sys/devices/system/cpu/cpu4/core_ctl/min_cpus
@@ -3756,8 +3756,8 @@ case "$target" in
         # Enable conservative pl
         echo 1 > /proc/sys/kernel/sched_conservative_pl
 
-        echo "0:1248000" > /sys/module/cpu_boost/parameters/input_boost_freq
-        echo 120 > /sys/module/cpu_boost/parameters/input_boost_ms
+        echo "0:1248000" > /sys/devices/system/cpu/cpu_boost/input_boost_freq
+        echo 120 > /sys/devices/system/cpu/cpu_boost/input_boost_ms
 
         # Set Memory parameters
         configure_memory_parameters
@@ -3834,6 +3834,12 @@ case "$target" in
                 echo "mem_latency" > $memlat/governor
                 echo 8 > $memlat/polling_interval
                 echo 400 > $memlat/mem_latency/ratio_ceil
+            done
+
+            for gold_memlat in $device/*qcom,devfreq-l3/*cpu6*-lat/devfreq/*cpu6*-lat
+            do
+                echo 25000 > $gold_memlat/mem_latency/wb_filter_ratio
+                echo 60 > $gold_memlat/mem_latency/wb_pct_thres
             done
 
             #Enable mem_latency governor for LLCC, and DDR scaling
@@ -4026,11 +4032,16 @@ case "$target" in
 
             # sched_load_boost as -6 is equivalent to target load as 85.
             echo 0 > /proc/sys/kernel/sched_boost
+            echo 1 > /proc/sys/kernel/sched_prefer_spread
             echo -6 > /sys/devices/system/cpu/cpu0/sched_load_boost
             echo -6 > /sys/devices/system/cpu/cpu1/sched_load_boost
             echo -6 > /sys/devices/system/cpu/cpu2/sched_load_boost
             echo -6 > /sys/devices/system/cpu/cpu3/sched_load_boost
             echo 85 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_load
+
+            # configure input boost settings
+            echo "0:1017600" > /sys/devices/system/cpu/cpu_boost/input_boost_freq
+            echo 80 > /sys/devices/system/cpu/cpu_boost/input_boost_ms
 
             # Set Memory parameters
             configure_memory_parameters
@@ -5949,7 +5960,7 @@ if [ -f /sys/devices/soc0/select_image ]; then
 fi
 
 # Change console log level as per console config property
-console_config=`getprop persist.console.silent.config`
+console_config=`getprop persist.vendor.console.silent.config`
 case "$console_config" in
     "1")
         echo "Enable console config to $console_config"

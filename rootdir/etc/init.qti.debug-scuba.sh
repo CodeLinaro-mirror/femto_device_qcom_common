@@ -86,6 +86,15 @@ enable_scuba_tracing_events()
     echo 1 > /sys/kernel/debug/tracing/events/iommu/map_sg/enable
     echo 1 > /sys/kernel/debug/tracing/events/iommu/unmap/enable
 
+    #Preempt trace events
+    echo 'nsec' > /proc/sys/kernel/preemptoff_tracing_threshold_ns
+    echo 500000000 > /proc/sys/kernel/preemptoff_tracing_threshold_ns
+    echo 1 > /sys/kernel/debug/tracing/events/sched/sched_preempt_disable/enable
+    #irqsoff trace events
+    echo 'nsec' > /proc/sys/kernel/irqsoff_tracing_threshold_ns
+    echo 100000000 > /proc/sys/kernel/irqsoff_tracing_threshold_ns
+    echo 1 > /sys/kernel/debug/tracing/events/preemptirq/irqs_disable/enable
+
     echo 1 > /sys/kernel/debug/tracing/tracing_on
 }
 
@@ -127,6 +136,9 @@ enable_scuba_stm_events()
     fi
 
     echo $etr_size > /sys/bus/coresight/devices/coresight-tmc-etr/buffer_size
+    if uname -m | grep "armv7l"; then
+        echo 0x1000000 > /sys/bus/coresight/devices/coresight-tmc-etr/buffer_size
+    fi
     echo 1 > /sys/bus/coresight/devices/coresight-tmc-etr/$sinkenable
     echo 1 > /sys/bus/coresight/devices/coresight-stm/$srcenable
     echo 1 > /sys/kernel/debug/tracing/tracing_on

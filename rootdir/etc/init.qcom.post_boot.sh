@@ -3895,7 +3895,7 @@ case "$target" in
         fi
 
         case "$soc_id" in
-                 "417" | "420" | "444" | "445" )
+                 "417" | "420" | "444" | "445" | "469" | "470" )
 
             # Core control is temporarily disabled till bring up
             echo 0 > /sys/devices/system/cpu/cpu0/core_ctl/enable
@@ -5960,7 +5960,7 @@ if [ -f /sys/devices/soc0/select_image ]; then
 fi
 
 # Change console log level as per console config property
-console_config=`getprop persist.console.silent.config`
+console_config=`getprop persist.vendor.console.silent.config`
 case "$console_config" in
     "1")
         echo "Enable console config to $console_config"

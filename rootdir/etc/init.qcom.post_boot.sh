@@ -1222,7 +1222,7 @@ case "$target" in
 	else
 		echo 128 > /sys/block/mmcblk0/queue/read_ahead_kb
         if [ "$MemTotal" -le "524288" ]; then #512Mb target
-            echo 32768 > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
+            echo 8192 > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
             echo 268435456 > /sys/block/zram0/disksize
         elif  [ "$MemTotal" -le "786432" ] && [ $MemTotal -gt "524288" ]; then #768MB target
             echo 36864 > /sys/module/lowmemorykiller/parameters/vmpressure_file_min

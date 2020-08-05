@@ -44,6 +44,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">true</bool>
     <bool name="config_setColorTransformAccelerated">true</bool>
     <bool name="config_dreamsSupported">false</bool>
+    <bool name="config_handleVolumeKeysInWindowManager">true</bool>
 
     <!-- ImsService package name to bind to by default. If none is specified in an overlay, an
          empty string is passed in -->

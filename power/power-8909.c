@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2015, 2020, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -47,6 +47,14 @@
 #include "performance.h"
 #include "power-common.h"
 
+static int saved_interactive_mode = -1;
+static int display_hint_sent;
+static int cpu2_fd;
+static int cpu3_fd;
+static int scaling_max_freq_fd;
+#define SYS_CPU2_ONLINE "/sys/devices/system/cpu/cpu2/online"
+#define SYS_CPU3_ONLINE "/sys/devices/system/cpu/cpu3/online"
+#define SYS_CPU_SCALING_MAX_FREQ "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"
 
 static void process_video_encode_hint(void *metadata)
 {
@@ -104,4 +112,70 @@ int power_hint_override(struct power_module *module, power_hint_t hint, void *da
         }
     }
     return HINT_NONE;
+}
+
+int  set_interactive_override(struct power_module *module, int on)
+{
+    int rc = 0;
+    static const char *cpu_on = "1";
+    static const char *cpu_off = "0";
+    static const char *limit_freq_off = "1094400";
+    static const char *limit_freq_on = "1267200";
+    char err_buf[80];
+    static int init_interactive_hint = 0;
+    if (init_interactive_hint == 0)
+    {
+        //First time the display is turned off
+        cpu2_fd = TEMP_FAILURE_RETRY(open(SYS_CPU2_ONLINE, O_RDWR));
+        cpu3_fd = TEMP_FAILURE_RETRY(open(SYS_CPU3_ONLINE, O_RDWR));
+        scaling_max_freq_fd = TEMP_FAILURE_RETRY(open(SYS_CPU_SCALING_MAX_FREQ, O_RDWR));
+        if (cpu2_fd < 0) {
+            strerror_r(errno,err_buf,sizeof(err_buf));
+            ALOGE("Error opening %s: %s\n", SYS_CPU2_ONLINE, err_buf);
+            return HINT_HANDLED;
+        }
+        else {
+            init_interactive_hint = 1;
+        }
+    }
+    else {
+        if (!on ) {
+            /* Display off. */
+            rc = TEMP_FAILURE_RETRY(write(cpu2_fd, cpu_off, strlen(cpu_off)));
+            if (rc < 0) {
+                strerror_r(errno,err_buf,sizeof(err_buf));
+                ALOGE("Error writing %s to  %s: %s\n", cpu_off, SYS_CPU2_ONLINE, err_buf);
+            }
+            rc = TEMP_FAILURE_RETRY(write(cpu3_fd, cpu_off, strlen(cpu_off)));
+            if (rc < 0) {
+                strerror_r(errno,err_buf,sizeof(err_buf));
+                ALOGE("Error writing %s to  %s: %s\n", cpu_off, SYS_CPU3_ONLINE, err_buf);
+            }
+            rc = TEMP_FAILURE_RETRY(write(scaling_max_freq_fd, limit_freq_off, strlen(limit_freq_off)));
+            if (rc < 0) {
+                strerror_r(errno,err_buf,sizeof(err_buf));
+                ALOGE("Error writing %s to  %s: %s\n", limit_freq_off, SYS_CPU_SCALING_MAX_FREQ, err_buf);
+            }
+        }
+        else {
+            /* Display on */
+            rc = TEMP_FAILURE_RETRY(write(cpu2_fd, cpu_on, strlen(cpu_on)));
+            if (rc < 0) {
+                strerror_r(errno,err_buf,sizeof(err_buf));
+                ALOGE("Error writing %s to  %s: %s\n", cpu_on, SYS_CPU2_ONLINE, err_buf);
+            }
+            rc = TEMP_FAILURE_RETRY(write(cpu3_fd, cpu_on, strlen(cpu_on)));
+            if (rc < 0) {
+                strerror_r(errno,err_buf,sizeof(err_buf));
+                ALOGE("Error writing %s to  %s: %s\n", cpu_on, SYS_CPU3_ONLINE, err_buf);
+            }
+            rc = TEMP_FAILURE_RETRY(write(scaling_max_freq_fd, limit_freq_on, strlen(limit_freq_on)));
+            if (rc < 0) {
+                strerror_r(errno,err_buf,sizeof(err_buf));
+                ALOGE("Error writing %s to  %s: %s\n", limit_freq_on, SYS_CPU_SCALING_MAX_FREQ, err_buf);
+            }
+        }
+    }
+
+    return HINT_HANDLED;
 }

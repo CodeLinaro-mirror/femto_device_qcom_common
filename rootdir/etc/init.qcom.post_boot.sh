@@ -557,8 +557,13 @@ function configure_zram_parameters() {
 
     RamSizeGB=`echo "($MemTotal / 1048576 ) + 1" | bc`
     if [ $RamSizeGB -le 2 ]; then
-        zRamSizeBytes=`echo "$RamSizeGB * 1024 * 1024 * 1024 * 3 / 4" | bc`
-        zRamSizeMB=`echo "$RamSizeGB * 1024 * 3 / 4" | bc`
+       if [ "$MemTotal" -le "524288" ];then
+          zRamSizeBytes=268435456 #402653184
+          zRamSizeMB=256  #384
+       else
+          zRamSizeBytes=`echo "$RamSizeGB * 1024 * 1024 * 1024 * 3 / 4" | bc`
+          zRamSizeMB=`echo "$RamSizeGB * 1024 * 3 / 4" | bc`
+       fi
     else
         zRamSizeBytes=`echo "$RamSizeGB * 1024 * 1024 * 1024 / 2" | bc`
         zRamSizeMB=`echo "$RamSizeGB * 1024 / 2" | bc`

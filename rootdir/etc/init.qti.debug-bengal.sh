@@ -81,6 +81,12 @@ enable_bengal_tracing_events()
     echo 1 > /sys/kernel/debug/tracing/events/psi/psi_event/enable
     echo 1 > /sys/kernel/debug/tracing/events/psi/psi_window_vmstat/enable
 
+    #enable preemption and irq off traces 500 ms for preemption and 100 ms for irq off
+    echo 500000000 > /proc/sys/kernel/preemptoff_tracing_threshold_ns
+    echo 1 > /sys/kernel/debug/tracing/events/sched/sched_preempt_disable/enable
+    echo 100000000 > /proc/sys/kernel/irqsoff_tracing_threshold_ns
+    echo 1 > /sys/kernel/debug/tracing/events/preemptirq/irqs_disable/enable
+
     #iommu events
     echo 1 > /sys/kernel/debug/tracing/events/iommu/map/enable
     echo 1 > /sys/kernel/debug/tracing/events/iommu/map_sg/enable

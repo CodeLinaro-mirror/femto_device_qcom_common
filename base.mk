@@ -150,6 +150,7 @@ AUDIO_HARDWARE += audio.primary.sdm845
 AUDIO_HARDWARE += audio.primary.apq8098_latv
 AUDIO_HARDWARE += audio.primary.sdm710
 AUDIO_HARDWARE += audio.primary.qcs605
+AUDIO_HARDWARE += audio.primary.msmnile.casa
 AUDIO_HARDWARE += audio.primary.msmnile
 AUDIO_HARDWARE += audio.primary.sdmshrike
 AUDIO_HARDWARE += audio.primary.$(MSMSTEPPE)

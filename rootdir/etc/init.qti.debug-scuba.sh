@@ -313,6 +313,7 @@ config_scuba_dcc_osm()
     echo 0x0F111310 > $DCC_PATH/config
     echo 0x0F111314 > $DCC_PATH/config
     echo 0x0F111318 > $DCC_PATH/config
+    echo 0x0F5219C0 > $DCC_PATH/config
 }
 
 config_scuba_dcc_gpu()

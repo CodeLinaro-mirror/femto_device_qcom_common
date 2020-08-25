@@ -145,13 +145,25 @@ config_lito_dcc_ddr()
 {
     #DDR -DCC starts here.
     #Start Link list #6
+    #DDR PHY
+    echo 0x9180740 1 > $DCC_PATH/config
+    echo 0x9181740 1 > $DCC_PATH/config
+    echo 0x9182740 1 > $DCC_PATH/config
+    echo 0x9183740 1 > $DCC_PATH/config
+    echo 0x9184740 1 > $DCC_PATH/config
+    echo 0x9185740 1 > $DCC_PATH/config
+
     #LLCC
     echo 0x9220480 1 > $DCC_PATH/config
+    echo 0x922320C 1 > $DCC_PATH/config
     echo 0x9232100 1 > $DCC_PATH/config
+    echo 0x9235030 2 > $DCC_PATH/config
     echo 0x92360b0 1 > $DCC_PATH/config
-    echo 0x9236044 4 > $DCC_PATH/config
+    echo 0x9236040 6 > $DCC_PATH/config
+    echo 0x923A004 6 > $DCC_PATH/config
     echo 0x923e030 1 > $DCC_PATH/config
     echo 0x9241000 1 > $DCC_PATH/config
+    echo 0x924202C 1 > $DCC_PATH/config
     echo 0x9248048 4 > $DCC_PATH/config
     echo 0x9248058 4 > $DCC_PATH/config
 
@@ -169,6 +181,8 @@ config_lito_dcc_ddr()
     echo 0x92604B8 > $DCC_PATH/config
     echo 0x9265804 > $DCC_PATH/config
     echo 0x9266418 > $DCC_PATH/config
+    echo 0x92A320C > $DCC_PATH/config
+    echo 0x92C202C > $DCC_PATH/config
     echo 0x92E0400 > $DCC_PATH/config
     echo 0x92e0410 > $DCC_PATH/config
     echo 0x92e0414 > $DCC_PATH/config
@@ -248,6 +262,9 @@ config_lito_dcc_ddr()
     echo 0x961e004 > $DCC_PATH/config
     echo 0x961f000 > $DCC_PATH/config
     echo 0x961f004 > $DCC_PATH/config
+    echo 0x962320C > $DCC_PATH/config
+    echo 0x963A01C > $DCC_PATH/config
+    echo 0x964202C > $DCC_PATH/config
 
     #SHRM / MCCC
     echo 0x9050008 > $DCC_PATH/config
@@ -267,11 +284,11 @@ config_lito_dcc_ddr()
     #LLCC1
     echo 0x92a0480 > $DCC_PATH/config
     echo 0x92b2100 > $DCC_PATH/config
-    echo 0x92b6044 > $DCC_PATH/config
-    echo 0x92b6048 > $DCC_PATH/config
-    echo 0x92b604c > $DCC_PATH/config
-    echo 0x92b6050 > $DCC_PATH/config
+    echo 0x92B5030 2 > $DCC_PATH/config
+    echo 0x92b6040 6 > $DCC_PATH/config
     echo 0x92b60b0 > $DCC_PATH/config
+    echo 0x92BA004 5 > $DCC_PATH/config
+    echo 0x92BA01C > $DCC_PATH/config
     echo 0x92be030 > $DCC_PATH/config
     echo 0x92c1000 > $DCC_PATH/config
     echo 0x92C8048 4 > $DCC_PATH/config
@@ -298,15 +315,20 @@ config_lito_dcc_gemnoc()
     #GemNOC for lito start
     echo 0x9680000 3 > $DCC_PATH/config
     echo 8 > $DCC_PATH/loop
-    echo 0x9681000 > $DCC_PATH/config
+    echo 0x9681000 2 > $DCC_PATH/config
     echo 1 > $DCC_PATH/loop
-    echo 0x09680078 > $DCC_PATH/config
+    echo 0x9680078 > $DCC_PATH/config
+    echo 0x9680088 2 > $DCC_PATH/config
     echo 0x9681008 12> $DCC_PATH/config
     echo 0xA6 > $DCC_PATH/loop
     echo 0x9681008 > $DCC_PATH/config
     echo 0x968100C > $DCC_PATH/config
     echo 1 > $DCC_PATH/loop
     echo 0x968103C > $DCC_PATH/config
+    echo 0x96950A0 > $DCC_PATH/config
+    echo 0x96950A8 > $DCC_PATH/config
+    echo 0x96950B0 > $DCC_PATH/config
+    echo 0x96950B0 > $DCC_PATH/config
     echo 0x9698100 > $DCC_PATH/config
     echo 0x9698104 > $DCC_PATH/config
     echo 0x9698108 > $DCC_PATH/config
@@ -319,6 +341,29 @@ config_lito_dcc_gemnoc()
     echo 0x9698134 > $DCC_PATH/config
     echo 0x9698138 > $DCC_PATH/config
     echo 0x969813c > $DCC_PATH/config
+    echo 0x96AD010 > $DCC_PATH/config
+    echo 0x96AE010 > $DCC_PATH/config
+    echo 0x96AE090 > $DCC_PATH/config
+    echo 0x96AF010 > $DCC_PATH/config
+    echo 0x96B0010 > $DCC_PATH/config
+    echo 0x96B1010 > $DCC_PATH/config
+    echo 0x96B1090 > $DCC_PATH/config
+    echo 0x96B2010 > $DCC_PATH/config
+    echo 0x96B3010 > $DCC_PATH/config
+    echo 0x96B4010 > $DCC_PATH/config
+    echo 0x96B5010 > $DCC_PATH/config
+    echo 0x96B5090 > $DCC_PATH/config
+    echo 0x96B6010 > $DCC_PATH/config
+    echo 0x96B7010 > $DCC_PATH/config
+    echo 0x96B8010 > $DCC_PATH/config
+    echo 0x96AC008 > $DCC_PATH/config
+    echo 0x96AC040 > $DCC_PATH/config
+    echo 0x96AC044 > $DCC_PATH/config
+    echo 0x96AC048 > $DCC_PATH/config
+    echo 0x96AC04C > $DCC_PATH/config
+    echo 0x96AC050 8 > $DCC_PATH/config
+    echo 0x96AC208 > $DCC_PATH/config
+    echo 0x96AC240 12 > $DCC_PATH/config
     #GemNOC for lito end
 }
 
@@ -1770,6 +1815,12 @@ config_lito_dcc_noc(){
     echo 0x0010500C 0x1 > $DCC_PATH/config_write
     echo 0x00104144 0x1 > $DCC_PATH/config_write
     echo 0x00105034 0x1 > $DCC_PATH/config_write
+
+    # AGGNOC
+    echo 0x00182008 > $DCC_PATH/config
+    echo 0x00182008 0x1 > $DCC_PATH/config_write
+    echo 0x00182008 > $DCC_PATH/config
+
     #A1NOC
     echo 0x16e0000 > $DCC_PATH/config
     echo 0x16e0004 > $DCC_PATH/config
@@ -2174,6 +2225,7 @@ config_lito_dcc_gcc(){
     echo 0x147000 > $DCC_PATH/config
     echo 0x14700c > $DCC_PATH/config
     echo 0x147014 > $DCC_PATH/config
+    echo 0x148064 > $DCC_PATH/config
     echo 0x17100c > $DCC_PATH/config
     echo 0x171010 > $DCC_PATH/config
     echo 0x171018 > $DCC_PATH/config
@@ -2911,7 +2963,7 @@ enable_lito_dcc_config()
     echo 4 > $DCC_PATH/curr_list
     echo cap > $DCC_PATH/func_type
     echo sram > $DCC_PATH/data_sink
-    config_lito_dcc_gemnoc
+#    config_lito_dcc_gemnoc
     config_lito_dcc_noc
     config_lito_dcc_cam
 

@@ -86,6 +86,15 @@ enable_scuba_tracing_events()
     echo 1 > /sys/kernel/debug/tracing/events/iommu/map_sg/enable
     echo 1 > /sys/kernel/debug/tracing/events/iommu/unmap/enable
 
+    #Preempt trace events
+    echo 'nsec' > /proc/sys/kernel/preemptoff_tracing_threshold_ns
+    echo 500000000 > /proc/sys/kernel/preemptoff_tracing_threshold_ns
+    echo 1 > /sys/kernel/debug/tracing/events/sched/sched_preempt_disable/enable
+    #irqsoff trace events
+    echo 'nsec' > /proc/sys/kernel/irqsoff_tracing_threshold_ns
+    echo 100000000 > /proc/sys/kernel/irqsoff_tracing_threshold_ns
+    echo 1 > /sys/kernel/debug/tracing/events/preemptirq/irqs_disable/enable
+
     echo 1 > /sys/kernel/debug/tracing/tracing_on
 }
 
@@ -304,6 +313,7 @@ config_scuba_dcc_osm()
     echo 0x0F111310 > $DCC_PATH/config
     echo 0x0F111314 > $DCC_PATH/config
     echo 0x0F111318 > $DCC_PATH/config
+    echo 0x0F5219C0 > $DCC_PATH/config
 }
 
 config_scuba_dcc_gpu()

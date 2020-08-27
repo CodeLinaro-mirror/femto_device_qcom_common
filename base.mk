@@ -869,7 +869,10 @@ IMS_SETTINGS := imssettings
 #IMS Extension module for Android Telephony
 IMS_EXT := ims-ext-common
 IMS_EXT += ims_ext_common.xml
+
+ifneq ($(TARGET_NO_TELEPHONY), true)
 IMS_EXT += ConfURIDialer
+endif
 
 #CRDA
 CRDA := crda
@@ -1112,8 +1115,6 @@ PRODUCT_PACKAGES_DEBUG += $(TELEPHONY_DBG)
 PRODUCT_COPY_FILES := \
     frameworks/native/data/etc/android.hardware.camera.full.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.full.xml\
     frameworks/native/data/etc/android.hardware.camera.raw.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.raw.xml\
-    frameworks/native/data/etc/android.hardware.telephony.gsm.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.gsm.xml \
-    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.cdma.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.gps.xml \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
@@ -1135,6 +1136,12 @@ ifneq (,$(filter qcs605, $(TARGET_BOARD_PLATFORM)))
         frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.flash-autofocus.xml \
         frameworks/native/data/etc/android.hardware.camera.front.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.front.xml
 endif
+# Enable telephony permissions only if the target supports telephony
+ifneq ($(TARGET_NO_TELEPHONY), true)
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.telephony.gsm.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.gsm.xml \
+    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.cdma.xml
+endif #TARGET_NO_TELEPHONY
 
 # Enable TDES support when KM4 is enabled
 ifeq ($(ENABLE_KM_4_0), true)

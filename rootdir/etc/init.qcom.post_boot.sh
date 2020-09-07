@@ -2618,9 +2618,10 @@ case "$target" in
             echo "cpufreq" > /sys/class/devfreq/soc:qcom,mincpubw/governor
 
             # Start cdsprpcd only for sdm660 and disable for sdm630
-            if [ "$soc_id" -eq "317" ]; then
+            case "$soc_id" in "317" | "324" )
                 start vendor.cdsprpcd
-            fi
+                ;;
+            esac
 
             # Start Host based Touch processing
                 case "$hw_platform" in

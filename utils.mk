@@ -91,6 +91,12 @@ define is-not-board-platform
 $(if $(call match-word,$(1),$(TARGET_BOARD_PLATFORM)),,true)
 endef
 
+# $(call is-wearable-kernel-in-list,bp)
+# returns true or empty
+define is-kernel-in-list
+$(call match-word-in-list,$(TARGET_KERNEL_VERSION),$(1))
+endef
+
 # $(call is-board-platform-in-list,bpl)
 # returns true or empty
 define is-board-platform-in-list

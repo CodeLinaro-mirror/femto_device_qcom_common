@@ -405,3 +405,6 @@ firmware_directories /vendor/firmware_mnt/image/
 #QG device
 /dev/qg               0660   system     system
 /dev/qg_battery       0660   system     system
+
+#permission for qvr
+/dev/at_usb0              0660   system     system

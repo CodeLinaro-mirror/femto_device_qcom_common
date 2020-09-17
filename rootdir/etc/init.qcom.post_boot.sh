@@ -773,9 +773,9 @@ else
             soc_id=`cat /sys/devices/system/soc/soc0/id`
         fi
         case "$soc_id" in
-            # Only for Scuba
-            "441")
-            #Set PPR nomap parameters for scuba target
+            # Only for scuba and scuba iot qcm
+            "441" | "473")
+            #Set PPR nomap parameters for scuba and scuba iot qcm targets
             echo 1 > /sys/module/process_reclaim/parameters/enable_process_reclaim
             echo 50 > /sys/module/process_reclaim/parameters/pressure_min
             echo 70 > /sys/module/process_reclaim/parameters/pressure_max
@@ -4037,7 +4037,7 @@ case "$target" in
 
         # Scuba perf/power tunings
         case "$soc_id" in
-             "441" )
+             "441" | "473" | "474" )
 
             # Quad-core device. disable core_ctl
             echo 0 > /sys/devices/system/cpu/cpu0/core_ctl/enable

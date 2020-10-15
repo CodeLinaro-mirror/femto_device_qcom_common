@@ -928,6 +928,8 @@ PRODUCT_PACKAGES += \
     make_ext4fs \
     setup_fs
 
+PRODUCT_PACKAGES += vndservicemanager
+
 # Qcril configuration file
 PRODUCT_PACKAGES += qcril.db
 

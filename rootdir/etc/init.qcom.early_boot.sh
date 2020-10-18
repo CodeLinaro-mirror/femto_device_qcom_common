@@ -372,13 +372,13 @@ case "$target" in
         ;;
     "bengal")
         case "$soc_hwid" in
-            441)
-                # 441 is for scuba
+            441|473)
+                # 441 is for scuba and 473 for scuba iot qcm
                 setprop vendor.fastrpc.disable.cdsprpcd.daemon 1
                 setprop vendor.media.target.version 2
                 setprop vendor.gralloc.disable_ubwc 1
                 setprop vendor.display.enhance_idle_time 1
-                setprop vendor.netflix.bsp_rev ""
+                setprop vendor.netflix.bsp_rev "Q4125-32106-1"
                 # 196609 is decimal for 0x30001 to report version 3.1
                 setprop vendor.opengles.version     196609
                 sku_ver=`cat /sys/devices/platform/soc/5a00000.qcom,vidc1/sku_version` 2> /dev/null
@@ -386,12 +386,12 @@ case "$target" in
                     setprop vendor.media.target.version 3
                 fi
                 ;;
-            471)
-                #scuba APQ
+            471|474)
+                # 471 is for scuba apq and 474 for scuba iot qcs
                 setprop vendor.fastrpc.disable.cdsprpcd.daemon 1
                 setprop vendor.gralloc.disable_ubwc 1
                 setprop vendor.display.enhance_idle_time 1
-                setprop vendor.netflix.bsp_rev ""
+                setprop vendor.netflix.bsp_rev "Q4125-32106-1"
                 ;;
             *)
                 # default case is for bengal

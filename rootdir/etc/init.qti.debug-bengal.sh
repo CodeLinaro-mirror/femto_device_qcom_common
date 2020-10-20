@@ -1105,6 +1105,8 @@ config_bengal_dcc_qdsp()
 config_bengal_dcc_misc()
 {
     echo 0xF017000 > $DCC_PATH/config
+    echo 0xF017004 > $DCC_PATH/config
+    echo 0xF017008 > $DCC_PATH/config
     echo 0xF01700C > $DCC_PATH/config
     echo 0xF017010 > $DCC_PATH/config
     echo 0xF017014 > $DCC_PATH/config
@@ -1120,6 +1122,9 @@ config_bengal_dcc_misc()
     #MPM_SSCAON_STATUS
     echo 0x440B00C > $DCC_PATH/config
     echo 0x440B014 > $DCC_PATH/config
+
+    #WDOG_RESET_REG
+    echo 0x4407000 6 > $DCC_PATH/config
 }
 
 config_modem_rscc()
@@ -1273,6 +1278,30 @@ config_bengal_dcc_cam()
     echo 0x5C23000 > $DCC_PATH/config
 }
 
+config_gladiator_hang()
+{
+    #APCS_COMMON_GIC_ERR_IPC
+    echo 0xF1D1438 > $DCC_PATH/config
+
+    #APCS_COMMON_GLADIATOR_FIRST_CHANNEL_HANG
+    echo 0xF1D143C > $DCC_PATH/config
+
+    #APCS_COMMON_GLADIATOR_HANG_DBG_STS_0
+    echo 0x0F1D1440 > $DCC_PATH/config
+
+    #APCS_COMMON_GLADIATOR_HANG_DBG_STS_1
+    echo 0x0F1D1444 > $DCC_PATH/config
+
+    #APCS_COMMON_CORE_HANG_DBG_STS_0
+    echo 0x0F1D1448 > $DCC_PATH/config
+
+    #APCS_COMMON_CORE_HANG_DBG_STS_1
+    echo 0x0F1D144C > $DCC_PATH/config
+
+    #APCS_COMMON_GLADIATOR_HANG_COUNTER_n
+    echo 0xF1D1404 > $DCC_PATH/config
+}
+
 # Function to send ASYNC package in TPDA
 dcc_async_package()
 {
@@ -1310,6 +1339,7 @@ enable_bengal_dcc_config()
     config_modem_rscc
     config_cdsp_rscc
     config_bengal_dcc_cam
+    config_gladiator_hang
 
     #configure sink for LL3 as atb
     echo 1 > /sys/bus/coresight/devices/coresight-tpdm-dcc/enable_source

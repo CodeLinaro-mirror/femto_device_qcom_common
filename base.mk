@@ -130,8 +130,9 @@ ANGLE := libangle
 #APPOPS_POLICY
 APPOPS_POLICY := appops_policy.xml
 
+# Disable for building to save Memory
 #ATRACE_HAL
-ATRACE_HAL := android.hardware.atrace@1.0-service
+#ATRACE_HAL := android.hardware.atrace@1.0-service
 
 AUDIO_HARDWARE := audio.primary.mpq8064
 AUDIO_HARDWARE += audio.primary.apq8084
@@ -952,7 +953,8 @@ PRODUCT_PACKAGES += $(ALSA_HARDWARE)
 PRODUCT_PACKAGES += $(ALSA_UCM)
 PRODUCT_PACKAGES += $(ANGLE)
 PRODUCT_PACKAGES += $(APPOPS_POLICY)
-PRODUCT_PACKAGES += $(ATRACE_HAL)
+# Disable for building to save Memory
+#PRODUCT_PACKAGES += $(ATRACE_HAL)
 PRODUCT_PACKAGES += $(AUDIO_HARDWARE)
 PRODUCT_PACKAGES += $(AUDIO_POLICY)
 PRODUCT_PACKAGES += $(AUDIO_WRAPPER)
@@ -1306,7 +1308,8 @@ PRODUCT_PACKAGES_DEBUG += \
 
 PRODUCT_PACKAGES += liboemaids_system
 PRODUCT_PACKAGES += liboemaids_vendor
-PRODUCT_PACKAGES += android.hardware.health@2.0-service
+# Disable for building to save Memory
+#PRODUCT_PACKAGES += android.hardware.health@2.0-service
 
 # framework detect libs
 PRODUCT_PACKAGES += libvndfwk_detect_jni.qti

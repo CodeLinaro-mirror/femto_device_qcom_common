@@ -1214,8 +1214,13 @@ ifneq ($(strip $(TARGET_BOARD_AUTO)),true)
 DEVICE_PACKAGE_OVERLAYS += device/qcom/common/device/overlay
 PRODUCT_PACKAGE_OVERLAYS += device/qcom/common/product/overlay
 else
+ifneq ($(strip $(TARGET_BOARD_AUTO_TABLET)),true)
 DEVICE_PACKAGE_OVERLAYS += device/qcom/common/automotive/device/overlay
 PRODUCT_PACKAGE_OVERLAYS += device/qcom/common/automotive/product/overlay
+else
+DEVICE_PACKAGE_OVERLAYS += device/qcom/common/automotive_tb/device/overlay
+PRODUCT_PACKAGE_OVERLAYS += device/qcom/common/automotive_tb/product/overlay
+endif
 endif
 endif
 

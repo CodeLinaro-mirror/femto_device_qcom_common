@@ -5806,6 +5806,13 @@ case "$target" in
 
         # Set Memory parameters
         configure_memory_parameters
+        # Enable PPR for msm8909
+        echo 0 > /sys/module/process_reclaim/parameters/min_score_adj
+        echo 1 > /sys/module/process_reclaim/parameters/enable_process_reclaim
+        echo 50 > /sys/module/process_reclaim/parameters/pressure_min
+        echo 70 > /sys/module/process_reclaim/parameters/pressure_max
+        echo 30 > /sys/module/process_reclaim/parameters/swap_opt_eff
+        echo 512 > /sys/module/process_reclaim/parameters/per_swap_size
         restorecon -R /sys/devices/system/cpu
 	;;
 esac

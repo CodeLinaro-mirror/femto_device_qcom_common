@@ -1052,7 +1052,7 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml \
     device/qcom/common/media/media_profiles.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles.xml \
 
-ifneq ($(TARGET_ENABLE_QC_AV_ENHANCEMENTS),true)
+ifneq (,$(filter true, $(TARGET_FWK_SUPPORTS_FULL_VALUEADDS)$(TARGET_ENABLE_QC_AV_ENHANCEMENTS)))
 PRODUCT_COPY_FILES += \
     device/qcom/common/media/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
     device/qcom/common/media/media_profiles.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml

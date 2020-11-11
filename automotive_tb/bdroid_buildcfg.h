@@ -24,7 +24,7 @@
 // Disables read remote device feature
 #define MAX_ACL_CONNECTIONS   16
 #define MAX_L2CAP_CHANNELS    16
-#define BLE_VND_INCLUDED   TRUE
+#define BLE_VND_INCLUDED   FALSE
 // skips conn update at conn completion
 #define BT_CLEAN_TURN_ON_DISABLED 1
 

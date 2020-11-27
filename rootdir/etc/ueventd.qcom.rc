@@ -235,6 +235,7 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/i2c-5                0660   media       media
 /dev/avtimer              0660   system     audio
 /dev/spidev2.0            0660   system     audio
+/dev/spidev22.0           0660   system     audio
 
 # DVB devices
 /dev/dvb/adapter0/demux*  0440   media       media
@@ -409,6 +410,8 @@ firmware_directories /vendor/firmware_mnt/image/
 /sys/class/graphics/fb0     mode                     0664    system  graphics
 /sys/class/graphics/fb0     msm_cmd_autorefresh_en   0664    system  graphics
 */
+
+/sys/devices/platform/soc/ae00000.qcom,mdss_mdp power/control 0664 system graphics
 
 #asm330 sensor
 #common sensors files

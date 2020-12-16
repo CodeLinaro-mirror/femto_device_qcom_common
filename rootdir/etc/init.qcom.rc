@@ -132,6 +132,9 @@ on boot
     chown bluetooth bluetooth /sys/devices/platform/msm_serial_hs.0/clock
     chown bluetooth bluetooth /sys/devices/platform/soc/a000000.qcom,wcnss-wlan/bt_profile
     chmod 0660 /sys/devices/platform/msm_serial_hs.0/clock
+    chown system  system /sys/class/pmic_twm/twm_enable
+    chown system  system /sys/module/qti_haptics/parameters/haptics_twm
+    chown system  system /sys/class/graphics/fb0/mdp/twm_enable
 
     chmod 0660 /dev/ttyHS2
     chown bluetooth bluetooth /dev/ttyHS2
@@ -234,6 +237,10 @@ on post-fs-data
     # Create directory used for dump collection
     mkdir /data/vendor/ssrdump 0770 root system
 
+    # Create directory used for bgdaemon
+    mkdir /data/vendor/bgdaemon 0770 root system
+    chmod 2770 /data/vendor/bgdaemon
+    rm /data/vendor/bgdaemon/last_twm_data
     # Create directory used by display clients
     mkdir /data/vendor/display 0770 system graphics
 

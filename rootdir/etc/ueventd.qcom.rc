@@ -268,6 +268,9 @@ firmware_directories /vendor/firmware_mnt/image/
 /sys/devices/virtual/optical_sensors/lightsensor    ls_poll_delay  0660    input    system
 /sys/devices/virtual/input/input*                   poll           0660    input    system
 /sys/devices/virtual/input/input*                   pollrate_ms    0660    input    system
+#bg rsb device
+/sys/devices/soc/soc:qcom,bg-rsb    enable    0660    system    system
+/sys/devices/platform/soc/soc:qcom,bg-rsb    enable    0660    system    system
 /sys/devices/soc/78b7000.i2c/i2c-3/3-0020/input/input*    secure_touch         0440   system  drmrpc
 /sys/devices/soc/78b7000.i2c/i2c-3/3-0020/input/input*    secure_touch_enable  0660   system  drmrpc
 /sys/devices/soc/78b7000.i2c/i2c-3/3-0038/input/input*    secure_touch         0440   system  drmrpc
@@ -368,6 +371,19 @@ firmware_directories /vendor/firmware_mnt/image/
 
 # NPU device
 /dev/msm_npu             0644   system     system
+
+#bg com device
+/dev/bg_com_dev           0660   system      system
+
+#bg display ctrl and data
+/dev/glink_pkt_bg_display_ctrl    0660   system        system
+/dev/glink_pkt_bg_display_data    0660   system        system
+/dev/glink_pkt_bg_daemon    0660   system        system
+/dev/glink_pkt_bg_daemon_ctrl    0660   system        system
+/dev/glink_pkt_bg_daemon_data    0660   system        system
+/dev/glink_pkt_bg_rsb_ctrl    0660   system        system
+/dev/glink_pkt_bg_sso_ctrl    0660   system        system
+/dev/glink_pkt_bg_buzzer_ctrl    0660   system        system
 
 # USB role switch
 /sys/class/dual_role_usb/*	data_role	0660	system	system

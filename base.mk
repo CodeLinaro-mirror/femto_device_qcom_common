@@ -157,6 +157,9 @@ AUDIO_HARDWARE += audio.primary.kona
 AUDIO_HARDWARE += audio.primary.lito
 AUDIO_HARDWARE += audio.primary.$(TRINKET)
 #
+
+#TODO SDM429w bring up
+ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
 AUDIO_POLICY := audio_policy.mpq8064
 AUDIO_POLICY += audio_policy.apq8084
 AUDIO_POLICY += audio_policy.msm8960
@@ -181,6 +184,8 @@ AUDIO_POLICY += audio_policy.msm8952
 AUDIO_POLICY += audio_policy.msm8937
 AUDIO_POLICY += audio_policy.msm8953
 AUDIO_POLICY += audio_policy.msmgold
+endif
+#End of SDM429w bring up
 
 #HAL Wrapper
 AUDIO_WRAPPER := libqahw
@@ -618,9 +623,11 @@ LIBQDMETADATA := libqdMetaData
 #LIBPOWER
 ifneq ($(TARGET_USES_NON_LEGACY_POWERHAL), true)
 LIBPOWER := power.qcom
+ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
 #LIBPOWER -- Add HIDL Packages
 LIBPOWER += android.hardware.power@1.0-impl
 LIBPOWER += android.hardware.power@1.0-service
+endif
 endif
 
 #LLVM for RenderScript
@@ -637,10 +644,13 @@ MEDIA_PROFILES := media_profiles.xml
 MM_AUDIO := libOmxAacDec
 MM_AUDIO += libOmxAacEnc
 MM_AUDIO += libOmxAmrEnc
-MM_AUDIO += libOmxEvrcEnc
 MM_AUDIO += libOmxMp3Dec
+
+ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+MM_AUDIO += libOmxEvrcEnc
 MM_AUDIO += libOmxQcelp13Enc
 MM_AUDIO += libOmxAc3HwDec
+endif
 
 #MM_CORE
 MM_CORE := libmm-omxcore
@@ -653,14 +663,11 @@ MM_WFD := libwfdaac_vendor
 
 #MM_VIDEO
 MM_VIDEO := ast-mm-vdec-omx-test
-MM_VIDEO += beat
 MM_VIDEO += liblasic
 MM_VIDEO += libOmxVdec
 MM_VIDEO += libOmxVdecHevc
 MM_VIDEO += libOmxVenc
 MM_VIDEO += libOmxVidEnc
-MM_VIDEO += libOmxSwVdec
-MM_VIDEO += libOmxSwVencMpeg4
 MM_VIDEO += libstagefrighthw
 MM_VIDEO += mm-vdec-omx-property-mgr
 MM_VIDEO += mm-vdec-omx-test
@@ -669,7 +676,13 @@ MM_VIDEO += mm-venc-omx-test720p
 MM_VIDEO += mm-video-driver-test
 MM_VIDEO += mm-video-encdrv-test
 MM_VIDEO += ExoplayerDemo
+
+ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+MM_VIDEO += beat
+MM_VIDEO += libOmxSwVdec
+MM_VIDEO += libOmxSwVencMpeg4
 MM_VIDEO += libaacwrapper
+endif
 
 #NQ_NFC
 NQ_NFC := NQNfcNci
@@ -736,12 +749,15 @@ RF4CE += rf4ce
 #SENSORS_HARDWARE
 SENSORS_HARDWARE := sensors.msm7630_surf
 SENSORS_HARDWARE += sensors.msm7630_fusion
+
+ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
 SENSORS_HARDWARE += sensors.msm8996_auto
 SENSORS_HARDWARE += sensors.msmnile.asm_auto
 
 #SOFTAP
 SOFTAP := libQWiFiSoftApCfg
 SOFTAP += libqsap_sdk
+endif
 
 #STK
 STK := Stk
@@ -788,7 +804,9 @@ WPA += wpa_cli
 WPA += wpa_supplicant_wcn.conf
 WPA += wpa_supplicant_ath6kl.conf
 WPA += wpa_supplicant
+ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
 WPA += hs20-osu-client
+endif
 
 #ZLIB
 ZLIB := gzip
@@ -833,7 +851,9 @@ CRDA += init.crda.sh
 #WLAN
 WLAN := prima_wlan.ko
 WLAN += pronto_wlan.ko
+ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
 WLAN += qca_cld_wlan.ko
+endif
 
 #FSTMAN
 FSTMAN := fstman
@@ -847,7 +867,7 @@ ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
 TELEPHONY_DBG := NrNetworkSettingApp
 endif
 endif
-
+ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
 PRODUCT_PACKAGES := \
     AccountAndSyncSettings \
     DeskClock \
@@ -892,22 +912,62 @@ else
             VisualizationWallpapers
 
     DELAUN := Launcher3
-endif
 
 #servicetracker HAL
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.servicetracker@1.2-impl \
     vendor.qti.hardware.servicetracker@1.2-service
 
+endif
+
+PRODUCT_PACKAGES += $(AUDIO_WRAPPER)
+PRODUCT_PACKAGES += $(AUDIO_HAL_TEST_APPS)
+PRODUCT_PACKAGES += $(CM)
+PRODUCT_PACKAGES += $(DASH)
+PRODUCT_PACKAGES += $(DELAUN)
+PRODUCT_PACKAGES += $(FM)
+PRODUCT_PACKAGES += $(HDMID)
+PRODUCT_PACKAGES += $(LIBCAMERA)
+PRODUCT_PACKAGES += $(MM_WFD)
+PRODUCT_PACKAGES += $(RCS)
+ifeq ($(strip $(TARGET_USES_NQ_NFC)),true)
+PRODUCT_PACKAGES += $(NQ_NFC)
+PRODUCT_BOOT_JARS += com.nxp.nfc.nq
+endif
+ifeq ($(strip $(BOARD_HAVE_QCOM_FM)),true)
+PRODUCT_BOOT_JARS += qcom.fmradio
+# system prop for fm
+PRODUCT_PROPERTY_OVERRIDES += \
+    vendor.hw.fm.init=0
+endif #BOARD_HAVE_QCOM_FM
+PRODUCT_PACKAGES += $(PROTOBUF)
+PRODUCT_PACKAGES += $(VR_HAL)
+PRODUCT_PACKAGES += $(IMS_EXT)
+PRODUCT_PACKAGES += $(IMS_SETTINGS)
+PRODUCT_PACKAGES += $(IPACM)
+PRODUCT_PACKAGES += $(FSTMAN)
+PRODUCT_PACKAGES += $(WIGIG)
+PRODUCT_PACKAGES += $(VT_JNI)
+PRODUCT_PACKAGES += $(VT_QTI_PERMISSIONS)
+PRODUCT_PACKAGES += move_wifi_data.sh
+PRODUCT_PACKAGES += librs_jni
+# Qcril configuration file
+PRODUCT_PACKAGES += qcril.db
+# healthd libaray expanded for mode charger
+PRODUCT_PACKAGES += libhealthd.msm
+PRODUCT_PACKAGES_DEBUG += init.qcom.debug.sh
+PRODUCT_PACKAGES_DEBUG += $(TELEPHONY_DBG)
+
+PRODUCT_PACKAGES += $(ATRACE_HAL)
+
+endif #TARGET_SUPPORTS_ANDROID_WEAR
+
 PRODUCT_PACKAGES += $(ALSA_HARDWARE)
 PRODUCT_PACKAGES += $(ALSA_UCM)
 PRODUCT_PACKAGES += $(ANGLE)
 PRODUCT_PACKAGES += $(APPOPS_POLICY)
-PRODUCT_PACKAGES += $(ATRACE_HAL)
 PRODUCT_PACKAGES += $(AUDIO_HARDWARE)
 PRODUCT_PACKAGES += $(AUDIO_POLICY)
-PRODUCT_PACKAGES += $(AUDIO_WRAPPER)
-PRODUCT_PACKAGES += $(AUDIO_HAL_TEST_APPS)
 PRODUCT_PACKAGES += $(TINY_ALSA_TEST_APPS)
 PRODUCT_PACKAGES += $(AMPLOADER)
 PRODUCT_PACKAGES += $(APPS)
@@ -916,19 +976,14 @@ PRODUCT_PACKAGES += $(BSON)
 PRODUCT_PACKAGES += $(C2DCC)
 PRODUCT_PACKAGES += $(CHROMIUM)
 PRODUCT_PACKAGES += $(CIMAX)
-PRODUCT_PACKAGES += $(CM)
-PRODUCT_PACKAGES += $(DELAUN)
-PRODUCT_PACKAGES += $(RCS)
 PRODUCT_PACKAGES += $(CONNECTIVITY)
 PRODUCT_PACKAGES += $(CHARGER)
 PRODUCT_PACKAGES += $(CURL)
-PRODUCT_PACKAGES += $(DASH)
 PRODUCT_PACKAGES += $(DATA_OS)
 PRODUCT_PACKAGES += $(E2FSPROGS)
 PRODUCT_PACKAGES += $(EBTABLES)
 PRODUCT_PACKAGES += $(EXTENDEDMEDIA_EXT)
 PRODUCT_PACKAGES += $(FASTPOWERON)
-PRODUCT_PACKAGES += $(HDMID)
 PRODUCT_PACKAGES += $(HOSTAPD)
 PRODUCT_PACKAGES += $(HIDL_WRAPPER)
 PRODUCT_PACKAGES += $(I420CC)
@@ -940,7 +995,6 @@ PRODUCT_PACKAGES += $(KEYPAD)
 PRODUCT_PACKAGES += $(KS)
 PRODUCT_PACKAGES += $(LIB_NL)
 PRODUCT_PACKAGES += $(LIB_XML2)
-PRODUCT_PACKAGES += $(LIBCAMERA)
 PRODUCT_PACKAGES += $(LIBGESTURES)
 PRODUCT_PACKAGES += $(LIBCOPYBIT)
 PRODUCT_PACKAGES += $(LIBGRALLOC)
@@ -961,14 +1015,9 @@ PRODUCT_PACKAGES += $(LOC_API)
 PRODUCT_PACKAGES += $(MEDIA_PROFILES)
 PRODUCT_PACKAGES += $(MM_AUDIO)
 PRODUCT_PACKAGES += $(MM_CORE)
-PRODUCT_PACKAGES += $(MM_WFD)
 PRODUCT_PACKAGES += $(MM_VIDEO)
-ifeq ($(strip $(TARGET_USES_NQ_NFC)),true)
-PRODUCT_PACKAGES += $(NQ_NFC)
-endif
 PRODUCT_PACKAGES += $(OPENCORE)
 PRODUCT_PACKAGES += $(PPP)
-PRODUCT_PACKAGES += $(PROTOBUF)
 PRODUCT_PACKAGES += $(PVOMX)
 PRODUCT_PACKAGES += $(QTI_TELEPHONY_UTILS)
 PRODUCT_PACKAGES += $(RF4CE)
@@ -976,39 +1025,38 @@ PRODUCT_PACKAGES += $(SENSORS_HARDWARE)
 #PRODUCT_PACKAGES += $(SOFTAP)
 PRODUCT_PACKAGES += $(STK)
 PRODUCT_PACKAGES += $(STMLOG)
-PRODUCT_PACKAGES += $(THERMAL_HAL)
 PRODUCT_PACKAGES += $(TSLIB_EXTERNAL)
-PRODUCT_PACKAGES += $(VR_HAL)
+PRODUCT_PACKAGES += $(THERMAL_HAL)
 PRODUCT_PACKAGES += $(QRGND)
 PRODUCT_PACKAGES += $(UPDATER)
 PRODUCT_PACKAGES += $(WPA)
 PRODUCT_PACKAGES += $(ZLIB)
 PRODUCT_HOST_PACKAGES += $(ZLIB_HOST)
-PRODUCT_PACKAGES += $(VT_JNI)
-PRODUCT_PACKAGES += $(VT_QTI_PERMISSIONS)
-PRODUCT_PACKAGES += $(IMS_SETTINGS)
 PRODUCT_PACKAGES += $(CRDA)
 PRODUCT_PACKAGES += $(WLAN)
-
-ifneq ($(TARGET_SUPPORTS_WEAR_ANDROID),true)
-    PRODUCT_PACKAGES += $(IPACM)
-endif
-
-PRODUCT_PACKAGES += $(FSTMAN)
 PRODUCT_PACKAGES += $(FD_LEAK)
-PRODUCT_PACKAGES += $(IMS_EXT)
 
-PRODUCT_PACKAGES += move_wifi_data.sh
-PRODUCT_PACKAGES += librs_jni
+
 PRODUCT_PACKAGES += libion
+
+# Live Wallpapers
+PRODUCT_PACKAGES += \
+        LiveWallpapers \
+        LiveWallpapersPicker \
+        VisualizationWallpapers \
+        librs_jni \
+        BasicSmsReceiver \
+        Dialer \
+        Mms \
+        TelephonyProvider \
+        Telecom \
+        TeleService \
+        MmsService
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
     make_ext4fs \
     setup_fs
-
-# Qcril configuration file
-PRODUCT_PACKAGES += qcril.db
 
 # MSM updater library
 PRODUCT_PACKAGES += librecovery_updater_msm
@@ -1019,20 +1067,16 @@ PRODUCT_PACKAGES += vcard
 # tcmiface for tcm support
 PRODUCT_PACKAGES += tcmiface
 
-# healthd libaray expanded for mode charger
-PRODUCT_PACKAGES += libhealthd.msm
-
 #intialise PRODUCT_PACKAGES_DEBUG list for debug modules
 PRODUCT_PACKAGES_DEBUG := init.qcom.testscripts.sh
 
 #Add init.qcom.test.rc to PRODUCT_PACKAGES_DEBUG list
 PRODUCT_PACKAGES_DEBUG += init.qcom.test.rc
-PRODUCT_PACKAGES_DEBUG += init.qcom.debug.sh
-
 #NANOPB_LIBRARY_NAME := libnanopb-c-2.8.0
 
-PRODUCT_PACKAGES_DEBUG += $(TELEPHONY_DBG)
 
+### START OF CLEANING PRODUCT_COPY_FILES
+ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
 PRODUCT_COPY_FILES := \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.front.xml \
@@ -1087,6 +1131,28 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.nfc.hcef.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.nfc.hcef.xml
 endif
 
+else
+
+PRODUCT_COPY_FILES := \
+    frameworks/native/data/etc/android.hardware.telephony.gsm.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.gsm.xml \
+    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.cdma.xml \
+    frameworks/native/data/etc/android.hardware.location.gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.gps.xml \
+    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
+    frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
+    frameworks/native/data/etc/android.software.sip.voip.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.sip.voip.xml \
+    frameworks/native/data/etc/android.hardware.sensor.light.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.light.xml \
+    frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.gyroscope.xml \
+    frameworks/native/data/etc/android.hardware.usb.accessory.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.accessory.xml \
+    frameworks/native/data/etc/android.hardware.bluetooth_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth_le.xml \
+
+endif
+### END OF CLEANING PRODUCT_COPY_FILES
+
+# Enable TDES support when KM4 is enabled
+ifeq ($(ENABLE_KM_4_0), true)
+    PRODUCT_PROPERTY_OVERRIDES += \
+        ro.hardware.keystore_desede=true
+endif
 ifneq ($(TARGET_NOT_SUPPORT_VULKAN),true)
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute-0.xml
@@ -1115,6 +1181,7 @@ PRODUCT_COPY_FILES += frameworks/native/data/etc/android.hardware.vulkan.version
 endif
 endif
 
+ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
 ifneq ($(strip $(TARGET_USES_RRO)),true)
 # enable overlays to use our version of
 # source/resources etc.
@@ -1125,6 +1192,10 @@ else
 DEVICE_PACKAGE_OVERLAYS += device/qcom/common/automotive/device/overlay
 PRODUCT_PACKAGE_OVERLAYS += device/qcom/common/automotive/product/overlay
 endif
+endif
+else
+DEVICE_PACKAGE_OVERLAYS += device/qcom/common/overlay-wear/device/overlay
+PRODUCT_PACKAGE_OVERLAYS += device/qcom/common/overlay-wear/product/overlay
 endif
 
 # Set up flags to determine the kernel version
@@ -1158,8 +1229,11 @@ ifneq ($(BOARD_AVB_ENABLE), true)
 endif
 
 ifeq ($(TARGET_BUILD_VARIANT),user)
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES+= \
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES+= \
     ro.adb.secure=1
+else ifeq ($(TARGET_BUILD_VARIANT),userdebug)
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES+= \
+    ro.adb.secure=0
 endif
 
 # OEM Unlock reporting

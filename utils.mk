@@ -97,6 +97,16 @@ define is-kernel-in-list
 $(call match-word-in-list,$(TARGET_KERNEL_VERSION),$(1))
 endef
 
+#is-wearable-kernel-in-list is only for wearable targets to differentiate the kernel versions
+#make sure no other targets will use this flag
+ifeq ($(TARGET_SUPPORTS_ANDROID_WEAR), true)
+# $(call is-wearable-kernel-in-list,bp)
+# returns true or empty
+define is-wearable-kernel-in-list
+$(call match-word-in-list,$(TARGET_KERNEL_VERSION),$(1))
+endef
+endif
+
 # $(call is-board-platform-in-list,bpl)
 # returns true or empty
 define is-board-platform-in-list

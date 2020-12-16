@@ -1,0 +1,5 @@
+offload
+heart_rate
+pedometer
+gravity
+amd

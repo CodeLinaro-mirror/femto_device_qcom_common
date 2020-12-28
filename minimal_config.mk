@@ -151,6 +151,9 @@ PRODUCT_PACKAGES += liboemaids_system
 PRODUCT_PACKAGES += liboemaids_vendor
 
 # Include the AOSP embedded configuration but strip display related modules out
+# Disable below modules for building to save Memory.
+# android.test.base, android.test.mock, android.test.runner, com.android.location.provider, voip-common, wifi-service
+# media, telecom, appwidget
 include build/target/product/base_system.mk
 include build/target/product/base_vendor.mk
 include build/target/product/core_64_bit.mk
@@ -163,15 +166,10 @@ _MINIMAL_STRIP_MODULES := blank_screen \
                               surfaceflinger \
                               libui \
                               surfaceflinger \
-                              appwidget \
                               BackupRestoreConfirmation \
-                              android.test.base \
-                              android.test.mock \
-                              android.test.runner \
                               audioserver \
                               app_process \
                               cameraserver \
-                              com.android.location.provider \
                               ContactsProvider \
                               DefaultContainerService \
                               DownloadProvider \
@@ -214,7 +212,6 @@ _MINIMAL_STRIP_MODULES := blank_screen \
                               libstagefright_foundation \
                               libstagefright_omx \
                               libwifi-service \
-                              media \
                               media_cmd \
                               mediadrmserver \
                               mediaextractor \
@@ -224,12 +221,10 @@ _MINIMAL_STRIP_MODULES := blank_screen \
                               PackageInstaller \
                               PermissionController \
                               SettingsProvider \
-                              telecom \
                               telephony-common \
                               voip-common \
                               WallpaperBackup \
                               wificond \
-                              wifi-service \
                               wm \
                               @inherit:build/target/product/runtime_libart.mk
 

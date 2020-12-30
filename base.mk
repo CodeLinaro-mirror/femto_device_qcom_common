@@ -66,9 +66,9 @@ endif
 #endif
 ifneq ($(strip $(TARGET_DISABLE_PERF_OPTIMIATIONS)),true)
 # Preloading QPerformance jar to ensure faster perflocks in Boost Framework
-PRODUCT_BOOT_JARS += QPerformance
+#PRODUCT_BOOT_JARS += QPerformance
 # Preloading UxPerformance jar to ensure faster UX invoke in Boost Framework
-PRODUCT_BOOT_JARS += UxPerformance
+#PRODUCT_BOOT_JARS += UxPerformance
 endif
 
 #skip boot jars check
@@ -293,7 +293,9 @@ EBTABLES += libebtc
 FASTPOWERON := FastBoot
 
 #FM
-FM := qcom.fmradio
+# Disable below modules for building to save Memory.
+# qcom.fmradio
+#FM := qcom.fmradio
 FM += libqcomfm_jni
 FM += fm_helium
 FM += ftm_fm_lib
@@ -316,10 +318,12 @@ GPS_HARDWARE += android.hardware.gnss@1.1-service-qti
 GPS_HARDWARE += android.hardware.gnss@2.0-impl-qti
 GPS_HARDWARE += android.hardware.gnss@2.0-service-qti
 
-HIDL_WRAPPER := qti-telephony-hidl-wrapper
+# Disable below modules for building to save Memory.
+# qti-telephony-hidl-wrapper, qti-telephony-utils
+#HIDL_WRAPPER := qti-telephony-hidl-wrapper
 HIDL_WRAPPER += qti_telephony_hidl_wrapper.xml
 
-QTI_TELEPHONY_UTILS := qti-telephony-utils
+#QTI_TELEPHONY_UTILS := qti-telephony-utils
 QTI_TELEPHONY_UTILS += qti_telephony_utils.xml
 
 #HDMID
@@ -865,12 +869,16 @@ RCS += rcs_service_api
 RCS += rcs_service_api.xml
 
 #IMS SETTINGS
-IMS_SETTINGS := imssettings
+# Disable below modules for building to save Memory.
+# imssettings
+#IMS_SETTINGS := imssettings
 
 #IMS Extension module for Android Telephony
-IMS_EXT := ims-ext-common
+# Disable below modules for building to save Memory.
+# ConfURIDialer, ims-ext-common
+#IMS_EXT := ims-ext-common
 IMS_EXT += ims_ext_common.xml
-IMS_EXT += ConfURIDialer
+#IMS_EXT += ConfURIDialer
 
 #CRDA
 CRDA := crda
@@ -893,6 +901,8 @@ FD_LEAK := libc_leak_detector
 
 TELEPHONY_DBG := NrNetworkSettingApp
 
+# Disable below modules for building to save Memory.
+# FM2
 PRODUCT_PACKAGES := \
     AccountAndSyncSettings \
     DeskClock \
@@ -921,7 +931,6 @@ PRODUCT_PACKAGES := \
     SoundRecorder \
     IM \
     VoiceDialer \
-    FM2 \
     SnapdragonGallery \
     SnapdragonMusic \
     VideoEditor \
@@ -1049,7 +1058,7 @@ PRODUCT_PACKAGES += $(ZLIB)
 PRODUCT_HOST_PACKAGES += $(ZLIB_HOST)
 PRODUCT_PACKAGES += $(VT_JNI)
 PRODUCT_PACKAGES += $(VT_QTI_PERMISSIONS)
-PRODUCT_PACKAGES += $(IMS_SETTINGS)
+#PRODUCT_PACKAGES += $(IMS_SETTINGS)
 PRODUCT_PACKAGES += $(CRDA)
 PRODUCT_PACKAGES += $(WLAN)
 PRODUCT_PACKAGES += $(IPACM)
@@ -1096,7 +1105,9 @@ PRODUCT_PACKAGES += librecovery_updater_msm
 PRODUCT_PACKAGES += vcard
 
 # tcmiface for tcm support
-PRODUCT_PACKAGES += tcmiface
+# Disable for building to save Memory
+# tcmiface
+#PRODUCT_PACKAGES += tcmiface
 
 # healthd libaray expanded for mode charger
 PRODUCT_PACKAGES += libhealthd.msm

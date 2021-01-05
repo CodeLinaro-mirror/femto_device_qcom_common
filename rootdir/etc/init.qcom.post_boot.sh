@@ -833,6 +833,36 @@ else
 
     enable_swap
 fi
+
+if [ "$ProductName" == "sdm429w" ]; then
+        # Disable Adaptive LMK
+        echo 1 > /sys/module/lowmemorykiller/parameters/enable_lmk
+        echo 0 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
+        echo 1 > /sys/module/process_reclaim/parameters/enable_process_reclaim
+#        disable_core_ctl
+        # Enable oom_reaper for Go devices
+        if [ -f /proc/sys/vm/reap_mem_on_sigkill ]; then
+            echo 1 > /proc/sys/vm/reap_mem_on_sigkill
+        fi
+
+        echo 16384 > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
+        echo 1 > /sys/module/lowmemorykiller/parameters/oom_reaper
+
+    # Set allocstall_threshold to 0 for all targets.
+    # Set swappiness to 100 for all targets
+    echo 0 > /sys/module/vmpressure/parameters/allocstall_threshold
+    echo 100 > /proc/sys/vm/swappiness
+
+    # Disable wsf for all targets beacause we are using efk.
+    # wsf Range : 1..1000 So set to bare minimum value 1.
+#    echo 1 > /proc/sys/vm/watermark_scale_factor
+    configure_zram_parameters
+
+    configure_read_ahead_kb_values
+
+#    enable_swap
+fi
+
 }
 
 function enable_memory_features()
@@ -2571,7 +2601,7 @@ case "$target" in
         esac
 
         case "$soc_id" in
-             "354" | "364" | "353" | "363" | "416" )
+             "354" | "364" | "353" | "363" | "416" | "437" )
 
                 # Start Host based Touch processing
                 case "$hw_platform" in

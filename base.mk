@@ -273,6 +273,26 @@ HIDL_WRAPPER += qti_telephony_hidl_wrapper.xml
 QTI_TELEPHONY_UTILS := qti-telephony-utils
 QTI_TELEPHONY_UTILS += qti_telephony_utils.xml
 
+#GPS
+GPS_HARDWARE := flp.conf
+GPS_HARDWARE += gnss_antenna_info.conf
+GPS_HARDWARE += gps.conf
+GPS_HARDWARE += libbatching
+GPS_HARDWARE += libgeofencing
+GPS_HARDWARE += libgnss
+GPS_HARDWARE += libgnsspps
+GPS_HARDWARE += libgps.utils
+GPS_HARDWARE += libloc_api_v02
+GPS_HARDWARE += libloc_core
+GPS_HARDWARE += liblocation_api
+GPS_HARDWARE += android.hardware.gnss@2.1-impl-qti
+GPS_HARDWARE += android.hardware.gnss@2.1-service-qti
+
+ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+ GPS_HARDWARE += libsynergy_loc_api
+endif
+PRODUCT_PACKAGES += $(GPS_HARDWARE)
+
 #HDMID
 HDMID := hdmid
 

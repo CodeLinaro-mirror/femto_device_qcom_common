@@ -27,7 +27,7 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 target_type=`getprop ro.hardware.type`
-early_eavb=`getprop automotive.ethavb.early_enable`
+early_eavb=`getprop persist.automotive.ethavb.early_enable`
 
 case "$target_type" in
     "automotive")

@@ -748,6 +748,13 @@ service loc_launcher /system/vendor/bin/loc_launcher
     user gps
     group gps
 
+service blpsvc /vendor/bin/blpsvc
+    class late_start
+    user gps
+    group gps wakelock inet
+    capabilities NET_BIND_SERVICE BLOCK_SUSPEND WAKE_ALARM
+    disabled
+
 service drmdiag /system/vendor/bin/drmdiagapp
     class late_start
      user root
@@ -797,6 +804,7 @@ service wifi-crda /vendor/bin/init.crda.sh
 
 on property:sys.boot_completed=1
     start qcom-post-boot
+    start blpsvc
 
 on property:ro.vendor.ril.mbn_copy_completed=1
     write /data/vendor/radio/copy_complete 1

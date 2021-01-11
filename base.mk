@@ -426,6 +426,10 @@ LIBCAMERA += libmmlib2d_interface
 LIBCAMERA += libqomx_core
 LIBCAMERA += mm-qcamera-app
 LIBCAMERA += camera_test
+ifeq ($(TARGET_SUPPORTS_WEAR_ANDROID),true)
+LIBCAMERA += camera-test-stereo
+LIBCAMERA += libqcamera
+endif
 LIBCAMERA += org.codeaurora.camera
 
 #LIBCOPYBIT

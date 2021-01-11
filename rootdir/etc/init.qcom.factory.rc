@@ -47,7 +47,7 @@ on property:vendor.sys.boot_mode=ffbm
     write ${persist.vendor.mmi.misc_dev_path} "ffbm-01"
 
 on property:vendor.sys.boot_mode=qmmi
-    write ${persist.vendor.mmi.misc_dev_path} "qmmi"
+    write ${persist.vendor.mmi.misc_dev_path} "ffbm-02"
 
 on property:vendor.sys.boot_mode=normal
     write ${persist.vendor.mmi.misc_dev_path} "normal"

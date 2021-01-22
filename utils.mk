@@ -99,7 +99,7 @@ endef
 
 #is-wearable-kernel-in-list is only for wearable targets to differentiate the kernel versions
 #make sure no other targets will use this flag
-ifeq ($(TARGET_SUPPORTS_ANDROID_WEAR), true)
+ifeq ($(TARGET_SUPPORTS_WEAR_OS), true)
 # $(call is-wearable-kernel-in-list,bp)
 # returns true or empty
 define is-wearable-kernel-in-list

@@ -153,7 +153,7 @@ PRODUCT_PACKAGES += liboemaids_vendor
 # Include the AOSP embedded configuration but strip display related modules out
 # Disable below modules for building to save Memory.
 # android.test.base, android.test.mock, android.test.runner, com.android.location.provider, voip-common, wifi-service
-# media, telecom, appwidget
+# media, telecom, appwidget, ims-common, telephony-common, voip-common
 include build/target/product/base_system.mk
 include build/target/product/base_vendor.mk
 include build/target/product/core_64_bit.mk
@@ -175,7 +175,6 @@ _MINIMAL_STRIP_MODULES := blank_screen \
                               DownloadProvider \
                               ExtServices \
                               ExtShared \
-                              ims-common \
                               libaaudio \
                               libamidi \
                               libandroid \
@@ -221,8 +220,6 @@ _MINIMAL_STRIP_MODULES := blank_screen \
                               PackageInstaller \
                               PermissionController \
                               SettingsProvider \
-                              telephony-common \
-                              voip-common \
                               WallpaperBackup \
                               wificond \
                               wm \

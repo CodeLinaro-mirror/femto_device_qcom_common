@@ -33,7 +33,7 @@
 #define AVDT_NUM_SEPS 12
 
 /* Enable A2DP(SNK) */
-#define BTA_AV_SINK_INCLUDED FALSE
+#define BTA_AV_SINK_INCLUDED TRUE
 
 /* Enable delay-report for A2DP(SNK) */
 #define A2DP_SINK_DELAY_REPORT TRUE
@@ -41,17 +41,17 @@
 /* Write 128bit UUID to EIR when a service based on RFCOMM channel is created. */
 #define BTA_EIR_SUPPORT_128BIT_UUID TRUE
 
-
-/* Default class of device
+/*
+* Change CoD for Auto car-kit
 * {SERVICE_CLASS, MAJOR_CLASS, MINOR_CLASS}
 *
-* SERVICE_CLASS:0x5A (Bit17 -Networking,Bit19 - Capturing,Bit20 -Object
-* Transfer,Bit22 -Telephony)
-* MAJOR_CLASS:0x01 - Computer
-* MINOR_CLASS:0x03 - Tablet
+* SERVICE_CLASS:0x26 (Bit17 - Networking, Bit18 - Rendering, Bit21 - Audio)
+* MAJOR_CLASS:0x04 - Audio/Video
+* MINOR_CLASS:0X08 - Hands-free Device
 *
+* Detailed information can be found in below link
+* https://www.bluetooth.com/specifications/assigned-numbers/baseband
 */
 #define BTA_DM_COD \
-  { 0x5A, 0x01, 0x03 }
-
+  { 0x26, 0x04, 0x08 }
 #endif

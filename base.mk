@@ -1264,7 +1264,7 @@ else
   $(warning **********)
 endif
 
-ifeq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+ifeq ($(TARGET_SUPPORTS_WEARABLES),true)
 PRODUCT_PROPERTY_OVERRIDES += \
         persist.vendor.qcomsysd.enabled=1
 else

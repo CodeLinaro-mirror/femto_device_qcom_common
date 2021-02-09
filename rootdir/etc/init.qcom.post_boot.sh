@@ -2610,17 +2610,20 @@ case "$target" in
                 ;;
                 esac
 
-                # Apply settings for sdm429/sda429/sdm439/sda439
-
-                for cpubw in /sys/class/devfreq/*qcom,mincpubw*
+                # Apply settings for sdm429/sda429/sdm439/sda439 in kernel 4-14
+                #Enable compute governor for gold latfloor
+                for latfloor in /sys/class/devfreq/*cpu-ddr-latfloor*
                 do
-                    echo "cpufreq" > $cpubw/governor
+                    echo "compute" > $latfloor/governor
+                    echo 10 > $latfloor/polling_interval
                 done
 
                 for cpubw in /sys/class/devfreq/*qcom,cpubw*
                 do
                     echo "bw_hwmon" > $cpubw/governor
-                    echo 20 > $cpubw/bw_hwmon/io_percent
+                    echo 68 > $cpubw/bw_hwmon/io_percent
+                    echo 20 > $devfreq_gov/bw_hwmon/hist_memory
+                    echo 80 > $devfreq_gov/bw_hwmon/down_thres
                     echo 30 > $cpubw/bw_hwmon/guard_band_mbps
                 done
 

@@ -159,7 +159,7 @@ AUDIO_HARDWARE += audio.primary.$(TRINKET)
 #
 
 #TODO SDM429w bring up
-ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 AUDIO_POLICY := audio_policy.mpq8064
 AUDIO_POLICY += audio_policy.apq8084
 AUDIO_POLICY += audio_policy.msm8960
@@ -288,7 +288,7 @@ GPS_HARDWARE += liblocation_api
 GPS_HARDWARE += android.hardware.gnss@2.1-impl-qti
 GPS_HARDWARE += android.hardware.gnss@2.1-service-qti
 
-ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
  GPS_HARDWARE += libsynergy_loc_api
 endif
 PRODUCT_PACKAGES += $(GPS_HARDWARE)
@@ -647,7 +647,7 @@ LIBQDMETADATA := libqdMetaData
 #LIBPOWER
 ifneq ($(TARGET_USES_NON_LEGACY_POWERHAL), true)
 LIBPOWER := power.qcom
-ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 #LIBPOWER -- Add HIDL Packages
 LIBPOWER += android.hardware.power@1.0-impl
 LIBPOWER += android.hardware.power@1.0-service
@@ -670,7 +670,7 @@ MM_AUDIO += libOmxAacEnc
 MM_AUDIO += libOmxAmrEnc
 MM_AUDIO += libOmxMp3Dec
 
-ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 MM_AUDIO += libOmxEvrcEnc
 MM_AUDIO += libOmxQcelp13Enc
 MM_AUDIO += libOmxAc3HwDec
@@ -701,7 +701,7 @@ MM_VIDEO += mm-video-driver-test
 MM_VIDEO += mm-video-encdrv-test
 MM_VIDEO += ExoplayerDemo
 
-ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 MM_VIDEO += beat
 MM_VIDEO += libOmxSwVdec
 MM_VIDEO += libOmxSwVencMpeg4
@@ -774,7 +774,7 @@ RF4CE += rf4ce
 SENSORS_HARDWARE := sensors.msm7630_surf
 SENSORS_HARDWARE += sensors.msm7630_fusion
 
-ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 SENSORS_HARDWARE += sensors.msm8996_auto
 SENSORS_HARDWARE += sensors.msmnile.asm_auto
 
@@ -828,7 +828,7 @@ WPA += wpa_cli
 WPA += wpa_supplicant_wcn.conf
 WPA += wpa_supplicant_ath6kl.conf
 WPA += wpa_supplicant
-ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 WPA += hs20-osu-client
 endif
 
@@ -875,7 +875,7 @@ CRDA += init.crda.sh
 #WLAN
 WLAN := prima_wlan.ko
 WLAN += pronto_wlan.ko
-ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 WLAN += qca_cld_wlan.ko
 endif
 
@@ -887,11 +887,11 @@ FSTMAN += fstman.ini
 FD_LEAK := libc_leak_detector
 
 ifneq ($(TARGET_HAS_LOW_RAM),true)
-ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 TELEPHONY_DBG := NrNetworkSettingApp
 endif
 endif
-ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 PRODUCT_PACKAGES := \
     AccountAndSyncSettings \
     DeskClock \
@@ -978,7 +978,7 @@ PRODUCT_PACKAGES_DEBUG += $(TELEPHONY_DBG)
 
 PRODUCT_PACKAGES += $(ATRACE_HAL)
 
-endif #TARGET_SUPPORTS_ANDROID_WEAR
+endif #TARGET_SUPPORTS_WEAR_OS
 
 PRODUCT_PACKAGES += $(ALSA_HARDWARE)
 PRODUCT_PACKAGES += $(ALSA_UCM)
@@ -1096,7 +1096,7 @@ PRODUCT_PACKAGES_DEBUG += init.qcom.test.rc
 
 
 ### START OF CLEANING PRODUCT_COPY_FILES
-ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 PRODUCT_COPY_FILES := \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.front.xml \
@@ -1201,7 +1201,7 @@ PRODUCT_COPY_FILES += frameworks/native/data/etc/android.hardware.vulkan.version
 endif
 endif
 
-ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 ifneq ($(strip $(TARGET_USES_RRO)),true)
 # enable overlays to use our version of
 # source/resources etc.

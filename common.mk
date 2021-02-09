@@ -5,7 +5,7 @@ $(call inherit-product, device/qcom/common/base.mk)
 # device-vendor.mk first to make sure QC specific files gets installed.
 $(call inherit-product-if-exists, $(QCPATH)/common/config/device-vendor.mk)
 
-ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 ifeq ($(TARGET_HAS_LOW_RAM),true)
     PRODUCT_PROPERTY_OVERRIDES += \
         keyguard.no_require_sim=true \

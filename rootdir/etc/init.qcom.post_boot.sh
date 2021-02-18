@@ -2610,17 +2610,20 @@ case "$target" in
                 ;;
                 esac
 
-                # Apply settings for sdm429/sda429/sdm439/sda439
-
-                for cpubw in /sys/class/devfreq/*qcom,mincpubw*
+                # Apply settings for sdm429/sda429/sdm439/sda439 in kernel 4-14
+                #Enable compute governor for gold latfloor
+                for latfloor in /sys/class/devfreq/*cpu-ddr-latfloor*
                 do
-                    echo "cpufreq" > $cpubw/governor
+                    echo "compute" > $latfloor/governor
+                    echo 10 > $latfloor/polling_interval
                 done
 
                 for cpubw in /sys/class/devfreq/*qcom,cpubw*
                 do
                     echo "bw_hwmon" > $cpubw/governor
-                    echo 20 > $cpubw/bw_hwmon/io_percent
+                    echo 68 > $cpubw/bw_hwmon/io_percent
+                    echo 20 > $devfreq_gov/bw_hwmon/hist_memory
+                    echo 80 > $devfreq_gov/bw_hwmon/down_thres
                     echo 30 > $cpubw/bw_hwmon/guard_band_mbps
                 done
 
@@ -2704,12 +2707,12 @@ case "$target" in
                      # configure schedutil governor settings
                      echo 1 > /sys/devices/system/cpu/cpu0/online
                      echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-                     echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us
-                     echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us
+                     echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/up_rate_limit_us
+                     echo 1000 > /sys/devices/system/cpu/cpufreq/schedutil/down_rate_limit_us
 
                      #set the hispeed_freq
-                     echo 1305600 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_freq
-                     echo 80 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_load
+                     echo 1305600 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_freq
+                     echo 90 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_load
                      echo 960000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
                      # sched_load_boost as -6 is equivalent to target load as 85.
                      echo -6 > /sys/devices/system/cpu/cpu0/sched_load_boost
@@ -2724,6 +2727,16 @@ case "$target" in
                  ;;
                 esac
 
+                #enable core control
+                echo 0 > /sys/devices/system/cpu/cpu0/core_ctl/enable
+                echo 0 1 1 1 > /sys/devices/system/cpu/cpu0/core_ctl/not_preferred
+                echo 1 > /sys/devices/system/cpu/cpu0/core_ctl/min_cpus
+                echo 4 > /sys/devices/system/cpu/cpu0/core_ctl/max_cpus
+                echo 73 73 60 50 > /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres
+                echo 30 > /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres
+                echo 100 > /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms
+                echo 1 > /sys/devices/system/cpu/cpu0/core_ctl/enable
+
                 # Set Memory parameters
                 configure_memory_parameters
 
@@ -2731,8 +2744,6 @@ case "$target" in
                 echo 0 > /proc/sys/kernel/sched_boost
 
                 # Disable L2-GDHS low power modes
-                echo N > /sys/module/lpm_levels/system/pwr/pwr-l2-gdhs/idle_enabled
-                echo N > /sys/module/lpm_levels/system/pwr/pwr-l2-gdhs/suspend_enabled
                 echo N > /sys/module/lpm_levels/system/perf/perf-l2-gdhs/idle_enabled
                 echo N > /sys/module/lpm_levels/system/perf/perf-l2-gdhs/suspend_enabled
 

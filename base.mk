@@ -647,11 +647,6 @@ LIBQDMETADATA := libqdMetaData
 #LIBPOWER
 ifneq ($(TARGET_USES_NON_LEGACY_POWERHAL), true)
 LIBPOWER := power.qcom
-ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
-#LIBPOWER -- Add HIDL Packages
-LIBPOWER += android.hardware.power@1.0-impl
-LIBPOWER += android.hardware.power@1.0-service
-endif
 endif
 
 #LLVM for RenderScript

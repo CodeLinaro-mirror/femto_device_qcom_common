@@ -700,9 +700,9 @@ MM_VIDEO += mm-venc-omx-test720p
 MM_VIDEO += mm-video-driver-test
 MM_VIDEO += mm-video-encdrv-test
 MM_VIDEO += ExoplayerDemo
+MM_VIDEO += beat
 
 ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
-MM_VIDEO += beat
 MM_VIDEO += libOmxSwVdec
 MM_VIDEO += libOmxSwVencMpeg4
 MM_VIDEO += libaacwrapper

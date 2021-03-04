@@ -20,7 +20,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
    <!-- Enable ACS (auto channel selection) for Wifi hotspot (SAP) -->
-   <bool translatable="false" name="config_wifi_softap_acs_supported">true</bool>
+   <bool translatable="false" name="config_wifi_softap_acs_supported">false</bool>
    <!-- Enable SAE (WPA3 personal) for Wifi hotspot (SAP) -->
    <bool translatable="false" name="config_wifi_softap_sae_supported">true</bool>
    <!-- Enable 80211ac for Wifi hotspot (SAP) -->

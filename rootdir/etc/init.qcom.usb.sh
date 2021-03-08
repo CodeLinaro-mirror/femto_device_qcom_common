@@ -268,3 +268,18 @@ if [ -d /config/usb_gadget/g1/functions/uvc.0 ]; then
 	ln -s streaming/header/h streaming/class/hs/
 	ln -s streaming/header/h streaming/class/ss/
 fi
+
+#
+# Initialize HID conifguration for XR use case on SXR1130 device.
+#
+if [ "$target" == "sdm710" -a "$soc_machine" == "SXR1130" ]; then
+	for i in 0 1 2 3 4 5; do
+		if [ -d /config/usb_gadget/g1/functions/hid.$i ]; then
+			cd /config/usb_gadget/g1/functions/hid.$i
+			echo 0 > protocol
+			echo 0 > subclass
+			echo 1024 > report_length
+			echo -ne "\x06\x$i\xB0\x09\x01\xa1\x01\x75\x08\x96\xf0\x03\x09\x02\x81\x02\x75\x08\x96\xf0\x03\x09\x03\x91\x02\xc0" > report_desc
+		fi
+	done
+fi

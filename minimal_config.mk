@@ -43,7 +43,6 @@ PRODUCT_PRIVATE_KEY := device/qcom/common/qcom.key
 INIT := init.qcom.rc
 INIT += init.qcom.sh
 INIT += init.qcom.class_core.sh
-INIT += init.class_main.sh
 INIT += init.qcom.early_boot.sh
 INIT += init.qcom.post_boot.sh
 INIT += init.target.rc

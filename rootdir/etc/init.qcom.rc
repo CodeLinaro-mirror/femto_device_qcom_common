@@ -77,6 +77,9 @@ on init
     chown root system /sys/fs/cgroup/memory/bg/tasks
     chmod 0660 /sys/fs/cgroup/memory/bg/tasks
 
+on late-fs
+    write sys/block/mmcblk0/queue/read_ahead_kb 2048
+
 on post-fs
     chmod 0755 /sys/kernel/debug/tracing
 

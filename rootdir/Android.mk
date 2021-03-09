@@ -145,8 +145,13 @@ LOCAL_MODULE_STEM  := ueventd.rc
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES    := etc/ueventd.qcom.rc
+ifeq ($(PLATFORM_VERSION),S)
+LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)
+else
 LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR)
+endif
 include $(BUILD_PREBUILT)
+
 
 include $(CLEAR_VARS)
 LOCAL_MODULE       := init.qcom.syspart_fixup.sh

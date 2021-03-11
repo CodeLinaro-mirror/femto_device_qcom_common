@@ -408,3 +408,10 @@ firmware_directories /vendor/firmware_mnt/image/
 
 #permission for qvr
 /dev/at_usb0              0660   system     system
+/dev/hidg0                0660   system     system
+/dev/hidg1                0660   system     system
+/dev/hidg2                0660   system     system
+/dev/hidg3                0660   system     system
+/dev/hidg4                0660   system     system
+/dev/hidg5                0660   system     system
+/sys/devices/platform/soc/a84000.i2c/i2c-2/2-0039 vxr7200_enable 0660 system system

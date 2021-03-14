@@ -3232,7 +3232,7 @@ case "$target" in
         fi
 
         case "$soc_id" in
-            "355" | "369" | "377" | "380" | "384" )
+            "355" | "369" | "377" | "380" | "384" | "401" )
       target_type=`getprop ro.hardware.type`
       if [ "$target_type" == "automotive" ]; then
 	# update frequencies
@@ -4373,6 +4373,13 @@ case "$target" in
                 echo "mem_latency" > $memlat/governor
                 echo 10 > $memlat/polling_interval
                 echo 400 > $memlat/mem_latency/ratio_ceil
+            done
+
+            #Enable userspace governor for L3 cdsp nodes
+            for l3cdsp in /sys/class/devfreq/*qcom,l3-cdsp*
+            do
+                echo "userspace" > $l3cdsp/governor
+                chown -h system $l3cdsp/userspace/set_freq
             done
 
             echo "cpufreq" > /sys/class/devfreq/soc:qcom,mincpubw/governor

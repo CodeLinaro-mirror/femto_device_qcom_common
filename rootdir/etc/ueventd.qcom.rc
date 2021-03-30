@@ -415,3 +415,5 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/hidg4                0660   system     system
 /dev/hidg5                0660   system     system
 /sys/devices/platform/soc/a84000.i2c/i2c-2/2-0039 vxr7200_enable 0660 system system
+/sys/bus/platform/devices/a600000.ssusb mode    0660   system     system
+/sys/class/usbpd/usbpd0 dp_hpd_status    0660   system     system

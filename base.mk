@@ -902,7 +902,6 @@ PRODUCT_PACKAGES := \
     Calculator \
     Calendar \
     Camera \
-    CellBroadcastReceiver \
     CertInstaller \
     DrmProvider \
     Email \
@@ -932,6 +931,11 @@ PRODUCT_PACKAGES := \
     wipowerservice \
     Mms \
     QtiDialer
+
+ifneq ($(TARGET_NO_TELEPHONY), true)
+PRODUCT_PACKAGES += $(STK)
+PRODUCT_PACKAGES += CellBroadcastReceiver
+endif #TARGET_NO_TELEPHONY
 
 ifneq ($(BOARD_HAVE_BLUETOOTH),false)
 PRODUCT_PACKAGES += \
@@ -1038,7 +1042,6 @@ PRODUCT_PACKAGES += $(QTI_TELEPHONY_UTILS)
 PRODUCT_PACKAGES += $(RF4CE)
 PRODUCT_PACKAGES += $(SENSORS_HARDWARE)
 #PRODUCT_PACKAGES += $(SOFTAP)
-PRODUCT_PACKAGES += $(STK)
 PRODUCT_PACKAGES += $(STMLOG)
 PRODUCT_PACKAGES += $(THERMAL_HAL)
 PRODUCT_PACKAGES += $(TSLIB_EXTERNAL)

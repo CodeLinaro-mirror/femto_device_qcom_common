@@ -34,6 +34,7 @@
 #define BLE_DELAY_REQUEST_ENC         TRUE
 #define BLE_LOCAL_PRIVACY_ENABLED     FALSE
 #define BLE_VND_INCLUDED              TRUE
+#define BLE_DYNAMIC_LATENCY_ENABLED   FALSE
 
 #define MAX_L2CAP_CHANNELS    14
 // skips conn update at conn completion

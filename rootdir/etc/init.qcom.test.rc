@@ -45,6 +45,22 @@ service cs-early-boot /vendor/bin/sh /vendor/bin/init.qcom.debug.sh
 on property:sys.boot_completed=1
     start cs-post-boot
 
+# This is for test purpose: to create veth interfaces and configure the params.
+service vendor.vethconfig /vendor/bin/init.veth_ipa_config.sh
+    user root
+    group root system
+    disabled
+    oneshot
+
+on property:sys.boot_completed=1
+    exec u:r:su:s0 root root -- /system/bin/ifconfig VETH0 up
+    exec u:r:su:s0 root root -- /system/bin/ip link add link VETH0 name VETH0_44 type vlan id 44
+    exec u:r:su:s0 root root -- /system/bin/ip link add link VETH0 name VETH0_45 type vlan id 45
+    exec u:r:su:s0 root root -- /system/bin/ip link add link VETH0 name VETH0_46 type vlan id 46
+    exec u:r:su:s0 root root -- /system/bin/ifconfig VETH0_44 up
+    exec u:r:su:s0 root root -- /system/bin/ifconfig VETH0_45 up
+    start vendor.vethconfig
+
 on property:sys.vendor.dbg.coresight.enable=1
     write /mnt/vendor/persist/coresight/enable 1
 

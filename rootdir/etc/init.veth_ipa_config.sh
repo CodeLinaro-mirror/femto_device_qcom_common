@@ -38,3 +38,6 @@ echo 25165824 > /proc/sys/net/core/optmem_max
 echo 786432 1048576 26777216 > /proc/sys/net/ipv4/tcp_mem
 echo 786432 1048576 26777216 > /proc/sys/net/ipv4/udp_mem
 echo 16384 87380 32554432 > /proc/sys/net/ipv4/tcp_rmem
+echo 03  >  /sys/class/net/VETH0_44/queues/rx-0/rps_cpus
+echo 03  >  /sys/class/net/VETH0_45/queues/rx-0/rps_cpus
+echo 03  >  /sys/class/net/VETH0_46/queues/rx-0/rps_cpus

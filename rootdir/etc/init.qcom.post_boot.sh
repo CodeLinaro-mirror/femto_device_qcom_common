@@ -2622,8 +2622,8 @@ case "$target" in
                 do
                     echo "bw_hwmon" > $cpubw/governor
                     echo 68 > $cpubw/bw_hwmon/io_percent
-                    echo 20 > $devfreq_gov/bw_hwmon/hist_memory
-                    echo 80 > $devfreq_gov/bw_hwmon/down_thres
+                    echo 20 > $cpubw/bw_hwmon/hist_memory
+                    echo 80 > $cpubw/bw_hwmon/down_thres
                     echo 30 > $cpubw/bw_hwmon/guard_band_mbps
                 done
 

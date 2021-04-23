@@ -881,6 +881,9 @@ FSTMAN += fstman.ini
 #FD_LEAK
 FD_LEAK := libc_leak_detector
 
+PRODUCT_PACKAGES := \
+    netutils-wrapper-1.0 \
+
 ifneq ($(TARGET_HAS_LOW_RAM),true)
 ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 TELEPHONY_DBG := NrNetworkSettingApp
@@ -901,7 +904,6 @@ PRODUCT_PACKAGES := \
     Gallery2 \
     LatinIME \
     Music \
-    netutils-wrapper-1.0 \
     Phone \
     Provision \
     Protips \

@@ -831,7 +831,9 @@ else
 
     configure_read_ahead_kb_values
 
-    enable_swap
+    if [ "$ProductName" != "sdm429w_law" ]; then
+       enable_swap
+    fi
 fi
 
 if [ "$ProductName" == "sdm429w" ]; then

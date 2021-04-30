@@ -913,8 +913,8 @@ PRODUCT_PACKAGES += $(IMS_EXT)
 # Temp workarround for b/36603742
 PRODUCT_PACKAGES += android.hidl.manager@1.0-java
 
-PRODUCT_PACKAGES += android.hardware.drm@1.3-service.widevine
-PRODUCT_PACKAGES += android.hardware.drm@1.3-service.clearkey
+PRODUCT_PACKAGES += android.hardware.drm@1.4-service.widevine
+PRODUCT_PACKAGES += android.hardware.drm@1.4-service.clearkey
 
 # Live Wallpapers
 PRODUCT_PACKAGES += \

@@ -967,15 +967,16 @@ PRODUCT_PACKAGES += move_wifi_data.sh
 PRODUCT_PACKAGES += librs_jni
 # Qcril configuration file
 PRODUCT_PACKAGES += qcril.db
-# healthd libaray expanded for mode charger
-PRODUCT_PACKAGES += android.hardware.health@2.1-impl-qti
-PRODUCT_PACKAGES += android.hardware.health@2.1-service
 PRODUCT_PACKAGES_DEBUG += init.qcom.debug.sh
 PRODUCT_PACKAGES_DEBUG += $(TELEPHONY_DBG)
 
 PRODUCT_PACKAGES += $(ATRACE_HAL)
 
 endif #TARGET_SUPPORTS_WEAR_OS
+
+# healthd libaray expanded for mode charger
+PRODUCT_PACKAGES += android.hardware.health@2.1-impl-qti
+PRODUCT_PACKAGES += android.hardware.health@2.1-service
 
 PRODUCT_PACKAGES += $(ALSA_HARDWARE)
 PRODUCT_PACKAGES += $(ALSA_UCM)

@@ -296,6 +296,9 @@ INIT += init.qti.ims.sh
 INIT += init.qcom.coex.sh
 INIT += init.qcom.early_boot.sh
 INIT += init.qcom.post_boot.sh
+ifeq ($(TARGET_BOARD_AUTO), true)
+INIT += sku-info.sh
+endif
 INIT += init.qcom.syspart_fixup.sh
 INIT += init.qcom.rc
 INIT += init.recovery.qcom.rc
@@ -325,6 +328,7 @@ INIT += init.qcom.sensors.sh
 INIT += init.qcom.crashdata.sh
 INIT += init.qcom.vendor.rc
 INIT += init.target.vendor.rc
+INIT += init.veth_ipa_config.sh
 ifeq ($(strip $(TARGET_BOARD_AUTO)),true)
 ifneq ($(strip $(ENABLE_HYP)),true)
 INIT += init.qti.can.sh

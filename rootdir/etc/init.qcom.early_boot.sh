@@ -337,6 +337,14 @@ case "$target" in
                 ;;
         esac
         ;;
+    "monaco")
+        case "$soc_hwid" in
+            517|486)
+                setprop vendor.gralloc.disable_ubwc 1
+                setprop vendor.display.enhance_idle_time 1
+                ;;
+        esac
+        ;;
     "bengal")
         case "$soc_hwid" in
             441)

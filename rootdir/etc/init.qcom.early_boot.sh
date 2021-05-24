@@ -1,6 +1,6 @@
 #! /vendor/bin/sh
 
-# Copyright (c) 2012-2013,2016,2018-2020 The Linux Foundation. All rights reserved.
+# Copyright (c) 2012-2013,2016,2018-2021 The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -342,6 +342,7 @@ case "$target" in
             517|486)
                 setprop vendor.gralloc.disable_ubwc 1
                 setprop vendor.display.enhance_idle_time 1
+                setprop vendor.media.target_variant "_monaco"
                 ;;
         esac
         ;;

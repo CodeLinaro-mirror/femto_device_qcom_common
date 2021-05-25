@@ -156,7 +156,8 @@ AUDIO_HARDWARE += audio.primary.$(MSMSTEPPE)
 AUDIO_HARDWARE += audio.primary.kona
 AUDIO_HARDWARE += audio.primary.lito
 AUDIO_HARDWARE += audio.primary.$(TRINKET)
-#
+
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 AUDIO_POLICY := audio_policy.mpq8064
 AUDIO_POLICY += audio_policy.apq8084
 AUDIO_POLICY += audio_policy.msm8960
@@ -181,6 +182,7 @@ AUDIO_POLICY += audio_policy.msm8952
 AUDIO_POLICY += audio_policy.msm8937
 AUDIO_POLICY += audio_policy.msm8953
 AUDIO_POLICY += audio_policy.msmgold
+endif
 
 #HAL Wrapper
 AUDIO_WRAPPER := libqahw
@@ -635,8 +637,12 @@ MM_AUDIO += libOmxAacEnc
 MM_AUDIO += libOmxAmrEnc
 MM_AUDIO += libOmxEvrcEnc
 MM_AUDIO += libOmxMp3Dec
+
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
+MM_AUDIO += libOmxEvrcEnc
 MM_AUDIO += libOmxQcelp13Enc
 MM_AUDIO += libOmxAc3HwDec
+endif
 
 #MM_CORE
 MM_CORE := libmm-omxcore
@@ -732,12 +738,15 @@ RF4CE += rf4ce
 #SENSORS_HARDWARE
 SENSORS_HARDWARE := sensors.msm7630_surf
 SENSORS_HARDWARE += sensors.msm7630_fusion
+
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 SENSORS_HARDWARE += sensors.msm8996_auto
 SENSORS_HARDWARE += sensors.msmnile.asm_auto
 
 #SOFTAP
 SOFTAP := libQWiFiSoftApCfg
 SOFTAP += libqsap_sdk
+endif
 
 #STK
 STK := Stk
@@ -784,7 +793,9 @@ WPA += wpa_cli
 WPA += wpa_supplicant_wcn.conf
 WPA += wpa_supplicant_ath6kl.conf
 WPA += wpa_supplicant
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 WPA += hs20-osu-client
+endif
 
 #ZLIB
 ZLIB := gzip
@@ -843,7 +854,7 @@ ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
 TELEPHONY_DBG := NrNetworkSettingApp
 endif
 endif
-
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 PRODUCT_PACKAGES := \
     AccountAndSyncSettings \
     DeskClock \
@@ -890,6 +901,7 @@ else
     DELAUN := Launcher3
 endif
 
+endif #TARGET_SUPPORTS_WEAR_OS
 PRODUCT_PACKAGES += $(ALSA_HARDWARE)
 PRODUCT_PACKAGES += $(ALSA_UCM)
 PRODUCT_PACKAGES += $(ANGLE)
@@ -1214,6 +1226,8 @@ PRODUCT_PACKAGES += libqti_vndfwk_detect
 PRODUCT_PACKAGES += libvndfwk_detect_jni.qti.vendor
 PRODUCT_PACKAGES += libqti_vndfwk_detect.vendor
 
+# vndservicemanager
+PRODUCT_PACKAGES += vndservicemanager
 #soong namespace for qssi vs vendor differentiation
 SOONG_CONFIG_NAMESPACES += qssi_vs_vendor
 SOONG_CONFIG_qssi_vs_vendor += qssi_or_vendor

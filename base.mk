@@ -822,10 +822,12 @@ ifeq ($(TARGET_FWK_SUPPORTS_FULL_VALUEADDS), true)
 IMS_SETTINGS := imssettings
 endif
 
+ifneq ($(strip $(TARGET_NO_TELEPHONY)),true)
 #IMS Extension module for Android Telephony
 IMS_EXT := ims-ext-common
 IMS_EXT += ims_ext_common.xml
 IMS_EXT += ConfURIDialer
+endif
 
 #CRDA
 CRDA := crda

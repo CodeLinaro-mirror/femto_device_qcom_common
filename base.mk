@@ -671,7 +671,9 @@ MM_VIDEO += mm-venc-omx-test720p
 MM_VIDEO += mm-video-driver-test
 MM_VIDEO += mm-video-encdrv-test
 MM_VIDEO += ExoplayerDemo
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 MM_VIDEO += libaacwrapper
+endif
 
 #NQ_NFC
 NQ_NFC := NQNfcNci
@@ -850,7 +852,7 @@ FSTMAN += fstman.ini
 FD_LEAK := libc_leak_detector
 
 ifneq ($(TARGET_HAS_LOW_RAM),true)
-ifneq ($(TARGET_SUPPORTS_ANDROID_WEAR),true)
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 TELEPHONY_DBG := NrNetworkSettingApp
 endif
 endif
@@ -901,16 +903,44 @@ else
     DELAUN := Launcher3
 endif
 
+PRODUCT_PACKAGES += $(AUDIO_WRAPPER)
+PRODUCT_PACKAGES += $(AUDIO_HAL_TEST_APPS)
+PRODUCT_PACKAGES += $(CM)
+PRODUCT_PACKAGES += $(DASH)
+PRODUCT_PACKAGES += $(DELAUN)
+PRODUCT_PACKAGES += $(HDMID)
+PRODUCT_PACKAGES += $(LIBCAMERA)
+PRODUCT_PACKAGES += $(MM_WFD)
+PRODUCT_PACKAGES += $(RCS)
+ifeq ($(strip $(TARGET_USES_NQ_NFC)),true)
+PRODUCT_PACKAGES += $(NQ_NFC)
+endif
+PRODUCT_PACKAGES += $(PROTOBUF)
+PRODUCT_PACKAGES += $(VR_HAL)
+PRODUCT_PACKAGES += $(IMS_EXT)
+PRODUCT_PACKAGES += $(IMS_SETTINGS)
+ifneq ($(TARGET_SUPPORTS_WEAR_ANDROID),true)
+PRODUCT_PACKAGES += $(IPACM)
+endif
+PRODUCT_PACKAGES += $(FSTMAN)
+
+PRODUCT_PACKAGES += $(VT_JNI)
+PRODUCT_PACKAGES += $(VT_QTI_PERMISSIONS)
+PRODUCT_PACKAGES += move_wifi_data.sh
+PRODUCT_PACKAGES += librs_jni
+# Qcril configuration file
+PRODUCT_PACKAGES += qcril.db
+
+PRODUCT_PACKAGES_DEBUG += init.qcom.debug.sh
+PRODUCT_PACKAGES_DEBUG += $(TELEPHONY_DBG)
+PRODUCT_PACKAGES += $(ATRACE_HAL)
 endif #TARGET_SUPPORTS_WEAR_OS
 PRODUCT_PACKAGES += $(ALSA_HARDWARE)
 PRODUCT_PACKAGES += $(ALSA_UCM)
 PRODUCT_PACKAGES += $(ANGLE)
 PRODUCT_PACKAGES += $(APPOPS_POLICY)
-PRODUCT_PACKAGES += $(ATRACE_HAL)
 PRODUCT_PACKAGES += $(AUDIO_HARDWARE)
 PRODUCT_PACKAGES += $(AUDIO_POLICY)
-PRODUCT_PACKAGES += $(AUDIO_WRAPPER)
-PRODUCT_PACKAGES += $(AUDIO_HAL_TEST_APPS)
 PRODUCT_PACKAGES += $(TINY_ALSA_TEST_APPS)
 PRODUCT_PACKAGES += $(AMPLOADER)
 PRODUCT_PACKAGES += $(APPS)
@@ -919,19 +949,14 @@ PRODUCT_PACKAGES += $(BSON)
 PRODUCT_PACKAGES += $(C2DCC)
 PRODUCT_PACKAGES += $(CHROMIUM)
 PRODUCT_PACKAGES += $(CIMAX)
-PRODUCT_PACKAGES += $(CM)
-PRODUCT_PACKAGES += $(DELAUN)
-PRODUCT_PACKAGES += $(RCS)
 PRODUCT_PACKAGES += $(CONNECTIVITY)
 PRODUCT_PACKAGES += $(CHARGER)
 PRODUCT_PACKAGES += $(CURL)
-PRODUCT_PACKAGES += $(DASH)
 PRODUCT_PACKAGES += $(DATA_OS)
 PRODUCT_PACKAGES += $(E2FSPROGS)
 PRODUCT_PACKAGES += $(EBTABLES)
 PRODUCT_PACKAGES += $(EXTENDEDMEDIA_EXT)
 PRODUCT_PACKAGES += $(FASTPOWERON)
-PRODUCT_PACKAGES += $(HDMID)
 PRODUCT_PACKAGES += $(HOSTAPD)
 PRODUCT_PACKAGES += $(HIDL_WRAPPER)
 PRODUCT_PACKAGES += $(I420CC)
@@ -943,7 +968,6 @@ PRODUCT_PACKAGES += $(KEYPAD)
 PRODUCT_PACKAGES += $(KS)
 PRODUCT_PACKAGES += $(LIB_NL)
 PRODUCT_PACKAGES += $(LIB_XML2)
-PRODUCT_PACKAGES += $(LIBCAMERA)
 PRODUCT_PACKAGES += $(LIBGESTURES)
 PRODUCT_PACKAGES += $(LIBCOPYBIT)
 PRODUCT_PACKAGES += $(LIBGRALLOC)
@@ -964,14 +988,9 @@ PRODUCT_PACKAGES += $(LOC_API)
 PRODUCT_PACKAGES += $(MEDIA_PROFILES)
 PRODUCT_PACKAGES += $(MM_AUDIO)
 PRODUCT_PACKAGES += $(MM_CORE)
-PRODUCT_PACKAGES += $(MM_WFD)
 PRODUCT_PACKAGES += $(MM_VIDEO)
-ifeq ($(strip $(TARGET_USES_NQ_NFC)),true)
-PRODUCT_PACKAGES += $(NQ_NFC)
-endif
 PRODUCT_PACKAGES += $(OPENCORE)
 PRODUCT_PACKAGES += $(PPP)
-PRODUCT_PACKAGES += $(PROTOBUF)
 PRODUCT_PACKAGES += $(PVOMX)
 PRODUCT_PACKAGES += $(QTI_TELEPHONY_UTILS)
 PRODUCT_PACKAGES += $(RF4CE)
@@ -981,24 +1000,17 @@ PRODUCT_PACKAGES += $(STK)
 PRODUCT_PACKAGES += $(STMLOG)
 PRODUCT_PACKAGES += $(THERMAL_HAL)
 PRODUCT_PACKAGES += $(TSLIB_EXTERNAL)
-PRODUCT_PACKAGES += $(VR_HAL)
 PRODUCT_PACKAGES += $(QRGND)
 PRODUCT_PACKAGES += $(UPDATER)
 PRODUCT_PACKAGES += $(WPA)
 PRODUCT_PACKAGES += $(ZLIB)
 PRODUCT_HOST_PACKAGES += $(ZLIB_HOST)
-PRODUCT_PACKAGES += $(VT_JNI)
-PRODUCT_PACKAGES += $(VT_QTI_PERMISSIONS)
-PRODUCT_PACKAGES += $(IMS_SETTINGS)
 PRODUCT_PACKAGES += $(CRDA)
 PRODUCT_PACKAGES += $(WLAN)
-PRODUCT_PACKAGES += $(IPACM)
-PRODUCT_PACKAGES += $(FSTMAN)
 PRODUCT_PACKAGES += $(FD_LEAK)
-PRODUCT_PACKAGES += $(IMS_EXT)
 
-PRODUCT_PACKAGES += move_wifi_data.sh
-PRODUCT_PACKAGES += librs_jni
+
+
 PRODUCT_PACKAGES += libion
 
 # Filesystem management tools
@@ -1006,8 +1018,6 @@ PRODUCT_PACKAGES += \
     make_ext4fs \
     setup_fs
 
-# Qcril configuration file
-PRODUCT_PACKAGES += qcril.db
 
 # MSM updater library
 PRODUCT_PACKAGES += librecovery_updater_msm
@@ -1026,12 +1036,12 @@ PRODUCT_PACKAGES_DEBUG := init.qcom.testscripts.sh
 
 #Add init.qcom.test.rc to PRODUCT_PACKAGES_DEBUG list
 PRODUCT_PACKAGES_DEBUG += init.qcom.test.rc
-PRODUCT_PACKAGES_DEBUG += init.qcom.debug.sh
 
 #NANOPB_LIBRARY_NAME := libnanopb-c-2.8.0
 
-PRODUCT_PACKAGES_DEBUG += $(TELEPHONY_DBG)
 
+### START OF CLEANING PRODUCT_COPY_FILES
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 PRODUCT_COPY_FILES := \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.front.xml \
@@ -1083,6 +1093,8 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.nfc.hcef.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.nfc.hcef.xml
 endif
 
+endif
+### END OF CLEANING PRODUCT_COPY_FILES
 ifneq ($(TARGET_NOT_SUPPORT_VULKAN),true)
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute-0.xml
@@ -1111,6 +1123,7 @@ PRODUCT_COPY_FILES += frameworks/native/data/etc/android.hardware.vulkan.version
 endif
 endif
 
+ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 ifneq ($(strip $(TARGET_USES_RRO)),true)
 # enable overlays to use our version of
 # source/resources etc.
@@ -1120,6 +1133,7 @@ PRODUCT_PACKAGE_OVERLAYS += device/qcom/common/product/overlay
 else
 DEVICE_PACKAGE_OVERLAYS += device/qcom/common/automotive/device/overlay
 PRODUCT_PACKAGE_OVERLAYS += device/qcom/common/automotive/product/overlay
+endif
 endif
 endif
 
@@ -1156,6 +1170,9 @@ endif
 ifeq ($(TARGET_BUILD_VARIANT),user)
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES+= \
     ro.adb.secure=1
+else ifeq ($(TARGET_BUILD_VARIANT),userdebug)
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES+= \
+    ro.adb.secure=0
 endif
 
 # OEM Unlock reporting

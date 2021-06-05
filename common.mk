@@ -20,6 +20,10 @@ else
 endif
 endif
 
+ifeq ($(TARGET_SUPPORTS_WEAR_OS),true)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/telephony_system.mk)
+endif
+
 PRODUCT_BRAND := qcom
 PRODUCT_AAPT_CONFIG += hdpi mdpi
 

@@ -52,6 +52,13 @@ service vendor.vethconfig /vendor/bin/init.veth_ipa_config.sh
     disabled
     oneshot
 
+service qti-testscripts /system/bin/sh /product/etc/init.qcom.testscripts.sh
+    class late_start
+    user root
+    disabled
+    oneshot
+    seclabel u:r:qti-testscripts:s0
+
 on property:sys.boot_completed=1
     exec u:r:su:s0 root root -- /system/bin/ifconfig VETH0 up
     exec u:r:su:s0 root root -- /system/bin/ip link add link VETH0 name VETH0_44 type vlan id 44
@@ -60,6 +67,7 @@ on property:sys.boot_completed=1
     exec u:r:su:s0 root root -- /system/bin/ifconfig VETH0_44 up
     exec u:r:su:s0 root root -- /system/bin/ifconfig VETH0_45 up
     start vendor.vethconfig
+    start qti-testscripts
 
 on property:sys.vendor.dbg.coresight.enable=1
     write /mnt/vendor/persist/coresight/enable 1

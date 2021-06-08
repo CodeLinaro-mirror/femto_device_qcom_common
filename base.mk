@@ -1132,6 +1132,9 @@ DEVICE_PACKAGE_OVERLAYS += device/qcom/common/automotive/device/overlay
 PRODUCT_PACKAGE_OVERLAYS += device/qcom/common/automotive/product/overlay
 endif
 endif
+else
+DEVICE_PACKAGE_OVERLAYS += device/qcom/common/overlay-wear/device/overlay
+PRODUCT_PACKAGE_OVERLAYS += device/qcom/common/overlay-wear/product/overlay
 endif
 
 # Set up flags to determine the kernel version

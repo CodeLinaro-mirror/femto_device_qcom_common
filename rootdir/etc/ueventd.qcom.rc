@@ -245,6 +245,8 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/msm_rtac             0660   system     audio
 /dev/msm_voicememo        0660   system     audio
 /dev/aud_pasthru_adsp     0660   system     audio
+/dev/gpr_channel          0660   system     audio
+/dev/nongpr_channel       0660   system     audio
 /dev/msm_audio_ion        0660   system     audio
 /dev/ttyHSL1              0660   system     system
 /dev/ttyHS1               0660   system     system

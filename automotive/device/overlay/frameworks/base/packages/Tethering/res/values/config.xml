@@ -26,6 +26,7 @@
         <item>"wlan\\d"</item>
         <item>"softap\\d"</item>
         <item>"wifi_br\\d"</item>
+        <item>"swlan\\d"</item>
     </string-array>
 
 </resources>

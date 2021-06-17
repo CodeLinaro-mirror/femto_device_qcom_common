@@ -658,8 +658,6 @@ MM_VIDEO += libOmxVdec
 MM_VIDEO += libOmxVdecHevc
 MM_VIDEO += libOmxVenc
 MM_VIDEO += libOmxVidEnc
-MM_VIDEO += libOmxSwVdec
-MM_VIDEO += libOmxSwVencMpeg4
 MM_VIDEO += libstagefrighthw
 MM_VIDEO += mm-vdec-omx-property-mgr
 MM_VIDEO += mm-vdec-omx-test
@@ -669,6 +667,8 @@ MM_VIDEO += mm-video-driver-test
 MM_VIDEO += mm-video-encdrv-test
 MM_VIDEO += ExoplayerDemo
 ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
+MM_VIDEO += libOmxSwVdec
+MM_VIDEO += libOmxSwVencMpeg4
 MM_VIDEO += libaacwrapper
 endif
 

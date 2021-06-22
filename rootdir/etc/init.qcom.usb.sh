@@ -227,13 +227,14 @@ if [ -d /config/usb_gadget/g1/functions/uvc.0 ]; then
 		ln -s control/header/h control/class/ss
 
 		mkdir -p streaming/uncompressed/u/720p
-		echo 640 > streaming/uncompressed/u/720p/wWidth
+		echo 1280 > streaming/uncompressed/u/720p/wWidth
 		echo 401 > streaming/uncompressed/u/720p/wHeight
 		echo 29491200 > streaming/uncompressed/u/720p/dwMinBitRate
 		echo 29491200 > streaming/uncompressed/u/720p/dwMaxBitRate
-		echo 513280 > streaming/uncompressed/u/720p/dwMaxVideoFrameBufferSize
+		echo 1026560 > streaming/uncompressed/u/720p/dwMaxVideoFrameBufferSize
 		echo 5000000 > streaming/uncompressed/u/720p/dwDefaultFrameInterval
 		echo "5000000\n" > streaming/uncompressed/u/720p/dwFrameInterval
+		echo -ne "\x59\x38\x20\x20\x00\x00\x10\x00\x80\x00\x00\xaa\x00\x38\x9b\x71" > streaming/uncompressed/u/guidFormat
 
 		mkdir streaming/header/h
 		ln -s streaming/uncompressed/u streaming/header/h

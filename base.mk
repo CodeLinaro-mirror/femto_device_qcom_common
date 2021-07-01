@@ -306,7 +306,9 @@ INIT += init.recovery.qcom.rc
 INIT += init.qcom.factory.rc
 INIT += init.qcom.sdio.sh
 INIT += init.qcom.sh
+ifneq ($(strip $(TARGET_BOARD_AUTO)),true)
 INIT += init.qcom.class_core.sh
+endif
 INIT += init.class_main.sh
 INIT += init.qcom.wifi.sh
 INIT += vold.fstab

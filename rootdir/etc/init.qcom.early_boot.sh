@@ -339,6 +339,7 @@ case "$target" in
         ;;
     "monaco")
         setprop vendor.media.target_variant "_monaco"
+        setprop vendor.display.disable_layer_stitch 1
         case "$soc_hwid" in
             517|486)
                 setprop vendor.gralloc.disable_ubwc 1

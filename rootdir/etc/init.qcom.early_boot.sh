@@ -492,6 +492,16 @@ case "$product" in
         *)
         ;;
 esac
+#Adding  for gvmq
+case "$product" in
+        "msmnile_gvmq")
+        su
+        mkdir /dev/input
+        chmod -R 777 /dev/input
+        mknod /dev/input/event8 c 13 71
+        chmod -R 777 /dev/input/event8
+     ;;
+esac
 # Setup display nodes & permissions
 # HDMI can be fb1 or fb2
 # Loop through the sysfs nodes and determine

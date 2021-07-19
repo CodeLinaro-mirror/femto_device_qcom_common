@@ -486,6 +486,9 @@ on property:vendor.media.target_variant=*
     setprop ro.media.xml_variant.codecs ${vendor.media.target_variant}
     setprop ro.media.xml_variant.codecs_performance ${vendor.media.target_variant}
 
+on property:vendor.mm.target.enable.qcom_parser=*
+    setprop vendor.mm.enable.qcom_parser ${vendor.mm.target.enable.qcom_parser}
+
 service qcom-c_core-sh  /vendor/bin/init.qcom.class_core.sh
     class core
     user root

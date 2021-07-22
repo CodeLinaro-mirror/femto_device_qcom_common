@@ -338,11 +338,12 @@ case "$target" in
         esac
         ;;
     "monaco")
+        setprop vendor.media.target_variant "_monaco"
+        setprop vendor.display.disable_layer_stitch 1
         case "$soc_hwid" in
             517|486)
                 setprop vendor.gralloc.disable_ubwc 1
                 setprop vendor.display.enhance_idle_time 1
-                setprop vendor.media.target_variant "_monaco"
                 ;;
         esac
         ;;

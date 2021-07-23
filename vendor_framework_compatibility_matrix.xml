@@ -58,6 +58,16 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
              <instance>default</instance>
         </interface>
     </hal>
+    <!-- DisplayOffload hal -->
+    <hal format="hidl" optional="true">
+        <name>vendor.google_clockwork.displayoffload</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IDisplayOffload</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
     <!-- SidekickGraphics hal -->
     <hal format="hidl" optional="true">
         <name>vendor.google_clockwork.sidekickgraphics</name>

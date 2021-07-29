@@ -851,6 +851,12 @@ FSTMAN += fstman.ini
 #FD_LEAK
 FD_LEAK := libc_leak_detector
 
+
+ifeq ($(TARGET_SUPPORTS_WEAR_OS),true)
+PRODUCT_PACKAGES += \
+    netutils-wrapper-1.0
+endif
+
 ifneq ($(TARGET_HAS_LOW_RAM),true)
 ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 TELEPHONY_DBG := NrNetworkSettingApp

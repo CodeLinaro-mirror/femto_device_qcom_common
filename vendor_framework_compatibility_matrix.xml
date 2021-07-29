@@ -88,6 +88,16 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <instance>default</instance>
         </interface>
     </hal>
+    <!-- AONUtility hal -->
+    <hal format="hidl" optional="true">
+        <name>vendor.qti.hardware.aonutility</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+            <interface>
+            <name>IAONUtility</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
     <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.buzzer</name>
         <transport>hwbinder</transport>

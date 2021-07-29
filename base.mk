@@ -1278,3 +1278,14 @@ PRODUCT_PACKAGES += vndservicemanager
 SOONG_CONFIG_NAMESPACES += qssi_vs_vendor
 SOONG_CONFIG_qssi_vs_vendor += qssi_or_vendor
 SOONG_CONFIG_qssi_vs_vendor_qssi_or_vendor := vendor
+
+SOONG_CONFIG_NAMESPACES += bredr_vs_btadva
+SOONG_CONFIG_bredr_vs_btadva += bredr_or_btadva
+
+ifneq "$(wildcard vendor/qcom/proprietary/commonsys/bt/bt_adv_audio)" ""
+    $(warning bt_adv_audio dir is present)
+    SOONG_CONFIG_bredr_vs_btadva_bredr_or_btadva := btadva
+else
+    $(warning bt_adv_audio dir is not present)
+    SOONG_CONFIG_bredr_vs_btadva_bredr_or_btadva := bredr
+endif #ifneq "$(wildcard vendor/qcom/proprietary/commonsys/bt/bt_adv_audio)" ""

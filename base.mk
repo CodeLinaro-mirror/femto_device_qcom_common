@@ -36,6 +36,7 @@ QCOM_BOARD_PLATFORMS += msmnile
 QCOM_BOARD_PLATFORMS += sdmshrike
 QCOM_BOARD_PLATFORMS += sdm710
 QCOM_BOARD_PLATFORMS += msmnile_au
+QCOM_BOARD_PLATFORMS += msmnile_tb
 QCOM_BOARD_PLATFORMS += qcs605
 QCOM_BOARD_PLATFORMS += $(MSMSTEPPE)
 QCOM_BOARD_PLATFORMS += kona
@@ -296,6 +297,9 @@ INIT += init.qti.ims.sh
 INIT += init.qcom.coex.sh
 INIT += init.qcom.early_boot.sh
 INIT += init.qcom.post_boot.sh
+ifeq ($(TARGET_BOARD_AUTO), true)
+INIT += sku-info.sh
+endif
 INIT += init.qcom.syspart_fixup.sh
 INIT += init.qcom.rc
 INIT += init.recovery.qcom.rc
@@ -325,6 +329,7 @@ INIT += init.qcom.sensors.sh
 INIT += init.qcom.crashdata.sh
 INIT += init.qcom.vendor.rc
 INIT += init.target.vendor.rc
+INIT += init.veth_ipa_config.sh
 ifeq ($(strip $(TARGET_BOARD_AUTO)),true)
 ifneq ($(strip $(ENABLE_HYP)),true)
 INIT += init.qti.can.sh
@@ -335,12 +340,6 @@ endif
 IPROUTE2 := ip
 IPROUTE2 += libiprouteutil
 
-#IPACM
-ifneq ($(TARGET_HAS_LOW_RAM),true)
-IPACM += ipacm
-IPACM += IPACM_cfg.xml
-IPACM += ipacm-diag
-endif
 
 #IPTABLES
 IPTABLES := libiptc
@@ -993,7 +992,6 @@ PRODUCT_PACKAGES += $(VT_QTI_PERMISSIONS)
 PRODUCT_PACKAGES += $(IMS_SETTINGS)
 PRODUCT_PACKAGES += $(CRDA)
 PRODUCT_PACKAGES += $(WLAN)
-PRODUCT_PACKAGES += $(IPACM)
 PRODUCT_PACKAGES += $(FSTMAN)
 PRODUCT_PACKAGES += $(FD_LEAK)
 PRODUCT_PACKAGES += $(IMS_EXT)
@@ -1220,7 +1218,8 @@ PRODUCT_PACKAGES_DEBUG += \
     init.qti.debug-trinket.sh \
     init.qti.debug-atoll.sh \
     init.qti.debug-lagoon.sh \
-    init.qti.debug-bengal.sh
+    init.qti.debug-bengal.sh \
+    init.qti.debug-khaje.sh
 
 PRODUCT_PACKAGES += liboemaids_system
 PRODUCT_PACKAGES += liboemaids_vendor

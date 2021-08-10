@@ -19,7 +19,6 @@ PRODUCT_MANUFACTURER := QUALCOMM
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=libqti-perfd-client.so \
-    persist.backup.ntpServer=0.pool.ntp.org \
     sys.vendor.shutdown.waittime=500
 
 

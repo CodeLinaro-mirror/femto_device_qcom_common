@@ -7,6 +7,7 @@ $(call inherit-product-if-exists, $(QCPATH)/common/config/device-vendor.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 ifeq ($(TARGET_BOARD_AUTO), true)
   $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
+  $(call inherit-product, frameworks/base/data/fonts/fonts.mk)
 else
   $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 endif

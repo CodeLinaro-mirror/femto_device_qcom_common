@@ -765,6 +765,12 @@ endif
 endif
 
 PRODUCT_PACKAGES := \
+    Gallery2 \
+    Music \
+    netutils-wrapper-1.0
+
+ifneq ($(strip $(TARGET_BOARD_AUTO)),true)
+PRODUCT_PACKAGES := \
     AccountAndSyncSettings \
     DeskClock \
     AlarmProvider \
@@ -775,10 +781,7 @@ PRODUCT_PACKAGES := \
     CertInstaller \
     DrmProvider \
     Email \
-    Gallery2 \
     LatinIME \
-    Music \
-    netutils-wrapper-1.0 \
     Phone \
     Provision \
     Protips \
@@ -813,6 +816,7 @@ else
     PRODUCT_PACKAGES += \
             vendor.qti.hardware.servicetracker@1.2-impl \
             vendor.qti.hardware.servicetracker@1.2-service
+endif
 endif
 
 PRODUCT_PACKAGES += $(ALSA_HARDWARE)

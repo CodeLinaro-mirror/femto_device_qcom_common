@@ -901,7 +901,10 @@ else
 
     DELAUN := Launcher3
 endif
-endif
+
+else
+PRODUCT_PACKAGES += Telecom
+endif #TARGET_BOARD_AUTO
 
 #servicetracker HAL
 ifneq ($(TARGET_BOARD_AUTO),true)

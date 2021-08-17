@@ -5,11 +5,19 @@ $(call inherit-product, device/qcom/common/base.mk)
 # device-vendor.mk first to make sure QC specific files gets installed.
 $(call inherit-product-if-exists, $(QCPATH)/common/config/device-vendor.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-ifeq ($(TARGET_BOARD_AUTO), true)
-  $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
-  $(call inherit-product, frameworks/base/data/fonts/fonts.mk)
-else
-  $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
+ifneq ($(TARGET_BOARD_AUTO),true)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
+endif
+
+ifeq ($(TARGET_BOARD_AUTO),true)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
+$(call inherit-product, frameworks/base/data/fonts/fonts.mk)
+$(call inherit-product, frameworks/base/data/sounds/AllAudio.mk)
+
+PRODUCT_PROPERTY_OVERRIDES := \
+    ro.config.ringtone=Ring_Synth_04.ogg \
+    ro.config.alarm_alert=Alarm_Classic.ogg \
+    ro.config.notification_sound=pixiedust.ogg
 endif
 
 

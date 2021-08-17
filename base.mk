@@ -828,6 +828,8 @@ endif
 
 else
 PRODUCT_PACKAGES += Telecom
+PRODUCT_PACKAGES += MtpService
+PRODUCT_PACKAGES += SettingsIntelligence
 endif #TARGET_BOARD_AUTO
 
 ifneq ($(TARGET_BOARD_AUTO),true)

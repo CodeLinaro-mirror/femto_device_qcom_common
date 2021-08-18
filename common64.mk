@@ -13,6 +13,8 @@ ifeq ($(TARGET_BOARD_AUTO),true)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 $(call inherit-product, frameworks/base/data/fonts/fonts.mk)
 $(call inherit-product, frameworks/base/data/sounds/AllAudio.mk)
+$(call inherit-product-if-exists, external/hyphenation-patterns/patterns.mk)
+$(call inherit-product-if-exists, frameworks/base/data/keyboards/keyboards.mk)
 
 PRODUCT_PROPERTY_OVERRIDES := \
     ro.config.ringtone=Ring_Synth_04.ogg \

@@ -1,4 +1,8 @@
-$(call inherit-product, device/qcom/common/base.mk)
+ifeq ($(BOARD_COMMON_DIR),)
+    BOARD_COMMON_DIR := device/qcom/common
+endif
+
+$(call inherit-product, $(BOARD_COMMON_DIR)/base.mk)
 
 # For PRODUCT_COPY_FILES, the first instance takes precedence.
 # Since we want use QC specific files, we should inherit
@@ -32,10 +36,10 @@ endif
 
 # whitelisted app
 PRODUCT_COPY_FILES += \
-    device/qcom/common/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml
+    $(BOARD_COMMON_DIR)/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml
 
 PRODUCT_COPY_FILES += \
-    device/qcom/common/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml
+    $(BOARD_COMMON_DIR)/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml
 
 # Ipsec_tunnels feature
 PRODUCT_COPY_FILES += \
@@ -51,7 +55,7 @@ endif
 # Permission for Wi-Fi passpoint support
 PRODUCT_COPY_FILES += frameworks/native/data/etc/android.hardware.wifi.passpoint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.passpoint.xml
 
-PRODUCT_PRIVATE_KEY := device/qcom/common/qcom.key
+PRODUCT_PRIVATE_KEY := $(BOARD_COMMON_DIR)/qcom.key
 
 ifneq ($(TARGET_DEFINES_DALVIK_HEAP), true)
 ifneq ($(TARGET_HAS_LOW_RAM), true)

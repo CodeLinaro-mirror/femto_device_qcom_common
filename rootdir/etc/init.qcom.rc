@@ -413,6 +413,20 @@ service iop /system/vendor/bin/iop
     disabled
     socket iop seqpacket 0666 root system
 
+service android_stop /system/bin/stop
+    class main
+    user root
+    group root
+    disabled
+    oneshot
+
+service android_start /system/bin/start
+    class main
+    user root
+    group root
+    disabled
+    oneshot
+
 service qcomsysd /system/vendor/bin/qcom-system-daemon
     class main
     user root

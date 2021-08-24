@@ -36,6 +36,7 @@ QCOM_BOARD_PLATFORMS += msmnile
 QCOM_BOARD_PLATFORMS += sdmshrike
 QCOM_BOARD_PLATFORMS += sdm710
 QCOM_BOARD_PLATFORMS += msmnile_au
+QCOM_BOARD_PLATFORMS += msmnile_tb
 QCOM_BOARD_PLATFORMS += qcs605
 QCOM_BOARD_PLATFORMS += $(MSMSTEPPE)
 QCOM_BOARD_PLATFORMS += kona
@@ -150,7 +151,9 @@ AUDIO_HARDWARE += audio.primary.sdm845
 AUDIO_HARDWARE += audio.primary.apq8098_latv
 AUDIO_HARDWARE += audio.primary.sdm710
 AUDIO_HARDWARE += audio.primary.qcs605
+ifeq ($(TARGET_BOARD_AUTO), true)
 AUDIO_HARDWARE += audio.primary.msmnile.casa
+endif
 AUDIO_HARDWARE += audio.primary.msmnile
 AUDIO_HARDWARE += audio.primary.sdmshrike
 AUDIO_HARDWARE += audio.primary.$(MSMSTEPPE)
@@ -340,12 +343,6 @@ endif
 IPROUTE2 := ip
 IPROUTE2 += libiprouteutil
 
-#IPACM
-ifneq ($(TARGET_HAS_LOW_RAM),true)
-IPACM += ipacm
-IPACM += IPACM_cfg.xml
-IPACM += ipacm-diag
-endif
 
 #IPTABLES
 IPTABLES := libiptc
@@ -998,7 +995,6 @@ PRODUCT_PACKAGES += $(VT_QTI_PERMISSIONS)
 PRODUCT_PACKAGES += $(IMS_SETTINGS)
 PRODUCT_PACKAGES += $(CRDA)
 PRODUCT_PACKAGES += $(WLAN)
-PRODUCT_PACKAGES += $(IPACM)
 PRODUCT_PACKAGES += $(FSTMAN)
 PRODUCT_PACKAGES += $(FD_LEAK)
 PRODUCT_PACKAGES += $(IMS_EXT)
@@ -1225,7 +1221,8 @@ PRODUCT_PACKAGES_DEBUG += \
     init.qti.debug-trinket.sh \
     init.qti.debug-atoll.sh \
     init.qti.debug-lagoon.sh \
-    init.qti.debug-bengal.sh
+    init.qti.debug-bengal.sh \
+    init.qti.debug-khaje.sh
 
 PRODUCT_PACKAGES += liboemaids_system
 PRODUCT_PACKAGES += liboemaids_vendor

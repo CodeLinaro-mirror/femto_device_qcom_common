@@ -362,12 +362,16 @@ elif [ $feature_id == 7 ]; then
     echo 576000 > /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
     echo 768000 > /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
     echo 768000 > /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
+    echo 940800000 > /sys/class/devfreq/18321110.qcom,cpu0-cpu-l3-lat/min_freq
+    echo 1017600000 > /sys/class/devfreq/18321110.qcom,cpu0-cpu-l3-lat/max_freq
+    echo 940800000 > /sys/class/devfreq/18321110.qcom,cpu6-cpu-l3-lat/min_freq
+    echo 1017600000 > /sys/class/devfreq/18321110.qcom,cpu6-cpu-l3-lat/max_freq
     echo 940800000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/min_freq
-    echo 1363200000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/max_freq
+    echo 1017600000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/max_freq
     echo 940800000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/min_freq
-    echo 1363200000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/max_freq
+    echo 1017600000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/max_freq
     echo 4 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
-    echo {class:ddr, res:capped, val: 1066} > /sys/kernel/debug/aop_send_message
+    echo 1016 > /sys/devices/platform/soc/soc:aop-set-ddr-freq/set_ddr_capped_freq
     setprop vendor.sku_identified 1
     setprop vendor.sku_name "SA4150P"
 elif [ $feature_id == 5 ]; then

@@ -37,7 +37,11 @@ else
     PRODUCT_PROPERTY_OVERRIDES += ro.frp.pst=/dev/block/bootdevice/by-name/config
 endif
 
-PRODUCT_PRIVATE_KEY := device/qcom/common/qcom.key
+ifeq ($(BOARD_COMMON_DIR),)
+    BOARD_COMMON_DIR := device/qcom/common
+endif
+
+PRODUCT_PRIVATE_KEY := $(BOARD_COMMON_DIR)/qcom.key
 
 #INIT
 INIT := init.qcom.rc
@@ -77,8 +81,8 @@ PRODUCT_PACKAGES += $(INIT)
 ifneq ($(strip $(TARGET_USES_RRO)),true)
 # enable overlays to use our version of
 # source/resources etc.
-DEVICE_PACKAGE_OVERLAYS += device/qcom/common/device/overlay
-PRODUCT_PACKAGE_OVERLAYS += device/qcom/common/product/overlay
+DEVICE_PACKAGE_OVERLAYS += $(BOARD_COMMON_DIR)/device/overlay
+PRODUCT_PACKAGE_OVERLAYS += $(BOARD_COMMON_DIR)/product/overlay
 endif
 
 # Pure AOSP framework vs vendor modified framework detection
@@ -106,7 +110,7 @@ else
      TARGET_KERNEL_SOURCE := kernel/msm-$(TARGET_KERNEL_VERSION)
 endif
 # include additional build utilities
--include device/qcom/common/utils.mk
+-include $(BOARD_COMMON_DIR)/utils.mk
 
 # dm-verity definitions
 ifneq ($(BOARD_AVB_ENABLE), true)
@@ -140,7 +144,7 @@ PRODUCT_PACKAGES += \
 # have been removed, TARGET_FS_CONFIG_GEN should be made unconditional.
 DEVICE_CONFIG_DIR := $(dir $(firstword $(subst ]],, $(word 2, $(subst [[, ,$(_node_import_context))))))
 ifeq ($(wildcard $(DEVICE_CONFIG_DIR)/android_filesystem_config.h),)
-  TARGET_FS_CONFIG_GEN := device/qcom/common/config.fs
+  TARGET_FS_CONFIG_GEN := $(BOARD_COMMON_DIR)/config.fs
 else
   $(warning **********)
   $(warning TODO: Need to replace legacy $(DEVICE_CONFIG_DIR)android_filesystem_config.h with config.fs)

@@ -58,6 +58,26 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
              <instance>default</instance>
         </interface>
     </hal>
+    <!-- DisplayOffload hal -->
+    <hal format="hidl" optional="true">
+        <name>vendor.google_clockwork.displayoffload</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IDisplayOffload</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <!-- UIOffload hal -->
+    <hal format="hidl" optional="true">
+        <name>vendor.qti.hardware.uioffload</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IUIOffload</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
     <!-- SidekickGraphics hal -->
     <hal format="hidl" optional="true">
         <name>vendor.google_clockwork.sidekickgraphics</name>
@@ -85,6 +105,16 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <version>1.1</version>
             <interface>
             <name>ISidekickUtility</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <!-- AONUtility hal -->
+    <hal format="hidl" optional="true">
+        <name>vendor.qti.hardware.aonutility</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+            <interface>
+            <name>IAONUtility</name>
             <instance>default</instance>
         </interface>
     </hal>

@@ -33,6 +33,12 @@ firmware_directories /vendor/firmware_mnt/image/
 # the DIAG device node is not world writable/readable.
 /dev/diag                 0660   system     oem_2901
 /dev/mhi_*_pipe_4         0660   system     system
+/dev/slate_apps_cntl      0660   system     system
+/dev/slate_apps_cmd       0660   system     system
+/dev/slate_apps_data      0660   system     system
+/dev/slate_adsp_cntl      0660   system     system
+/dev/slate_adsp_cmd       0660   system     system
+/dev/slate_adsp_data      0660   system     system
 
 /dev/genlock              0666   system     system
 /dev/wlan                 0660   wifi       wifi
@@ -181,6 +187,10 @@ firmware_directories /vendor/firmware_mnt/image/
 #slatecom device
 /dev/slate_com_dev           0660   system      system
 
+#display - glink
+/dev/glink_pkt_slate_display_ctrl   0660  system  system
+/dev/glink_pkt_slate_display_data   0660  system  system
+
 #sensors - glink
 /dev/glinkpkt_slate_ssc_hal         0660  system  system
 /dev/glinkpkt_slate_sso_hal         0660  system  system
@@ -201,6 +211,9 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/glinkpkt_slate_ssc_test_12     0660  system  system
 /dev/glinkpkt_slate_ssc_test_13     0660  system  system
 /dev/glinkpkt_slate_ssc_test_14     0660  system  system
+
+#Vibrator offload device
+/dev/glinkpkt_slate_haptics_offload     0660  system  system
 
 # wlan
 /dev/wcnss_wlan           0660   system     system

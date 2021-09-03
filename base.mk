@@ -851,6 +851,12 @@ FSTMAN += fstman.ini
 #FD_LEAK
 FD_LEAK := libc_leak_detector
 
+
+ifeq ($(TARGET_SUPPORTS_WEAR_OS),true)
+PRODUCT_PACKAGES += \
+    netutils-wrapper-1.0
+endif
+
 ifneq ($(TARGET_HAS_LOW_RAM),true)
 ifneq ($(TARGET_SUPPORTS_WEAR_OS),true)
 TELEPHONY_DBG := NrNetworkSettingApp
@@ -1072,7 +1078,7 @@ endif
 
 # gps/location secuity configuration file
 PRODUCT_COPY_FILES += \
-    device/qcom/common/sec_config:$(TARGET_COPY_OUT_VENDOR)/etc/sec_config
+    $(BOARD_COMMON_DIR)/sec_config:$(TARGET_COPY_OUT_VENDOR)/etc/sec_config
 
 #copy codecs_xxx.xml to (TARGET_COPY_OUT_VENDOR)/etc/
 PRODUCT_COPY_FILES += \
@@ -1081,12 +1087,12 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_c2_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml \
-    device/qcom/common/media/media_profiles.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles.xml \
+    $(BOARD_COMMON_DIR)/media/media_profiles.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles.xml \
 
 ifneq ($(TARGET_ENABLE_QC_AV_ENHANCEMENTS),true)
 PRODUCT_COPY_FILES += \
-    device/qcom/common/media/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
-    device/qcom/common/media/media_profiles.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
+    $(BOARD_COMMON_DIR)/media/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
+    $(BOARD_COMMON_DIR)/media/media_profiles.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
 endif
 
 ifeq ($(strip $(TARGET_USES_NQ_NFC)),true)
@@ -1117,7 +1123,7 @@ PRODUCT_COPY_FILES += \
 endif
 
 # include additional build utilities
--include device/qcom/common/utils.mk
+-include $(BOARD_COMMON_DIR)/utils.mk
 
 # Copy the vulkan feature level file.
 # Targets listed in VULKAN_FEATURE_LEVEL_0_TARGETS_LIST supports only vulkan feature level 0.
@@ -1144,16 +1150,16 @@ ifneq ($(strip $(TARGET_USES_RRO)),true)
 # enable overlays to use our version of
 # source/resources etc.
 ifneq ($(strip $(TARGET_BOARD_AUTO)),true)
-DEVICE_PACKAGE_OVERLAYS += device/qcom/common/device/overlay
-PRODUCT_PACKAGE_OVERLAYS += device/qcom/common/product/overlay
+DEVICE_PACKAGE_OVERLAYS += $(BOARD_COMMON_DIR)/device/overlay
+PRODUCT_PACKAGE_OVERLAYS += $(BOARD_COMMON_DIR)/product/overlay
 else
-DEVICE_PACKAGE_OVERLAYS += device/qcom/common/automotive/device/overlay
-PRODUCT_PACKAGE_OVERLAYS += device/qcom/common/automotive/product/overlay
+DEVICE_PACKAGE_OVERLAYS += $(BOARD_COMMON_DIR)/automotive/device/overlay
+PRODUCT_PACKAGE_OVERLAYS += $(BOARD_COMMON_DIR)/automotive/product/overlay
 endif
 endif
 else
-DEVICE_PACKAGE_OVERLAYS += device/qcom/common/overlay-wear/device/overlay
-PRODUCT_PACKAGE_OVERLAYS += device/qcom/common/overlay-wear/product/overlay
+DEVICE_PACKAGE_OVERLAYS += $(BOARD_COMMON_DIR)/overlay-wear/device/overlay
+PRODUCT_PACKAGE_OVERLAYS += $(BOARD_COMMON_DIR)/overlay-wear/product/overlay
 endif
 
 # Set up flags to determine the kernel version
@@ -1216,7 +1222,7 @@ PRODUCT_PACKAGES += \
 # have been removed, TARGET_FS_CONFIG_GEN should be made unconditional.
 DEVICE_CONFIG_DIR := $(dir $(firstword $(subst ]],, $(word 2, $(subst [[, ,$(_node_import_context))))))
 ifeq ($(wildcard $(DEVICE_CONFIG_DIR)/android_filesystem_config.h),)
-  TARGET_FS_CONFIG_GEN := device/qcom/common/config.fs
+  TARGET_FS_CONFIG_GEN := $(BOARD_COMMON_DIR)/config.fs
 else
   $(warning **********)
   $(warning TODO: Need to replace legacy $(DEVICE_CONFIG_DIR)android_filesystem_config.h with config.fs)
@@ -1272,3 +1278,14 @@ PRODUCT_PACKAGES += vndservicemanager
 SOONG_CONFIG_NAMESPACES += qssi_vs_vendor
 SOONG_CONFIG_qssi_vs_vendor += qssi_or_vendor
 SOONG_CONFIG_qssi_vs_vendor_qssi_or_vendor := vendor
+
+SOONG_CONFIG_NAMESPACES += bredr_vs_btadva
+SOONG_CONFIG_bredr_vs_btadva += bredr_or_btadva
+
+ifneq "$(wildcard vendor/qcom/proprietary/commonsys/bt/bt_adv_audio)" ""
+    $(warning bt_adv_audio dir is present)
+    SOONG_CONFIG_bredr_vs_btadva_bredr_or_btadva := btadva
+else
+    $(warning bt_adv_audio dir is not present)
+    SOONG_CONFIG_bredr_vs_btadva_bredr_or_btadva := bredr
+endif #ifneq "$(wildcard vendor/qcom/proprietary/commonsys/bt/bt_adv_audio)" ""

@@ -236,19 +236,8 @@ if [ -d /config/usb_gadget/g1/functions/uvc.0 ]; then
 		echo "5000000\n" > streaming/uncompressed/u/720p/dwFrameInterval
 		echo -ne "\x59\x38\x20\x20\x00\x00\x10\x00\x80\x00\x00\xaa\x00\x38\x9b\x71" > streaming/uncompressed/u/guidFormat
 
-		mkdir -p streaming/uncompressed/u1/720p
-		echo 1280 > streaming/uncompressed/u1/720p/wWidth
-		echo 721 > streaming/uncompressed/u1/720p/wHeight
-		echo 29491200 > streaming/uncompressed/u1/720p/dwMinBitRate
-		echo 29491200 > streaming/uncompressed/u1/720p/dwMaxBitRate
-		echo 1445120 > streaming/uncompressed/u1/720p/dwMaxVideoFrameBufferSize
-		echo 5000000 > streaming/uncompressed/u1/720p/dwDefaultFrameInterval
-		echo "5000000\n" > streaming/uncompressed/u1/720p/dwFrameInterval
-		echo -ne "\x49\x34\x32\x30\x00\x00\x10\x00\x80\x00\x00\xaa\x00\x38\x9b\x71" > streaming/uncompressed/u1/guidFormat
-
 		mkdir streaming/header/h
 		ln -s streaming/uncompressed/u streaming/header/h
-		ln -s streaming/uncompressed/u1 streaming/header/h
 		ln -s streaming/header/h streaming/class/fs/
 		ln -s streaming/header/h streaming/class/hs/
 		ln -s streaming/header/h streaming/class/ss/
@@ -300,6 +289,35 @@ if [ -d /config/usb_gadget/g1/functions/uvc.0 ]; then
 		ln -s streaming/uncompressed/u streaming/header/h
 		ln -s streaming/mjpeg/m streaming/header/h
 		ln -s streaming/h264/h streaming/header/h
+		ln -s streaming/header/h streaming/class/fs/
+		ln -s streaming/header/h streaming/class/hs/
+		ln -s streaming/header/h streaming/class/ss/
+	fi
+fi
+
+# UVC.1 (2nd instance configuration)
+if [ -d /config/usb_gadget/g1/functions/uvc.1 ]; then
+	if [ "$target" == "sdm710" -a "$soc_machine" == "SXR1130" ]; then
+		cd /config/usb_gadget/g1/functions/uvc.1
+
+		echo 3072 > streaming_maxpacket
+		echo 6 > streaming_maxburst
+		mkdir control/header/h
+		ln -s control/header/h control/class/fs/
+		ln -s control/header/h control/class/ss
+
+		mkdir -p streaming/uncompressed/u/720p
+		echo 1280 > streaming/uncompressed/u/720p/wWidth
+		echo 721 > streaming/uncompressed/u/720p/wHeight
+		echo 29491200 > streaming/uncompressed/u/720p/dwMinBitRate
+		echo 29491200 > streaming/uncompressed/u/720p/dwMaxBitRate
+		echo 1845760 > streaming/uncompressed/u/720p/dwMaxVideoFrameBufferSize
+		echo 5000000 > streaming/uncompressed/u/720p/dwDefaultFrameInterval
+		echo "5000000\n" > streaming/uncompressed/u/720p/dwFrameInterval
+		echo -ne "\x49\x34\x32\x30\x00\x00\x10\x00\x80\x00\x00\xaa\x00\x38\x9b\x71" > streaming/uncompressed/u/guidFormat
+
+		mkdir streaming/header/h
+		ln -s streaming/uncompressed/u streaming/header/h
 		ln -s streaming/header/h streaming/class/fs/
 		ln -s streaming/header/h streaming/class/hs/
 		ln -s streaming/header/h streaming/class/ss/

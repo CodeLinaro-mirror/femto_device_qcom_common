@@ -306,7 +306,9 @@ INIT += init.recovery.qcom.rc
 INIT += init.qcom.factory.rc
 INIT += init.qcom.sdio.sh
 INIT += init.qcom.sh
+ifneq ($(strip $(TARGET_BOARD_AUTO)),true)
 INIT += init.qcom.class_core.sh
+endif
 INIT += init.class_main.sh
 INIT += init.qcom.wifi.sh
 INIT += vold.fstab
@@ -340,12 +342,6 @@ endif
 IPROUTE2 := ip
 IPROUTE2 += libiprouteutil
 
-#IPACM
-ifneq ($(TARGET_HAS_LOW_RAM),true)
-IPACM += ipacm
-IPACM += IPACM_cfg.xml
-IPACM += ipacm-diag
-endif
 
 #IPTABLES
 IPTABLES := libiptc
@@ -1001,7 +997,6 @@ PRODUCT_PACKAGES += $(VT_QTI_PERMISSIONS)
 PRODUCT_PACKAGES += $(IMS_SETTINGS)
 PRODUCT_PACKAGES += $(CRDA)
 PRODUCT_PACKAGES += $(WLAN)
-PRODUCT_PACKAGES += $(IPACM)
 PRODUCT_PACKAGES += $(FSTMAN)
 PRODUCT_PACKAGES += $(FD_LEAK)
 PRODUCT_PACKAGES += $(IMS_EXT)

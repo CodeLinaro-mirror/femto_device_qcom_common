@@ -852,6 +852,12 @@ endif
 endif
 
 PRODUCT_PACKAGES := \
+    Gallery2 \
+    Music \
+    netutils-wrapper-1.0
+
+ifneq ($(strip $(TARGET_BOARD_AUTO)),true)
+PRODUCT_PACKAGES := \
     AccountAndSyncSettings \
     DeskClock \
     AlarmProvider \
@@ -862,10 +868,7 @@ PRODUCT_PACKAGES := \
     CertInstaller \
     DrmProvider \
     Email \
-    Gallery2 \
     LatinIME \
-    Music \
-    netutils-wrapper-1.0 \
     Phone \
     Provision \
     Protips \
@@ -895,7 +898,15 @@ else
             VisualizationWallpapers
 
     DELAUN := Launcher3
+endif
 
+else
+PRODUCT_PACKAGES += Telecom
+PRODUCT_PACKAGES += MtpService
+PRODUCT_PACKAGES += SettingsIntelligence
+endif #TARGET_BOARD_AUTO
+
+ifneq ($(TARGET_BOARD_AUTO),true)
     #servicetracker HAL
     PRODUCT_PACKAGES += \
             vendor.qti.hardware.servicetracker@1.2-impl \

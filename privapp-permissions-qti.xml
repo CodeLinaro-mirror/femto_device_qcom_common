@@ -155,6 +155,19 @@ It allows additional grants on top of privapp-permissions-platform.xml
         <permission name="android.permission.CHANGE_WIFI_STATE"/>
     </privapp-permissions>
 
+    <privapp-permissions package="com.qualcomm.qti.powerstatemanager">
+        <permission name="android.permission.ACCESS_FINE_LOCATION"/>
+        <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+        <permission name="android.permission.SYSTEM_ALERT_WINDOW"/>
+        <permission name="android.permission.MODIFY_PHONE_STATE"/>
+        <permission name="android.permission.REBOOT"/>
+        <permission name="android.permission.DEVICE_POWER"/>
+    </privapp-permissions>
+
+    <privapp-permissions package="com.qualcomm.qti.powerstatemanagerservice">
+        <permission name="android.permission.MODIFY_PHONE_STATE"/>
+    </privapp-permissions>
+
     <privapp-permissions package="com.qualcomm.qti.twm">
         <permission name="android.permission.SHUTDOWN"/>
     </privapp-permissions>

@@ -1289,3 +1289,12 @@ else
     $(warning bt_adv_audio dir is not present)
     SOONG_CONFIG_bredr_vs_btadva_bredr_or_btadva := bredr
 endif #ifneq "$(wildcard vendor/qcom/proprietary/commonsys/bt/bt_adv_audio)" ""
+
+# for Telecom implementation
+SOONG_CONFIG_NAMESPACES += qc_bt_telecom
+SOONG_CONFIG_qc_bt_telecom += aosp_or_qc_bt_telecom
+ifeq ($(TARGET_USE_WEAR_QC_BT_STACK),true)
+SOONG_CONFIG_qc_bt_telecom_aosp_or_qc_bt_telecom := enabled
+else
+SOONG_CONFIG_qc_bt_telecom_aosp_or_qc_bt_telecom := disabled
+endif

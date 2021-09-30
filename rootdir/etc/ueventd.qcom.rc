@@ -324,6 +324,10 @@ firmware_directories /vendor/firmware_mnt/image/
 /sys/devices/platform/soc/a84000.i2c/i2c-2/2-0020/input/input*  secure_touch          0440 system drmrpc
 /sys/devices/platform/soc/a84000.i2c/i2c-2/2-0020/input/input*  secure_touch_enable   0660 system drmrpc
 
+#slate rsb device
+/sys/devices/soc/soc:qcom,slate-rsb            enable    0660    system    system
+/sys/devices/platform/soc/soc:qcom,slate-rsb   enable    0660    system    system
+
 # GNSS Device premissions
 /dev/gnss_sirf             0660   gps     gps
 

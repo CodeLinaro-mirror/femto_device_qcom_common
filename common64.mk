@@ -14,6 +14,7 @@ $(call inherit-product, frameworks/base/data/fonts/fonts.mk)
 $(call inherit-product, frameworks/base/data/sounds/AllAudio.mk)
 $(call inherit-product-if-exists, external/hyphenation-patterns/patterns.mk)
 $(call inherit-product-if-exists, frameworks/base/data/keyboards/keyboards.mk)
+$(call inherit-product-if-exists, external/noto-fonts/fonts.mk)
 
 PRODUCT_PROPERTY_OVERRIDES := \
     ro.config.ringtone=Ring_Synth_04.ogg \
@@ -32,7 +33,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.radio.sib16_support=1 \
     persist.vendor.radio.custom_ecc=1 \
     persist.vendor.radio.rat_on=combine \
-    persist.backup.ntpServer=0.pool.ntp.org \
     sys.vendor.shutdown.waittime=500 \
     persist.vendor.radio.procedure_bytes=SKIP
 

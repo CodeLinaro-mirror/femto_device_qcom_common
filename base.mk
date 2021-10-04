@@ -909,9 +909,11 @@ PRODUCT_PACKAGES += SettingsIntelligence
 endif #TARGET_BOARD_AUTO
 
 #servicetracker HAL
-PRODUCT_PACKAGES += \
-    vendor.qti.hardware.servicetracker@1.2-impl \
-    vendor.qti.hardware.servicetracker@1.2-service
+ifneq ($(TARGET_BOARD_AUTO),true)
+    PRODUCT_PACKAGES += \
+        vendor.qti.hardware.servicetracker@1.2-impl \
+        vendor.qti.hardware.servicetracker@1.2-service
+endif
 
 PRODUCT_PACKAGES += $(ALSA_HARDWARE)
 PRODUCT_PACKAGES += $(ALSA_UCM)

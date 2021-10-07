@@ -465,6 +465,9 @@ on property:sys.boot_completed=1
     #Reinit lmkd to reconfigure lmkd properties
     setprop lmkd.reinit 1
     chown media audio /sys/kernel/aud_dev/state
+    #boost_concurrent_node is used by audio
+    chown audio audio /sys/class/qcom-smb/boost_concurrent_mode
+    chmod 0660 /sys/class/qcom-smb/boost_concurrent_mode
 
 on property:persist.vendor.radio.atfwd.start=false
     stop vendor.atfwd

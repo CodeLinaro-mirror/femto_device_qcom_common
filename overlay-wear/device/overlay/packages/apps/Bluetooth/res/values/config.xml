@@ -36,5 +36,5 @@
     <bool name="profile_supported_sap">true</bool>
     <bool name="profile_supported_hs_hfp">true</bool>
 
-    <bool name="headset_client_initial_audio_route_allowed">true</bool>
+    <bool name="headset_client_initial_audio_route_allowed">false</bool>
 </resources>

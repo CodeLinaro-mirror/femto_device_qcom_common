@@ -341,6 +341,7 @@ case "$target" in
         setprop vendor.media.target_variant "_monaco"
 	setprop vendor.mm.target.enable.qcom_parser 1040479
         setprop vendor.display.disable_layer_stitch 1
+        setprop vendor.display.enable_rounded_corner 1
         case "$soc_hwid" in
             517|486)
                 setprop vendor.gralloc.disable_ubwc 1

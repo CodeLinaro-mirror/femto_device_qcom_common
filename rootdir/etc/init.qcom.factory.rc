@@ -253,6 +253,25 @@ service vendor.audio_tc104 /vendor/bin/mm-audio-ftm -tc 104 -file /data/vendor/a
     disabled
     oneshot
 
+service vendor.audio_tc1 /vendor/bin/mm-audio-ftm -tc 1
+    user audio
+    group audio
+    disabled
+    oneshot
+
+
+service vendor.audio_tc2 /vendor/bin/mm-audio-ftm -tc 6 -d 10
+    user audio
+    group audio
+    disabled
+    oneshot
+
+service vendor.audio_tc3 /vendor/bin/mm-audio-ftm -tc 7 -d 10
+    user audio
+    group audio
+    disabled
+    oneshot
+
 # ========================================================
 #           End for audio TC
 # ========================================================

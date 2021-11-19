@@ -39,6 +39,7 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/slate_adsp_cntl      0660   system     system
 /dev/slate_adsp_cmd       0660   system     system
 /dev/slate_adsp_data      0660   system     system
+/dev/slate_tme_log        0660   system     system
 
 /dev/genlock              0666   system     system
 /dev/wlan                 0660   wifi       wifi

@@ -260,13 +260,13 @@ service vendor.audio_tc1 /vendor/bin/mm-audio-ftm -tc 1
     oneshot
 
 
-service vendor.audio_tc2 /vendor/bin/mm-audio-ftm -tc 6 -d 10
+service vendor.audio_tc2 /vendor/bin/mm-audio-ftm -tc 6 -c /vendor/etc/ftm_test_config -d 10
     user audio
     group audio
     disabled
     oneshot
 
-service vendor.audio_tc3 /vendor/bin/mm-audio-ftm -tc 7 -d 10
+service vendor.audio_tc3 /vendor/bin/mm-audio-ftm -tc 7 -c /vendor/etc/ftm_test_config -d 10
     user audio
     group audio
     disabled

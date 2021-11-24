@@ -226,7 +226,10 @@ config_khaje_dcc_bimc()
     echo 0x4500094 1 > $DCC_PATH/config
     echo 0x450009c 1 > $DCC_PATH/config
     echo 0x45000c4 2 > $DCC_PATH/config
+    echo 0x4500244 1 > $DCC_PATH/config
     echo 0x45003dc 1 > $DCC_PATH/config
+    echo 0x4500498 1 > $DCC_PATH/config
+    echo 0x450049C 1 > $DCC_PATH/config
     echo 0x45005d8 1 > $DCC_PATH/config
 
     #CH0_CA1_DDRPHY
@@ -234,7 +237,10 @@ config_khaje_dcc_bimc()
     echo 0x4501094 1 > $DCC_PATH/config
     echo 0x450109c 1 > $DCC_PATH/config
     echo 0x45010c4 2 > $DCC_PATH/config
+    echo 0x4501244 1 > $DCC_PATH/config
     echo 0x45013dc 1 > $DCC_PATH/config
+    echo 0x4501498 1 > $DCC_PATH/config
+    echo 0x450149c 1 > $DCC_PATH/config
     echo 0x45015d8 1 > $DCC_PATH/config
 
     #CH0_DQ0_DDRPHY
@@ -242,7 +248,10 @@ config_khaje_dcc_bimc()
     echo 0x4502094 1 > $DCC_PATH/config
     echo 0x450209c 1 > $DCC_PATH/config
     echo 0x45020c4 2 > $DCC_PATH/config
+    echo 0x4502244 1 > $DCC_PATH/config
     echo 0x45023dc 1 > $DCC_PATH/config
+    echo 0x4502498 1 > $DCC_PATH/config
+    echo 0x450249c 1 > $DCC_PATH/config
     echo 0x45025d8 1 > $DCC_PATH/config
 
     #CH0_DQ1_DDRPHY
@@ -250,7 +259,10 @@ config_khaje_dcc_bimc()
     echo 0x4503094 1 > $DCC_PATH/config
     echo 0x450309c 1 > $DCC_PATH/config
     echo 0x45030c4 2 > $DCC_PATH/config
+    echo 0x4503244 1 > $DCC_PATH/config
     echo 0x45033dc 1 > $DCC_PATH/config
+    echo 0x450349c 1 > $DCC_PATH/config
+    echo 0x4503498 1 > $DCC_PATH/config
     echo 0x45035d8 1 > $DCC_PATH/config
 
     #CH0_DQ2_DDRPHY
@@ -258,7 +270,10 @@ config_khaje_dcc_bimc()
     echo 0x4504094 1 > $DCC_PATH/config
     echo 0x450409c 1 > $DCC_PATH/config
     echo 0x45040c8 2 > $DCC_PATH/config
+    echo 0x4504244 1 > $DCC_PATH/config
     echo 0x45043dc 1 > $DCC_PATH/config
+    echo 0x4504498 1 > $DCC_PATH/config
+    echo 0x450449c 1 > $DCC_PATH/config
     echo 0x45045d8 1 > $DCC_PATH/config
 
     #CH0_DQ3_DDRPHY
@@ -266,7 +281,10 @@ config_khaje_dcc_bimc()
     echo 0x4505094 1 > $DCC_PATH/config
     echo 0x450509c 1 > $DCC_PATH/config
     echo 0x45050c4 2 > $DCC_PATH/config
+    echo 0x4505244 1 > $DCC_PATH/config
     echo 0x45053dc 1 > $DCC_PATH/config
+    echo 0x4505498 1 > $DCC_PATH/config
+    echo 0x450549c 1 > $DCC_PATH/config
     echo 0x45055d8 1 > $DCC_PATH/config
 
 }
@@ -1220,6 +1238,29 @@ config_khaje_apm()
     echo 0x0F500000 1 > $DCC_PATH/config
 }
 
+# Added lmh register
+config_khaje_lmh()
+{
+    echo 0xF55903C 1 > $DCC_PATH/config
+    echo 0xF559814 1 > $DCC_PATH/config
+    echo 0xF521700 1 > $DCC_PATH/config
+    echo 0xF521704 1 > $DCC_PATH/config
+    echo 0xF52172C  1 > $DCC_PATH/config
+}
+
+# Added Tsens register
+config_khaje_tsens()
+{
+    echo 0x4410004 1 > $DCC_PATH/config
+    echo 0x4411014 1 > $DCC_PATH/config
+    echo 0x44110E0 1 > $DCC_PATH/config
+    echo 0x44110EC 1 > $DCC_PATH/config
+    echo 0x44110A0 16 > $DCC_PATH/config
+    echo 0x44110E8 1 > $DCC_PATH/config
+    echo 0x441113C 1 > $DCC_PATH/config
+    echo 0x4410010 1 > $DCC_PATH/config
+
+}
 # Function to send ASYNC package in TPDA
 dcc_async_package()
 {
@@ -1259,6 +1300,8 @@ enable_khaje_dcc_config()
     config_khaje_dcc_cam
     config_khaje_dcc_wdog
     config_khaje_apm
+    config_khaje_lmh
+    config_khaje_tsens
 
     #configure sink for LL3 as atb
     echo 1 > /sys/bus/coresight/devices/coresight-tpdm-dcc/enable_source

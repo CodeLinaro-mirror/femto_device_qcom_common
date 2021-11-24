@@ -744,7 +744,6 @@ TSLIB_EXTERNAL += ts
 
 #VR_HAL
 VR_HAL := vr.msm8998
-VR_HAL += vr.sdm845
 
 #QRGND
 QRGND := qrngd

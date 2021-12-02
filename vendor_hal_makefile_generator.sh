@@ -141,19 +141,23 @@ function generate_make_files() {
 
 function start_script_for_interfaces {
     #Find interfaces in workspace
-    local interfaces=$(${LS} -d ${ANDROID_BUILD_TOP}/vendor/qcom/*/interfaces)
 
-    ${ECHO} "HIDL interfaces:  Scanning for changes..."
-    for interface in $interfaces; do
+    local interfaces_temp=$(${LS} -d ${ANDROID_BUILD_TOP}/vendor/qcom/*/interfaces | tr '\n' ' ')
+    eval "interfaces=(`echo ${interfaces_temp}`)"
+    echo $interfaces
+
+    echo "HIDL interfaces:  Scanning for changes..."
+    for interface in "${interfaces[@]}"; do
         #generate interfaces
         local relative_interface=${interface#${ANDROID_BUILD_TOP}/}
         generate_make_files $relative_interface "android.hidl:system/libhidl/transport"
         if [ $? -ne 0 ] ; then
-           ${ECHO} "HIDL interfaces: Update Failed"
+           echo "HIDL interfaces: Update Failed"
            return 1;
         fi
     done
-    ${ECHO} "HIDL interfaces:  Update complete."
+    echo "HIDL interfaces:  Update complete."
+
 }
 
 #Start script for interfaces

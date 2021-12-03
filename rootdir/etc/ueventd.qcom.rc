@@ -219,6 +219,11 @@ firmware_directories /vendor/firmware_mnt/image/
 #Vibrator offload device
 /dev/glinkpkt_slate_haptics_offload     0660  system  system
 
+#Bluetooth offload - glink
+/dev/glink_pkt_slate_bt_ctrl        0660  system  system
+/dev/glink_pkt_bt_offload_event     0660  system  system
+/dev/glink_pkt_slate_bt_app         0660  system  system
+
 # wlan
 /dev/wcnss_wlan           0660   system     system
 /dev/wcnss_ctrl           0660   system     system

@@ -1057,6 +1057,7 @@ PRODUCT_COPY_FILES := \
     frameworks/native/data/etc/android.hardware.camera.front.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.front.xml \
     frameworks/native/data/etc/android.hardware.camera.full.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.full.xml\
     frameworks/native/data/etc/android.hardware.camera.raw.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.raw.xml\
+    frameworks/native/data/etc/android.hardware.camera.autofocus.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.autofocus.xml \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.gsm.xml \
     frameworks/native/data/etc/android.hardware.telephony.cdma.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.cdma.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.gps.xml \
@@ -1289,3 +1290,12 @@ else
     $(warning bt_adv_audio dir is not present)
     SOONG_CONFIG_bredr_vs_btadva_bredr_or_btadva := bredr
 endif #ifneq "$(wildcard vendor/qcom/proprietary/commonsys/bt/bt_adv_audio)" ""
+
+# for Telecom implementation
+SOONG_CONFIG_NAMESPACES += qc_bt_telecom
+SOONG_CONFIG_qc_bt_telecom += aosp_or_qc_bt_telecom
+ifeq ($(TARGET_USE_WEAR_QC_BT_STACK),true)
+SOONG_CONFIG_qc_bt_telecom_aosp_or_qc_bt_telecom := enabled
+else
+SOONG_CONFIG_qc_bt_telecom_aosp_or_qc_bt_telecom := disabled
+endif

@@ -1161,6 +1161,9 @@ PRODUCT_PACKAGES += libqti_vndfwk_detect_vendor
 PRODUCT_PACKAGES += libvndfwk_detect_jni.qti_system
 PRODUCT_PACKAGES += libvndfwk_detect_jni.qti_vendor
 
+# vndservicemanager
+PRODUCT_PACKAGES += vndservicemanager
+
 #soong namespace for qssi vs vendor differentiation
 SOONG_CONFIG_NAMESPACES += qssi_vs_vendor
 SOONG_CONFIG_qssi_vs_vendor += qssi_or_vendor

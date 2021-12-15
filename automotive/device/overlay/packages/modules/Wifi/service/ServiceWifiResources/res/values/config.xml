@@ -69,4 +69,7 @@
     <!--Enable Wifi STA + STA concurrent for local only connections-->
     <bool translatable="false" name="config_wifiMultiStaLocalOnlyConcurrencyEnabled">true</bool>
 
+    <!-- Channel list for softap 2G band. Empty means all channels -->
+    <string translateble="false" name="config_wifiSoftap2gChannelList"></string>
+
 </resources>

@@ -39,6 +39,7 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/slate_adsp_cntl      0660   system     system
 /dev/slate_adsp_cmd       0660   system     system
 /dev/slate_adsp_data      0660   system     system
+/dev/slate_tme_log        0660   system     system
 
 /dev/genlock              0666   system     system
 /dev/wlan                 0660   wifi       wifi
@@ -194,6 +195,9 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/glink_pkt_slate_display_ctrl   0660  system  system
 /dev/glink_pkt_slate_display_data   0660  system  system
 
+#slate-ux-ctl - glink
+/dev/glink_pkt_slate_ux_ctl         0660  system  system
+
 #sensors - glink
 /dev/glinkpkt_slate_ssc_hal         0660  system  system
 /dev/glinkpkt_slate_sso_hal         0660  system  system
@@ -217,6 +221,11 @@ firmware_directories /vendor/firmware_mnt/image/
 
 #Vibrator offload device
 /dev/glinkpkt_slate_haptics_offload     0660  system  system
+
+#Bluetooth offload - glink
+/dev/glink_pkt_slate_bt_ctrl        0660  system  system
+/dev/glink_pkt_bt_offload_event     0660  system  system
+/dev/glink_pkt_slate_bt_app         0660  system  system
 
 # wlan
 /dev/wcnss_wlan           0660   system     system

@@ -744,7 +744,6 @@ TSLIB_EXTERNAL += ts
 
 #VR_HAL
 VR_HAL := vr.msm8998
-VR_HAL += vr.sdm845
 
 #QRGND
 QRGND := qrngd
@@ -1166,6 +1165,9 @@ PRODUCT_PACKAGES += libqti_vndfwk_detect_system
 PRODUCT_PACKAGES += libqti_vndfwk_detect_vendor
 PRODUCT_PACKAGES += libvndfwk_detect_jni.qti_system
 PRODUCT_PACKAGES += libvndfwk_detect_jni.qti_vendor
+
+# vndservicemanager
+PRODUCT_PACKAGES += vndservicemanager
 
 #soong namespace for qssi vs vendor differentiation
 SOONG_CONFIG_NAMESPACES += qssi_vs_vendor

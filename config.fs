@@ -31,6 +31,42 @@ user: AID_BLUETOOTH
 group: AID_BLUETOOTH
 caps: BLOCK_SUSPEND
 
+[vendor/bin/init.qcom.*]
+mode: 0744
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/bin/init.crda.sh]
+mode: 0744
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/bin/init.mdm.sh]
+mode: 0744
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/bin/init.qti.media.sh]
+mode: 0744
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/bin/init.veth_ipa_config.sh]
+mode: 0744
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/bin/qca6234-service.sh]
+mode: 0744
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
 [system/vendor/bin/wcnss_filter]
 mode: 0755
 user: AID_BLUETOOTH

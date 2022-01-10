@@ -10,17 +10,13 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 endif
 
 ifeq ($(TARGET_BOARD_AUTO),true)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
+# Most of these are not needed on the end product.
+#$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 $(call inherit-product, frameworks/base/data/fonts/fonts.mk)
 $(call inherit-product, frameworks/base/data/sounds/AllAudio.mk)
 $(call inherit-product-if-exists, external/hyphenation-patterns/patterns.mk)
 $(call inherit-product-if-exists, frameworks/base/data/keyboards/keyboards.mk)
 $(call inherit-product-if-exists, external/noto-fonts/fonts.mk)
-
-PRODUCT_PROPERTY_OVERRIDES := \
-    ro.config.ringtone=Ring_Synth_04.ogg \
-    ro.config.alarm_alert=Alarm_Classic.ogg \
-    ro.config.notification_sound=pixiedust.ogg
 endif
 
 

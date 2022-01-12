@@ -865,7 +865,10 @@ PRODUCT_PACKAGES := \
     DrmProvider \
     Provision \
     CalendarProvider \
-    SyncProvider
+    SyncProvider \
+    Contacts \
+    UserDictionaryProvider \
+    TeleService
 
 ifneq ($(strip $(TARGET_BOARD_AUTO)),true)
 PRODUCT_PACKAGES += \

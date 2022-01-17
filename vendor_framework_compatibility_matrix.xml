@@ -108,6 +108,16 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <instance>default</instance>
         </interface>
     </hal>
+    <!-- WristOrientation hal -->
+    <hal format="hidl">
+        <name>vendor.google_clockwork.wristorientation</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IWristOrientation</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
     <!-- AONUtility hal -->
     <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.aonutility</name>

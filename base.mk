@@ -72,6 +72,8 @@ MASTER_SIDE_CP_TARGET_LIST := msm8996 msm8998 sdm660 sdm845 apq8098_latv sdm710 
 #List of targets where Vulkan feature level is restricted to 0
 VULKAN_FEATURE_LEVEL_0_TARGETS_LIST := msm8937_32 msm8937_64 sdm660_32 sdm660_64 msm8998 msm8998_32 msm8996 msm8953_64 msm8953_32 monaco monaco_go monaco_go_aon
 
+#List of targets are being restricted to deqp level version 132383489
+VULKAN_DEQP_LEVEL_2020_03_01_TARGETS_LIST := monaco monaco_go monaco_go_aon
 # Below projects/packages with LOCAL_MODULEs will be used by
 # PRODUCT_PACKAGES to build LOCAL_MODULEs that are tagged with
 # optional tag, which will not be available on target unless
@@ -1118,7 +1120,10 @@ PRODUCT_COPY_FILES += \
 
 endif
 ### END OF CLEANING PRODUCT_COPY_FILES
+
+PRODUCT_PROPERTY_OVERRIDES += ro.hardware.egl=adreno
 ifneq ($(TARGET_NOT_SUPPORT_VULKAN),true)
+PRODUCT_PROPERTY_OVERRIDES += ro.hardware.vulkan=adreno
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute-0.xml
 endif
@@ -1143,6 +1148,13 @@ ifeq ($(TARGET_SUPPORT_VULKAN_VERSION_1_1),false)
 PRODUCT_COPY_FILES += frameworks/native/data/etc/android.hardware.vulkan.version-1_0_3.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.version-1_0_3.xml
 else
 PRODUCT_COPY_FILES += frameworks/native/data/etc/android.hardware.vulkan.version-1_1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.version-1_1.xml
+endif
+endif
+
+# android.software.vulkan.deqp.level*.xml is a new file added in android R and above defining dEQP version supported for device.
+ifneq ($(TARGET_NOT_SUPPORT_VULKAN),true)
+ifeq ($(call is-product-in-list,$(VULKAN_DEQP_LEVEL_2020_03_01_TARGETS_LIST)), true)
+PRODUCT_COPY_FILES += frameworks/native/data/etc/android.software.vulkan.deqp.level-2020-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.vulkan.deqp.level.xml
 endif
 endif
 

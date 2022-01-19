@@ -1,0 +1,3 @@
+distance
+calories
+pedometer

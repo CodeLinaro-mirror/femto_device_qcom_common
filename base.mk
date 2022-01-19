@@ -868,7 +868,8 @@ PRODUCT_PACKAGES := \
     SyncProvider \
     Contacts \
     UserDictionaryProvider \
-    TeleService
+    TeleService \
+    TelephonyProvider
 
 ifneq ($(strip $(TARGET_BOARD_AUTO)),true)
 PRODUCT_PACKAGES += \

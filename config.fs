@@ -51,7 +51,7 @@ caps: 0
 
 [vendor/bin/init.qti.media.sh]
 mode: 0744
-user: AID_ROOT
+user: AID_MEDIA
 group: AID_SHELL
 caps: 0
 

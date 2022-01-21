@@ -815,6 +815,8 @@ endif
 
 else
 PRODUCT_PACKAGES += Telecom
+PRODUCT_PACKAGES += TelephonyProvider
+PRODUCT_PACKAGES += TeleService
 PRODUCT_PACKAGES += MtpService
 PRODUCT_PACKAGES += SettingsIntelligence
 endif #TARGET_BOARD_AUTO

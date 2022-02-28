@@ -548,6 +548,19 @@ LIBPOWER += android.hardware.power@1.0-impl
 LIBPOWER += android.hardware.power@1.0-service
 endif
 
+# Light AIDL Soong configs
+ifeq ($(PLATFORM_VERSION), $(filter $(PLATFORM_VERSION),R 11))
+  SOONG_CONFIG_NAMESPACES += lights
+  SOONG_CONFIG_lights += lighttargets
+  SOONG_CONFIG_lights_lighttargets := lightaidltarget
+endif
+
+ifeq ($(PLATFORM_VERSION), $(filter $(PLATFORM_VERSION),S 12))
+  SOONG_CONFIG_NAMESPACES += lights
+  SOONG_CONFIG_lights += lighttargets
+  SOONG_CONFIG_lights_lighttargets := lightaidlV1target
+endif
+
 #LLVM for RenderScript
 #use qcom LLVM
 $(call inherit-product-if-exists, external/llvm/llvm-select.mk)
@@ -765,6 +778,12 @@ endif
 endif
 
 PRODUCT_PACKAGES := \
+    Gallery2 \
+    Music \
+    netutils-wrapper-1.0
+
+ifneq ($(strip $(TARGET_BOARD_AUTO)),true)
+PRODUCT_PACKAGES := \
     AccountAndSyncSettings \
     DeskClock \
     AlarmProvider \
@@ -775,10 +794,7 @@ PRODUCT_PACKAGES := \
     CertInstaller \
     DrmProvider \
     Email \
-    Gallery2 \
     LatinIME \
-    Music \
-    netutils-wrapper-1.0 \
     Phone \
     Provision \
     Protips \
@@ -808,7 +824,17 @@ else
             VisualizationWallpapers
 
     DELAUN := Launcher3
+endif
 
+else
+PRODUCT_PACKAGES += Telecom
+PRODUCT_PACKAGES += TelephonyProvider
+PRODUCT_PACKAGES += TeleService
+PRODUCT_PACKAGES += MtpService
+PRODUCT_PACKAGES += SettingsIntelligence
+endif #TARGET_BOARD_AUTO
+
+ifneq ($(TARGET_BOARD_AUTO),true)
     #servicetracker HAL
     PRODUCT_PACKAGES += \
             vendor.qti.hardware.servicetracker@1.2-impl \
@@ -941,10 +967,10 @@ PRODUCT_PACKAGES_DEBUG += init.qcom.debug.sh
 PRODUCT_PACKAGES_DEBUG += $(TELEPHONY_DBG)
 
 PRODUCT_COPY_FILES := \
-    frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.flash-autofocus.xml \
+    frameworks/native/data/etc/android.hardware.camera.autofocus.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.front.xml \
-    frameworks/native/data/etc/android.hardware.camera.full.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.full.xml\
-    frameworks/native/data/etc/android.hardware.camera.raw.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.raw.xml\
+    frameworks/native/data/etc/android.hardware.telephony.gsm.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.gsm.xml \
+    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.cdma.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.gps.xml \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \

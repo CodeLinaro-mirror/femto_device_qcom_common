@@ -54,4 +54,7 @@
 */
 #define BTA_DM_COD \
   { 0x26, 0x04, 0x08 }
+
+/* Set AVRCP discovery timeout as 2.5 seconds */
+#define BTA_AV_RC_DISC_TIME_VAL 2500
 #endif

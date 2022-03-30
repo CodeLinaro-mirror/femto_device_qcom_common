@@ -869,7 +869,8 @@ PRODUCT_PACKAGES := \
     Contacts \
     UserDictionaryProvider \
     TeleService \
-    TelephonyProvider
+    TelephonyProvider \
+    Browser2
 
 ifneq ($(strip $(TARGET_BOARD_AUTO)),true)
 PRODUCT_PACKAGES += \

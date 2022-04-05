@@ -860,7 +860,7 @@ PRODUCT_PACKAGES := \
     AccountAndSyncSettings \
     AlarmProvider \
     Calendar \
-    Camera \
+    Camera2 \
     CertInstaller \
     DrmProvider \
     Provision \

@@ -380,6 +380,10 @@ case "$target" in
             585)
                 setprop vendor.media.target.version 4
                 ;;
+            *)
+                # default case is for bengal
+                setprop ro.sf.ro.sf.disable_triple_buffer 1
+        ;;
         esac
         ;;
     "sdm710" | "msmpeafowl")

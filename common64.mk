@@ -23,7 +23,7 @@ endif
 PRODUCT_BRAND := qcom
 PRODUCT_AAPT_CONFIG += hdpi mdpi
 
-PRODUCT_MANUFACTURER := QUALCOMM
+PRODUCT_MANUFACTURER := QTI
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=libqti-perfd-client.so \

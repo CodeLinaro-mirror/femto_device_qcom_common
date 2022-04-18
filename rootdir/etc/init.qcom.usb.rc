@@ -93,6 +93,11 @@ on boot
     mkdir /config/usb_gadget/g1/functions/uac1.uac1
     mkdir /config/usb_gadget/g1/functions/uac2.0
     mkdir /config/usb_gadget/g1/functions/uvc.0
+    mkdir /config/usb_gadget/g1/functions/hid.usb0
+    mkdir /config/usb_gadget/g1/functions/hid.usb0/protocol 0660
+    mkdir /config/usb_gadget/g1/functions/hid.usb0/subclass 0660
+    mkdir /config/usb_gadget/g1/functions/hid.usb0/report_length 0660
+    mkdir /config/usb_gadget/g1/functions/hid.usb0/report_desc 0660
     mkdir /config/usb_gadget/g1/configs/b.1 0770
     mkdir /config/usb_gadget/g2/configs/b.1 0770
     mkdir /config/usb_gadget/g1/configs/b.1/strings/0x409 0770

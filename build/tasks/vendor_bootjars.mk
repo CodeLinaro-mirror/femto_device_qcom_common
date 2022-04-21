@@ -6,7 +6,9 @@ ifneq ($(call is-vendor-board-platform,QCOM),true)
 
 #call dex_preopt.mk for extra jars
 ifneq ($(BUILD_QEMU_IMAGES),true)
+ifneq ($(PRODUCT_NAME), $(filter $(PRODUCT_NAME),aosp_arm64 aosp_arm))
 include $(BUILD_SYSTEM)/dex_preopt.mk
+endif
 endif
 
 endif

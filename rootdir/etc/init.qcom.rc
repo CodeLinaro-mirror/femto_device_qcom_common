@@ -133,6 +133,7 @@ on boot
 
     chown bluetooth net_bt /sys/class/rfkill/rfkill0/device/extldo
     chmod 0660 /sys/class/rfkill/rfkill0/device/extldo
+    chown system system /sys/kernel/snd_card/card_state
 
     # This location is used by QCRIL to host UNIX domain
     # socket files used for internal IPC within QCRIL

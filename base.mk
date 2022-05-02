@@ -1157,7 +1157,7 @@ PRODUCT_PACKAGES_DEBUG += \
 
 PRODUCT_PACKAGES += liboemaids_system
 PRODUCT_PACKAGES += liboemaids_vendor
-PRODUCT_PACKAGES += android.hardware.health@2.0-service
+PRODUCT_PACKAGES += android.hardware.health@2.1-service
 
 # framework detect libs
 PRODUCT_PACKAGES += libvndfwk_detect_jni.qti
@@ -1183,4 +1183,24 @@ ifeq ($(TARGET_FWK_SUPPORTS_FULL_VALUEADDS),true)
 SOONG_CONFIG_aosp_vs_qva_aosp_or_qva := qva
 else
 SOONG_CONFIG_aosp_vs_qva_aosp_or_qva := aosp
+endif
+
+# soong namespace for lights hal
+SOONG_CONFIG_NAMESPACES += lights
+SOONG_CONFIG_lights += lights
+
+ifeq ($(PLATFORM_VERSION), $(filter $(PLATFORM_VERSION),S 12))
+  SOONG_CONFIG_lights_lights := lightaidlV12target
+else ifeq ($(PLATFORM_VERSION), $(filter $(PLATFORM_VERSION),Tiramisu T 13))
+  SOONG_CONFIG_lights_lights := lightaidlV13target
+endif
+
+# soong namespace for vibrator hal
+SOONG_CONFIG_NAMESPACES += vibrator
+SOONG_CONFIG_vibrator += vibrator
+
+ifeq ($(PLATFORM_VERSION), $(filter $(PLATFORM_VERSION),S 12))
+  SOONG_CONFIG_vibrator_vibrator := vibratoraidlV12target
+else ifeq ($(PLATFORM_VERSION), $(filter $(PLATFORM_VERSION),Tiramisu T 13))
+  SOONG_CONFIG_vibrator_vibrator := vibratoraidlV13target
 endif

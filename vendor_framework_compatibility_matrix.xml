@@ -108,13 +108,13 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <instance>default</instance>
         </interface>
     </hal>
-    <!-- WristOrientation hal -->
+    <!-- HealthServices hal -->
     <hal format="hidl">
-        <name>vendor.google_clockwork.wristorientation</name>
+        <name>vendor.google_clockwork.healthservices</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
         <interface>
-            <name>IWristOrientation</name>
+            <name>IHealthServices</name>
             <instance>default</instance>
         </interface>
     </hal>
@@ -125,6 +125,16 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <version>1.0</version>
             <interface>
             <name>IAONUtility</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <!-- WristOrientation hal -->
+    <hal format="hidl">
+        <name>vendor.google_clockwork.wristorientation</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IWristOrientation</name>
             <instance>default</instance>
         </interface>
     </hal>

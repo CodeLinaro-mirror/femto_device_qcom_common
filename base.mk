@@ -789,7 +789,7 @@ PRODUCT_PACKAGES := \
     AlarmProvider \
     Calculator \
     Calendar \
-    Camera \
+    Camera2 \
     CellBroadcastReceiver \
     CertInstaller \
     DrmProvider \

@@ -860,7 +860,7 @@ PRODUCT_PACKAGES := \
     AccountAndSyncSettings \
     AlarmProvider \
     Calendar \
-    Camera \
+    Camera2 \
     CertInstaller \
     DrmProvider \
     Provision \
@@ -869,7 +869,8 @@ PRODUCT_PACKAGES := \
     Contacts \
     UserDictionaryProvider \
     TeleService \
-    TelephonyProvider
+    TelephonyProvider \
+    Browser2
 
 ifneq ($(strip $(TARGET_BOARD_AUTO)),true)
 PRODUCT_PACKAGES += \

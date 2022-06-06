@@ -90,6 +90,7 @@ on boot
     mkdir /config/usb_gadget/g1/functions/rmnet_bam.dpl_bam_dmux
     mkdir /config/usb_gadget/g1/functions/ncm.0
     mkdir /config/usb_gadget/g1/functions/ccid.ccid
+    mkdir /config/usb_gadget/g1/functions/uac1.uac1
     mkdir /config/usb_gadget/g1/functions/uac2.0
     mkdir /config/usb_gadget/g1/functions/uvc.0
     mkdir /config/usb_gadget/g1/configs/b.1 0770

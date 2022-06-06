@@ -3084,7 +3084,7 @@ case "$target" in
         fi
 
         case "$soc_id" in
-            "355" | "369" | "377" | "380" | "384" )
+            "355" | "369" | "377" | "380" | "384" | "401" )
       target_type=`getprop ro.hardware.type`
       if [ "$target_type" == "automotive" ]; then
 	# update frequencies

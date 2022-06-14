@@ -98,6 +98,7 @@ on boot
     mkdir /config/usb_gadget/g1/functions/hid.3
     mkdir /config/usb_gadget/g1/functions/hid.4
     mkdir /config/usb_gadget/g1/functions/hid.5
+    mkdir /config/usb_gadget/g1/functions/eem.0
     mkdir /config/usb_gadget/g1/configs/b.1 0770
     mkdir /config/usb_gadget/g2/configs/b.1 0770
     mkdir /config/usb_gadget/g1/configs/b.1/strings/0x409 0770

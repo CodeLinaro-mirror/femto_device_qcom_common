@@ -133,7 +133,7 @@ AUDIO_HARDWARE += audio.primary.msm7627a
 AUDIO_HARDWARE += audio.primary.msm7630_surf
 AUDIO_HARDWARE += audio.primary.msm7630_fusion
 #AUDIO_HARDWARE += audio.primary.default
-AUDIO_HARDWARE += audio.a2dp.default
+#AUDIO_HARDWARE += audio.a2dp.default
 AUDIO_HARDWARE += audio.usb.default
 AUDIO_HARDWARE += audio.r_submix.default
 AUDIO_HARDWARE += audio.primary.mpq8092
@@ -1221,8 +1221,13 @@ ifeq ($(TARGET_USES_QCOM_BSP_ATEL),true)
     PRODUCT_PROPERTY_OVERRIDES += persist.radio.multisim.config=ssss
 endif
 
+ifeq ($(TARGET_HAS_DIAG_ROUTER),true)
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    vendor.usb.diag.func.name=ffs
+else
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     vendor.usb.diag.func.name=diag
+endif
 
 # VNDK-SP:
 PRODUCT_PACKAGES += \

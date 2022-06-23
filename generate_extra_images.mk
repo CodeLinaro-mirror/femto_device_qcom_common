@@ -7,6 +7,8 @@
 # and gets parsed before build/core/Makefile, which has these
 # variables defined. build/core/Makefile will overwrite these
 # variables again.
+
+ifneq ($(PREBUILT_KERNEL),true)
 ifneq ($(strip $(TARGET_NO_KERNEL)),true)
 
 ifneq ($(strip $(BOARD_KERNEL_BINARIES)),)
@@ -34,12 +36,12 @@ endif
 recovery_ramdisk := $(PRODUCT_OUT)/ramdisk-recovery.img
 INSTALLED_USBIMAGE_TARGET := $(PRODUCT_OUT)/usbdisk.img
 endif
+endif
 
 #----------------------------------------------------------------------
 # Generate persist image (persist.img)
 #----------------------------------------------------------------------
 ifneq ($(strip $(BOARD_PERSISTIMAGE_PARTITION_SIZE)),)
-ifneq ($(strip $(TARGET_NO_KERNEL)),true)
 
 TARGET_OUT_PERSIST := $(PRODUCT_OUT)/persist
 
@@ -62,11 +64,11 @@ $(INSTALLED_PERSISTIMAGE_TARGET): $(MKEXTUSERIMG) $(MAKE_EXT4FS) $(INTERNAL_PERS
 ALL_DEFAULT_INSTALLED_MODULES += $(INSTALLED_PERSISTIMAGE_TARGET)
 ALL_MODULES.$(LOCAL_MODULE).INSTALLED += $(INSTALLED_PERSISTIMAGE_TARGET)
 droidcore: $(INSTALLED_PERSISTIMAGE_TARGET)
+$(call dist-for-goals, droidcore, $(PRODUCT_OUT)/persist.img)
 
 .PHONY: persistimage
 persistimage: $(INSTALLED_PERSISTIMAGE_TARGET)
 
-endif
 endif
 
 #----------------------------------------------------------------------
@@ -94,6 +96,8 @@ ALL_DEFAULT_INSTALLED_MODULES += $(INSTALLED_METADATAIMAGE_TARGET)
 ALL_MODULES.$(LOCAL_MODULE).INSTALLED += $(INSTALLED_METADATAIMAGE_TARGET)
 droidcore: $(INSTALLED_METADATAIMAGE_TARGET)
 
+$(call dist-for-goals, droidcore, $(PRODUCT_OUT)/metadata.img)
+
 .PHONY: metadataimage
 metadataimage: $(INSTALLED_METADATAIMAGE_TARGET)
 
@@ -102,11 +106,12 @@ endif
 #----------------------------------------------------------------------
 # Generate device tree overlay image (dtbo.img)
 #----------------------------------------------------------------------
+ifneq ($(PREBUILT_KERNEL),true)
 ifneq ($(strip $(TARGET_NO_KERNEL)),true)
 ifeq ($(strip $(BOARD_KERNEL_SEPARATED_DTBO)),true)
 
 MKDTIMG := $(HOST_OUT_EXECUTABLES)/mkdtimg$(HOST_EXECUTABLE_SUFFIX)
-
+BOARD_PREBUILT_DTBOIMAGE := $(PRODUCT_OUT)/prebuilt_dtbo.img
 # Most specific paths must come first in possible_dtbo_dirs
 possible_dtbo_dirs = $(KERNEL_OUT)/arch/$(TARGET_KERNEL_ARCH)/boot/dts $(KERNEL_OUT)/arch/arm/boot/dts
 $(shell mkdir -p $(possible_dtbo_dirs))
@@ -127,10 +132,11 @@ $(BOARD_PREBUILT_DTBOIMAGE): $(MKDTIMG) $(INSTALLED_KERNEL_TARGET)
 
 endif
 endif
-
+endif
 #----------------------------------------------------------------------
 # Generate device tree image (dt.img)
 #----------------------------------------------------------------------
+ifneq ($(PREBUILT_KERNEL),true)
 ifneq ($(strip $(TARGET_NO_KERNEL)),true)
 ifeq ($(strip $(BOARD_KERNEL_SEPARATED_DT)),true)
 ifeq ($(strip $(BUILD_TINY_ANDROID)),true)
@@ -156,6 +162,7 @@ $(INSTALLED_DTIMAGE_TARGET): $(DTBTOOL) $(INSTALLED_KERNEL_TARGET)
 
 ALL_DEFAULT_INSTALLED_MODULES += $(INSTALLED_DTIMAGE_TARGET)
 ALL_MODULES.$(LOCAL_MODULE).INSTALLED += $(INSTALLED_DTIMAGE_TARGET)
+endif
 endif
 endif
 
@@ -212,14 +219,17 @@ endif
 endif
 
 ###################################################################################################
-
+ifneq ($(PREBUILT_KERNEL),true)
+ifneq ($(strip $(TARGET_NO_BOOTLOADER)),true)
 .PHONY: aboot
 ifeq ($(USESECIMAGETOOL), true)
 aboot: $(TARGET_SIGNED_BOOTLOADER) gensecimage_install
 else
 aboot: $(INSTALLED_BOOTLOADER_MODULE)
 endif
+endif
 
+ifneq ($(strip $(TARGET_NO_KERNEL)),true)
 .PHONY: kernel
 kernel: $(INSTALLED_BOOTIMAGE_TARGET) $(INSTALLED_DTBOIMAGE_TARGET)
 
@@ -270,3 +280,5 @@ endif
 
 #Print PRODUCT_PACKAGES & PRODUCT_PACKAGES_DEBUG to output log
 $(call dump-products)
+endif
+endif

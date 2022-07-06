@@ -1204,7 +1204,7 @@ SOONG_CONFIG_lights += lights
 
 ifeq ($(PLATFORM_VERSION), $(filter $(PLATFORM_VERSION),S 12))
   SOONG_CONFIG_lights_lights := lightaidlV12target
-else ifeq ($(PLATFORM_VERSION), $(filter $(PLATFORM_VERSION),Tiramisu T 13))
+else ifeq ($(PLATFORM_VERSION), $(filter $(PLATFORM_VERSION),T 13))
   SOONG_CONFIG_lights_lights := lightaidlV13target
 endif
 
@@ -1214,6 +1214,13 @@ SOONG_CONFIG_vibrator += vibrator
 
 ifeq ($(PLATFORM_VERSION), $(filter $(PLATFORM_VERSION),S 12))
   SOONG_CONFIG_vibrator_vibrator := vibratoraidlV12target
-else ifeq ($(PLATFORM_VERSION), $(filter $(PLATFORM_VERSION),Tiramisu T 13))
+else ifeq ($(PLATFORM_VERSION), $(filter $(PLATFORM_VERSION),T 13))
   SOONG_CONFIG_vibrator_vibrator := vibratoraidlV13target
+endif
+
+ifeq ($(PLATFORM_VERSION), $(filter $(PLATFORM_VERSION),T 13))
+  # soong namespace for kernel-tests-internal
+  SOONG_CONFIG_NAMESPACES += kernel_tests_internal
+  SOONG_CONFIG_kernel_tests_internal += kernel_tests_internal
+  SOONG_CONFIG_kernel_tests_internal_kernel_tests_internal := kernel_tests_internal_llvm_ge_13
 endif

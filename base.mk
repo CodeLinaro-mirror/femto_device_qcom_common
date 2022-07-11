@@ -1051,6 +1051,14 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute-0.xml
 endif
 
+ifeq ($(PLATFORM_VERSION),$(filter $(PLATFORM_VERSION),S 12))
+PRODUCT_COPY_FILES += \
+    device/qcom/common/wpa_supplicant_hidl.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.wpa_supplicant.rc
+else
+PRODUCT_COPY_FILES += \
+    device/qcom/common/wpa_supplicant_aidl.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.wpa_supplicant.rc
+endif
+
 # include additional build utilities
 -include device/qcom/common/utils.mk
 

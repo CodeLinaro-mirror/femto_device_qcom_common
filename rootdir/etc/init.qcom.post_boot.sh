@@ -244,6 +244,13 @@ function configure_automotive_sku_parameters() {
     echo 1612800000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/max_freq
     echo 1612800000 > /sys/class/devfreq/soc\:qcom,cpu4-cpu-l3-lat/max_freq
     echo 1612800000 > /sys/class/devfreq/soc\:qcom,cpu7-cpu-l3-lat/max_freq
+    echo 902400000  > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver
+    echo 902400000  > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
+    echo 902400000  > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:prime
+    echo 1612800000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver
+    echo 1612800000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
+    echo 1612800000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:prime
+
 
 #read feature id from nvram
 reg_val=`cat /sys/devices/platform/soc/780130.qfprom/qfprom0/nvmem | od -An -t d4`
@@ -277,6 +284,10 @@ function configure_automotive_sku_parameters_sa8195() {
         echo 940800000  > /sys/class/devfreq/soc\:qcom,cpu4-cpu-l3-lat/min_freq
         echo 1651200000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/max_freq
 	echo 1651200000 > /sys/class/devfreq/soc\:qcom,cpu4-cpu-l3-lat/max_freq
+	echo 940800000  > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
+        echo 940800000  > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:prime
+        echo 1651200000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
+	echo 1651200000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:prime
 
 	#read feature id
         reg_val=`cat /sys/devices/platform/soc/780130.qfprom/qfprom0/nvmem | od -An -t d4`
@@ -340,6 +351,10 @@ if [ $feature_id == 6 ]; then
 	echo 1017600000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/max_freq
 	echo 940800000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/min_freq
 	echo 1017600000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/max_freq
+	echo 940800000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver
+	echo 1017600000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
+	echo 940800000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver
+	echo 1017600000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
 	echo 3 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
 	echo 1016 > /sys/devices/platform/soc/soc:aop-set-ddr-freq/set_ddr_capped_freq
 	setprop vendor.sku_identified 1
@@ -370,6 +385,10 @@ elif [ $feature_id == 7 ]; then
     echo 1017600000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/max_freq
     echo 940800000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/min_freq
     echo 1017600000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/max_freq
+    echo 940800000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver
+    echo 1017600000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
+    echo 940800000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver
+    echo 1017600000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
     echo 4 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
     echo 1016 > /sys/devices/platform/soc/soc:aop-set-ddr-freq/set_ddr_capped_freq
     setprop vendor.sku_identified 1
@@ -400,6 +419,10 @@ elif [ $feature_id == 5 ]; then
 	echo 1363200000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/max_freq
 	echo 940800000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/min_freq
 	echo 1363200000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/max_freq
+        echo 940800000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver
+        echo 1363200000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
+        echo 940800000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver
+        echo 1363200000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
 	echo 2 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
 	echo 1333 > /sys/devices/platform/soc/soc:aop-set-ddr-freq/set_ddr_capped_freq
 	setprop vendor.sku_identified 1
@@ -430,6 +453,10 @@ elif [ $feature_id == 4 ] || [ $feature_id == 3 ]; then
 	echo 1363200000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/max_freq
 	echo 940800000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/min_freq
 	echo 1363200000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/max_freq
+        echo 940800000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver
+        echo 1363200000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
+        echo 940800000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver
+        echo 1363200000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
 	echo 0 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
 	echo 1555 > /sys/devices/platform/soc/soc:aop-set-ddr-freq/set_ddr_capped_freq
 	setprop vendor.sku_identified 1
@@ -460,6 +487,10 @@ else
 	echo 1363200000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/max_freq
 	echo 940800000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/min_freq
 	echo 1363200000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/max_freq
+        echo 940800000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver
+        echo 1363200000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
+        echo 940800000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver
+        echo 1363200000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
 	echo 0 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
 	echo 1555 > /sys/devices/platform/soc/soc:aop-set-ddr-freq/set_ddr_capped_freq
         setprop vendor.sku_identified 1

@@ -88,16 +88,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <instance>default</instance>
         </interface>
     </hal>
-    <!-- SidekickMetrics hal -->
-    <hal format="hidl" optional="true">
-        <name>vendor.qti.hardware.sidekickmetrics</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-            <interface>
-            <name>ISidekickMetrics</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
     <!-- SidekickUtility hal -->
     <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.sidekickutility</name>

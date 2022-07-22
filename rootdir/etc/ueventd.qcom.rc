@@ -198,6 +198,9 @@ firmware_directories /vendor/firmware_mnt/image/
 #slate-ux-ctl - glink
 /dev/glink_pkt_slate_ux_ctl         0660  system  system
 
+#slate-qcli - glink
+/dev/glink_pkt_slate_qcli           0660  system  system
+
 #sensors - glink
 /dev/glinkpkt_slate_ssc_hal         0660  system  system
 /dev/glinkpkt_slate_sso_hal         0660  system  system

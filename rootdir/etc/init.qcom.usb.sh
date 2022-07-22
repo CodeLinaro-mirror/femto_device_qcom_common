@@ -26,7 +26,10 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-#
+# Changes from Qualcomm Innovation Center are provided under the
+# following license:
+# Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+# SPDX-License-Identifier: BSD-3-Clause-Clear
 
 # Set platform variables
 soc_hwplatform=`cat /sys/devices/soc0/hw_platform 2> /dev/null`
@@ -256,15 +259,6 @@ if [ -d /config/usb_gadget/g1/functions/uvc.0 ]; then
 	echo 4147200 > streaming/mjpeg/m/1080p/dwMaxVideoFrameBufferSize
 	echo 333333 > streaming/mjpeg/m/1080p/dwDefaultFrameInterval
 	echo "333333\n666666\n1000000\n5000000\n" > streaming/mjpeg/m/1080p/dwFrameInterval
-
-	mkdir -p streaming/mjpeg/m/1440p
-	echo 2560 > streaming/mjpeg/m/1440p/wWidth
-	echo 1440 > streaming/mjpeg/m/1440p/wHeight
-	echo 117964800 > streaming/mjpeg/m/1440p/dwMinBitRate
-	echo 1769472000 > streaming/mjpeg/m/1440p/dwMaxBitRate
-	echo 7372800 > streaming/mjpeg/m/1440p/dwMaxVideoFrameBufferSize
-	echo 333333 > streaming/mjpeg/m/1440p/dwDefaultFrameInterval
-	echo "333333\n666666\n1000000\n5000000\n" > streaming/mjpeg/m/1440p/dwFrameInterval
 
 	mkdir -p streaming/mjpeg/m/2160p
 	echo 3840 > streaming/mjpeg/m/2160p/wWidth

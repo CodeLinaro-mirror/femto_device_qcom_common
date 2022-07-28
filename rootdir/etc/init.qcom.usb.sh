@@ -319,3 +319,16 @@ if [ -d /config/usb_gadget/g1/functions/uvc.0 ]; then
 	ln -s streaming/header/h1 streaming/class/hs/
 	ln -s streaming/header/h streaming/class/ss/
 fi
+
+
+#
+# Initialize HID conifguration.
+#
+if [ -d /config/usb_gadget/g1/functions/hid.usb0 ]; then
+	cd /config/usb_gadget/g1/functions/hid.usb0
+
+	echo 0 > protocol                     #  set the HID protocol
+        echo 0 > subclass                     #  set the device subclass
+        echo 3 > report_length                #  set the byte length of HID reports
+        cat /data/vendor/misc/hid_report_desc.bin > report_desc
+fi

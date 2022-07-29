@@ -240,11 +240,17 @@ kernelclean:
 	@echo "kernel cleanup done"
 
 # Set correct dependency for kernel modules
+ifeq ($(TARGET_PRODUCT),sdk_car_x86_64)
+ifneq ($(INSTALLED_BOOTIMAGE_TARGET),)
+
 ifneq ($(BOARD_VENDOR_KERNEL_MODULES),)
 $(BOARD_VENDOR_KERNEL_MODULES): $(INSTALLED_BOOTIMAGE_TARGET)
 endif
 ifneq ($(BOARD_RECOVERY_KERNEL_MODULES),)
 $(BOARD_RECOVERY_KERNEL_MODULES): $(INSTALLED_BOOTIMAGE_TARGET)
+endif
+
+endif
 endif
 
 define board-vendorkernel-ota

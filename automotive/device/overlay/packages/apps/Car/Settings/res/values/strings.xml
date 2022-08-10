@@ -23,4 +23,6 @@
     <!-- Wifi hotspot settings -->
     <!-- Label for Wifi security type OWE Transition [CHAR LIMIT=25]-->
     <string name="wifi_hotspot_owe_transition">Enhanced Open</string>
+    <!-- Label for Wifi security type WPA3 SAE [CHAR LIMIT=25]-->
+    <string name="wifi_hotspot_wpa3_sae">WPA3 Personal</string>
 </resources>

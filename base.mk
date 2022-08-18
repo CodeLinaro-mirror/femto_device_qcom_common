@@ -1051,8 +1051,21 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute-0.xml
 endif
 
+ifeq ($(PLATFORM_VERSION),$(filter $(PLATFORM_VERSION),S 12))
+PRODUCT_COPY_FILES += \
+    device/qcom/common/wpa_supplicant_hidl.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.wpa_supplicant.rc
+else
+PRODUCT_COPY_FILES += \
+    device/qcom/common/wpa_supplicant_aidl.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.wpa_supplicant.rc
+endif
+
 # include additional build utilities
 -include device/qcom/common/utils.mk
+
+ifneq ($(strip $(TARGET_BUILD_VARIANT)),user)
+PRODUCT_COPY_FILES += \
+    device/qcom/common/rootdir/etc/init.qcom.testscripts.sh:$(TARGET_COPY_OUT_PRODUCT)/etc/init.qcom.testscripts.sh
+endif
 
 ifneq ($(strip $(TARGET_USES_RRO)),true)
 # enable overlays to use our version of

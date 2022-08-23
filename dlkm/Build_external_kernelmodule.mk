@@ -58,6 +58,23 @@ MODULE_KP_TARGET := $(MODULE_KP_OUT_DIR)/$(LOCAL_MODULE_KBUILD_NAME)
 $(LOCAL_BUILT_MODULE): $(MODULE_KP_TARGET) | $(ACP)
 	$(transform-prebuilt-to-target)
 
+# Add Module.symvers as extra intermediate if we're creating a KO
+ifneq ($(filter %.ko,$(LOCAL_MODULE_KBUILD_NAME)),)
+# Grep would fail if this DLKM doesn't export any symbols, so handle that it might fail
+intermediate_export_symvers := $(call local-intermediates-dir)/Module.symvers
+$(intermediate_export_symvers): local_module_kbuild_name := $(LOCAL_MODULE_KBUILD_NAME)
+$(intermediate_export_symvers): $(MODULE_KP_OUT_DIR)/Module.symvers
+	-grep $(basename $(local_module_kbuild_name)) $< > $@
+	touch $@
+
+LOCAL_INTERMEDIATE_TARGETS += $(intermediate_export_symvers)
+
+# Module.symvers generated via the combined target (make modules)
+$(MODULE_KP_OUT_DIR)/Module.symvers: $(MODULE_KP_COMBINED_TARGET)
+
+intermediate_export_symvers :=
+endif
+
 # To build the module inside kernel_platform, depend on the kbuild_target
 $(MODULE_KP_TARGET): $(MODULE_KP_COMBINED_TARGET)
 $(MODULE_KP_TARGET): $(LOCAL_ADDITIONAL_DEPENDENCIES)
@@ -108,12 +125,15 @@ $(MODULE_KP_COMBINED_TARGET)_RULE := 1
 $(MODULE_KP_COMBINED_TARGET): local_path     := $(LOCAL_PATH)
 $(MODULE_KP_COMBINED_TARGET): local_out      := $(MODULE_KP_OUT_DIR)
 $(MODULE_KP_COMBINED_TARGET): kbuild_options := $(KBUILD_OPTIONS)
-$(MODULE_KP_COMBINED_TARGET): $(MODULE_KP_COMMON_TARGET)
+$(MODULE_KP_COMBINED_TARGET): required_kos   := $(KBUILD_REQUIRED_KOS)
+$(MODULE_KP_COMBINED_TARGET): kbuild_symvers := $(sort $(foreach m,$(required_kos),$(call intermediates-dir-for,DLKM,$m)/Module.symvers))
+$(MODULE_KP_COMBINED_TARGET): $(MODULE_KP_COMMON_TARGET) $(sort $(foreach m,$(KBUILD_REQUIRED_KOS),$(call intermediates-dir-for,DLKM,$m)/Module.symvers))
 	export ANDROID_BUILD_TOP=$$(pwd) ; export KP_OUT_DIR=$$(cd $(KP_DLKM_INTERMEDIATE)/kernel_platform ; pwd) ; \
 	(cd $(KERNEL_PLATFORM_PATH) && \
 	    EXT_MODULES=$(KERNEL_PLATFORM_TO_ROOT)/$(local_path) \
 	    OUT_DIR=$${KP_OUT_DIR} \
 	    KERNEL_KIT=$${ANDROID_BUILD_TOP}/$(KERNEL_PREBUILT_DIR) \
+	    $(if $(kbuild_symvers),KBUILD_EXTRA_SYMBOLS="$(addprefix $${ANDROID_BUILD_TOP}/,$(kbuild_symvers))") \
 	    ./build/build_module.sh $(kbuild_options) \
 	)
 	touch $@

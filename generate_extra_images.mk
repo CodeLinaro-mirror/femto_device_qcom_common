@@ -42,6 +42,7 @@ endif
 # Generate persist image (persist.img)
 #----------------------------------------------------------------------
 ifneq ($(strip $(BOARD_PERSISTIMAGE_PARTITION_SIZE)),)
+ifneq ($(strip $(TARGET_NO_KERNEL)),true)
 
 TARGET_OUT_PERSIST := $(PRODUCT_OUT)/persist
 
@@ -69,6 +70,7 @@ $(call dist-for-goals, droidcore, $(PRODUCT_OUT)/persist.img)
 .PHONY: persistimage
 persistimage: $(INSTALLED_PERSISTIMAGE_TARGET)
 
+endif
 endif
 
 #----------------------------------------------------------------------
@@ -249,12 +251,14 @@ kernelclean:
 	$(hide) if [ -f "$(PRODUCT_OUT)/kernel" ]; then  rm $(PRODUCT_OUT)/kernel; fi
 	@echo "kernel cleanup done"
 
+ifeq ($(TARGET_COMPILE_WITH_MSM_KERNEL),true)
 # Set correct dependency for kernel modules
 ifneq ($(BOARD_VENDOR_KERNEL_MODULES),)
 $(BOARD_VENDOR_KERNEL_MODULES): $(INSTALLED_BOOTIMAGE_TARGET)
 endif
 ifneq ($(BOARD_RECOVERY_KERNEL_MODULES),)
 $(BOARD_RECOVERY_KERNEL_MODULES): $(INSTALLED_BOOTIMAGE_TARGET)
+endif
 endif
 
 define board-vendorkernel-ota

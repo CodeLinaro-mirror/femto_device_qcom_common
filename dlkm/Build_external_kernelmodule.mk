@@ -9,12 +9,6 @@
 # Assign external kernel modules to the DLKM class
 LOCAL_MODULE_CLASS := DLKM
 
-# Set the default install path to system/lib/modules
-LOCAL_MODULE_PATH := $(strip $(LOCAL_MODULE_PATH))
-ifeq ($(LOCAL_MODULE_PATH),)
-  LOCAL_MODULE_PATH := $(TARGET_OUT)/lib/modules
-endif
-
 # LOCAL_MODULE_KBUILD_NAME is the name of the .ko that kernel makefiles generate
 # for instance, one could write my_device.ko, but want it to be called
 # the_device.ko on vendor image (and rest of Android build system)
@@ -105,12 +99,12 @@ $(MODULE_KP_COMBINED_TARGET): local_path     := $(LOCAL_PATH)
 $(MODULE_KP_COMBINED_TARGET): local_out      := $(MODULE_KP_OUT_DIR)
 $(MODULE_KP_COMBINED_TARGET): kbuild_options := $(KBUILD_OPTIONS)
 $(MODULE_KP_COMBINED_TARGET): $(MODULE_KP_COMMON_TARGET)
+	export ANDROID_BUILD_TOP=$$(pwd) ; export KP_OUT_DIR=$$(cd $(KP_DLKM_INTERMEDIATE)/kernel_platform ; pwd) ; \
 	(cd $(KERNEL_PLATFORM_PATH) && \
 	    EXT_MODULES=$(KERNEL_PLATFORM_TO_ROOT)/$(local_path) \
-	    OUT_DIR=$(KERNEL_PLATFORM_TO_ROOT)/$(KP_DLKM_INTERMEDIATE)/kernel_platform \
-	    KERNEL_KIT=$(KERNEL_PLATFORM_TO_ROOT)/$(KERNEL_PREBUILT_DIR) \
+	    OUT_DIR=$${KP_OUT_DIR} \
+	    KERNEL_KIT=$${ANDROID_BUILD_TOP}/$(KERNEL_PREBUILT_DIR) \
 	    ./build/build_module.sh $(kbuild_options) \
-	    ANDROID_BUILD_TOP=$$(realpath $$(pwd)/$(KERNEL_PLATFORM_TO_ROOT)) \
 	)
 	touch $@
 
@@ -118,31 +112,8 @@ endif
 
 else # Use old full prebuilt kernel platform method
 
-# Since this file will be included more than once for directories
-# with more than one kernel module, the shared KBUILD_TARGET rule should
-# only be defined once to avoid "overriding commands ..." warnings.
-ifndef $(MODULE_KP_COMBINED_TARGET)_RULE
-$(MODULE_KP_COMBINED_TARGET)_RULE := 1
+$(error Old full prebulit kernel platform is deprecated. Upgrade to newer kernel platform which has KERNEL_KIT support)
 
-# Kernel modules have to be built after:
-#  * the kernel config has been created
-#  * host executables, like scripts/basic/fixdep, have been built
-#    (otherwise parallel invocations of the kernel build system will
-#    fail as they all try to compile these executables at the same time)
-#  * a full kernel build (to make module versioning work)
-$(MODULE_KP_COMBINED_TARGET): local_path     := $(LOCAL_PATH)
-$(MODULE_KP_COMBINED_TARGET): local_out      := $(MODULE_KP_OUT_DIR)
-$(MODULE_KP_COMBINED_TARGET): kbuild_options := $(KBUILD_OPTIONS)
-$(MODULE_KP_COMBINED_TARGET):
-	(cd $(KERNEL_PLATFORM_PATH) && \
-	    EXT_MODULES=la/$(local_path) \
-	    MODULE_OUT=$(KERNEL_PLATFORM_TO_ROOT)$(local_out) \
-	    ./build/build_module.sh $(kbuild_options) \
-	    ANDROID_BUILD_TOP=$$(realpath $$(pwd)/$(KERNEL_PLATFORM_TO_ROOT)) \
-	)
-	touch $@
-
-endif
 endif
 
 # Once the KBUILD_OPTIONS variable has been used for the target

@@ -88,16 +88,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <instance>default</instance>
         </interface>
     </hal>
-    <!-- SidekickMetrics hal -->
-    <hal format="hidl" optional="true">
-        <name>vendor.qti.hardware.sidekickmetrics</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-            <interface>
-            <name>ISidekickMetrics</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
     <!-- SidekickUtility hal -->
     <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.sidekickutility</name>
@@ -108,13 +98,13 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <instance>default</instance>
         </interface>
     </hal>
-    <!-- WristOrientation hal -->
+    <!-- HealthServices hal -->
     <hal format="hidl">
-        <name>vendor.google_clockwork.wristorientation</name>
+        <name>vendor.google_clockwork.healthservices</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
         <interface>
-            <name>IWristOrientation</name>
+            <name>IHealthServices</name>
             <instance>default</instance>
         </interface>
     </hal>
@@ -125,6 +115,16 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <version>1.0</version>
             <interface>
             <name>IAONUtility</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <!-- WristOrientation hal -->
+    <hal format="hidl">
+        <name>vendor.google_clockwork.wristorientation</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IWristOrientation</name>
             <instance>default</instance>
         </interface>
     </hal>
@@ -200,6 +200,20 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <version>1.0</version>
         <interface>
             <name>IBluetoothAudio</name>
+            <instance>default</instance>
+        </interface>
+   </hal>
+   <!-- Bluetooth Offload HalService -->
+   <hal format="hidl">
+        <name>vendor.qti.hardware.bluetooth_offload</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IBluetoothOffload</name>
+            <instance>default</instance>
+        </interface>
+        <interface>
+            <name>IBluetoothOffloadService</name>
             <instance>default</instance>
         </interface>
    </hal>

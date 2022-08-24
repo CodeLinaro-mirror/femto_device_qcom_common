@@ -226,6 +226,8 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/glink_pkt_slate_bt_ctrl        0660  system  system
 /dev/glink_pkt_bt_offload_event     0660  system  system
 /dev/glink_pkt_slate_bt_app         0660  system  system
+/dev/glink_pkt_dcf_bt_ctrl          0660  system  system
+/dev/glink_pkt_dcf_bt_data          0660  system  system
 
 #rawdump
 /dev/block/platform/soc/4744000.sdhci/by-name/rawdump       0660   root     system

@@ -236,6 +236,9 @@ subsystem dma_heap
 /dev/glinkpkt_slate_ssc_test_13     0660  system  system
 /dev/glinkpkt_slate_ssc_test_14     0660  system  system
 
+#location glink
+/dev/glink_pkt_slate_location_ctrl         0660  system  system
+
 #Vibrator offload device
 /dev/glinkpkt_slate_haptics_offload     0660  system  system
 

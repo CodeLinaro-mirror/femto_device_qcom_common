@@ -4286,7 +4286,7 @@ case "$target" in
 
         #power/perf tunings for khaje
         case "$soc_id" in
-                 "518" )
+                 "518" | "561")
 
             # Core control parameters on big
             echo 0 > /sys/devices/system/cpu/cpu0/core_ctl/enable
@@ -5260,7 +5260,7 @@ case "$target" in
     "msmnile")
 	# cpuset parameters
 	target_varient=`getprop ro.build.product`
-        if [ "$target_varient" == "msmnile_gvmq" ]; then
+        if [ "$target_varient" == "msmnile_gvmq" ] || [ "$target_varient" == "msmnile_gvmgh" ]; then
 		echo 4-7 > /dev/cpuset/background/cpus
 		echo 4-7 > /dev/cpuset/system-background/cpus
 

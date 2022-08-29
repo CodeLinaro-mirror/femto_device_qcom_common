@@ -46,10 +46,11 @@ def LoadFilesMap(zip, name="RADIO/filesmap"):
   except KeyError:
     print ("Warning: could not find %s in %s." % (name, zip))
     data = ""
+  data = data.decode('UTF-8')
   d = {}
-  for line in data.split(b'\n'):
+  for line in data.split("\n"):
     line = line.strip()
-    if not line or line.startswith(b'#'):
+    if not line or line.startswith("#"):
       continue
     pieces = line.split()
     if not (len(pieces) == 2):

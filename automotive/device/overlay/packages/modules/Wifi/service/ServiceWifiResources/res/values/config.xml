@@ -69,4 +69,7 @@
     <!--Enable Wifi STA + STA concurrent for local only connections-->
     <bool translatable="false" name="config_wifiMultiStaLocalOnlyConcurrencyEnabled">true</bool>
 
+    <!-- Wifi driver supports 5GHz band for softap when chip support 5GHz -->
+    <bool translatable="false" name="config_wifiSoftap5ghzSupported">true</bool>
+
 </resources>

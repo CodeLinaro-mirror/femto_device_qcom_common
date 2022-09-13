@@ -222,10 +222,12 @@ CHROMIUM += libwebviewchromium_plat_support
 #CIMAX
 CIMAX := libcimax_spi
 
+ifneq ($(TARGET_BOARD_AUTO),true)
 ifneq ($(TARGET_HAS_LOW_RAM),true)
 #CM
 CM :=CMFileManager
 #CM += Trebuchet
+endif
 endif
 
 #CONNECTIVITY
@@ -854,31 +856,31 @@ endif
 PRODUCT_PACKAGES := \
     Gallery2 \
     Music \
-    netutils-wrapper-1.0
-
-ifneq ($(strip $(TARGET_BOARD_AUTO)),true)
-PRODUCT_PACKAGES := \
+    netutils-wrapper-1.0 \
     AccountAndSyncSettings \
-    DeskClock \
     AlarmProvider \
-    Calculator \
     Calendar \
     Camera \
-    CellBroadcastReceiver \
     CertInstaller \
     DrmProvider \
+    Provision \
+    CalendarProvider \
+    SyncProvider
+
+ifneq ($(strip $(TARGET_BOARD_AUTO)),true)
+PRODUCT_PACKAGES += \
+    DeskClock \
+    Calculator \
+    CellBroadcastReceiver \
     Email \
     LatinIME \
     Phone \
-    Provision \
     Protips \
     QuickSearchBox \
     Settings \
     Sync \
     SystemUI \
     Updater \
-    CalendarProvider \
-    SyncProvider \
     SoundRecorder \
     IM \
     VoiceDialer \

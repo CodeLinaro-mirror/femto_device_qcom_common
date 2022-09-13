@@ -240,11 +240,16 @@ kernelclean:
 	@echo "kernel cleanup done"
 
 # Set correct dependency for kernel modules
+ifneq ($(TARGET_PRODUCT),sdk_car_x86_64)
+# INSTALLED_BOOTIMAGE_TARGET is not set for emulator build
+
 ifneq ($(BOARD_VENDOR_KERNEL_MODULES),)
 $(BOARD_VENDOR_KERNEL_MODULES): $(INSTALLED_BOOTIMAGE_TARGET)
 endif
 ifneq ($(BOARD_RECOVERY_KERNEL_MODULES),)
 $(BOARD_RECOVERY_KERNEL_MODULES): $(INSTALLED_BOOTIMAGE_TARGET)
+endif
+
 endif
 
 define board-vendorkernel-ota

@@ -148,7 +148,7 @@ case "$target" in
                     setprop vendor.media.sdmmagpie.version 1
                 fi
                 ;;
-            355)
+            355|401)
                 setprop vendor.media.sm6150.version 1
                 setprop vendor.chre.enabled 0
                 ;;

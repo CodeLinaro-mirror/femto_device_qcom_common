@@ -59,4 +59,9 @@
 
 #define BTM_DEFAULT_SCAN_TYPE         BTM_SCAN_TYPE_STANDARD
 
+/* Sets the Page_Scan_Activity:  the interval between the start of two
+* consecutive page scans. */
+#define BTM_DEFAULT_CONN_INTERVAL 0x0800
+
+
 #endif

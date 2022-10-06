@@ -61,3 +61,7 @@ service DiagDaemon /system/vendor/bin/diag_socket_log -f /sdcard/ipaddress.txt
     disabled
     user root
     group root system log diag net_raw
+
+# crash dump trigger from audio subsystem
+on property:vendor.audio.crash.trigger=1
+    exec u:r:vendor-qti-testscripts:s0 -- /vendor/bin/sh /vendor/bin/init.qti.audio.debug.sh

@@ -231,9 +231,9 @@ subsystem dma_heap
 /dev/glinkpkt_slate_haptics_offload     0660  system  system
 
 #Bluetooth offload - glink
-/dev/glink_pkt_slate_bt_ctrl        0660  system  system
-/dev/glink_pkt_bt_offload_event     0660  system  system
-/dev/glink_pkt_slate_bt_app         0660  system  system
+/dev/glink_pkt_slate_bt_ctrl        0660  bluetooth  bluetooth
+/dev/glink_pkt_bt_offload_event     0660  bluetooth  bluetooth
+/dev/glink_pkt_slate_bt_app         0660  bluetooth  bluetooth
 /dev/glink_pkt_dcf_bt_ctrl          0660  system  system
 /dev/glink_pkt_dcf_bt_data          0660  system  system
 

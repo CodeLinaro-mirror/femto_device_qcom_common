@@ -5157,6 +5157,7 @@ case "$target" in
 		echo 1 > /proc/sys/vm/watermark_scale_factor
 		# Enable oom_reaper
 		echo 1 > /proc/sys/vm/reap_mem_on_sigkill
+		echo fc > /sys/class/net/eth0/queues/rx-0/rps_cpus
 
 	else
 		# Core control parameters for gold

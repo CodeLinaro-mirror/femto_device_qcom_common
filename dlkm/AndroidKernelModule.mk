@@ -68,7 +68,7 @@ $(KBUILD_MODULE): kbuild_out := $(KBUILD_OUT_DIR)/$(LOCAL_MODULE_KBUILD_NAME)
 $(KBUILD_MODULE): $(KBUILD_TARGET)
 $(KBUILD_MODULE): $(LOCAL_ADDITIONAL_DEPENDENCIES)
 ifneq "$(LOCAL_MODULE_KBUILD_NAME)" ""
-	mv -f $(kbuild_out) $@
+	cp -r $(kbuild_out) $@
 endif
 
 # To ensure KERNEL_OUT and TARGET_PREBUILT_INT_KERNEL are defined,

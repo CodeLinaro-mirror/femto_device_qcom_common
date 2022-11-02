@@ -107,6 +107,24 @@ enable_bengal_ftrace_event_tracing()
     enable_bengal_tracing_events
 }
 
+create_stp_policy()
+{
+    mkdir /config/stp-policy/coresight-stm:p_ost.policy
+    chmod 660 /config/stp-policy/coresight-stm:p_ost.policy
+    mkdir /config/stp-policy/coresight-stm:p_ost.policy/default
+    chmod 660 /config/stp-policy/coresight-stm:p_ost.policy/default
+    echo 0x10 > /sys/bus/coresight/devices/coresight-stm/traceid
+}
+
+adjust_permission()
+{
+    #add permission for block_size, mem_type, mem_size nodes to collect diag over QDSS by ODL
+    #application by "oem_2902" group
+    chown -h root.oem_2902 /sys/devices/platform/soc/8048000.tmc/coresight-tmc-etr/block_size
+    chmod 660 /sys/devices/platform/soc/8048000.tmc/coresight-tmc-etr/block_size
+    chown -h root.oem_2902 /sys/devices/platform/soc/8048000.tmc/coresight-tmc-etr/buffer_size
+    chmod 660 /sys/devices/platform/soc/8048000.tmc/coresight-tmc-etr/buffer_size
+}
 # function to enable ftrace event transfer to CoreSight STM
 enable_bengal_stm_events()
 {
@@ -131,6 +149,7 @@ enable_bengal_stm_events()
         echo 0x1000000 > /sys/bus/coresight/devices/coresight-tmc-etr/buffer_size
     fi
     echo 1 > /sys/bus/coresight/devices/coresight-tmc-etr/$sinkenable
+    echo coresight-stm > /sys/class/stm_source/ftrace/stm_source_link
     echo 1 > /sys/bus/coresight/devices/coresight-stm/$srcenable
     echo 1 > /sys/kernel/tracing/tracing_on
     echo 0 > /sys/bus/coresight/devices/coresight-stm/hwevent_enable
@@ -1534,6 +1553,8 @@ enable_bengal_debug()
     echo "bengal debug"
     srcenable="enable_source"
     sinkenable="enable_sink"
+    create_stp_policy
+    adjust_permission
     echo "Enabling STM events on bengal."
     enable_bengal_stm_events
     echo "Enabling HW  events on bengal."

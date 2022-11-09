@@ -30,13 +30,24 @@
      IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <resources>
-    <bool name="profile_supported_avrcp_controller">true</bool>
-    <bool name="profile_supported_a2dp_sink">true</bool>
-    <bool name="profile_supported_sap">false</bool>
+    <!-- Enable source profiles (typically used in phone) in Bluetooth chip#1 (new) -->
+    <bool name="profile_supported_a2dp">true</bool>
+    <bool name="profile_supported_avrcp_target">true</bool>
+    <bool name="profile_supported_hs_hfp">true</bool>
     <bool name="profile_supported_hid_device">false</bool>
-    <bool name="profile_supported_avrcp_target">false</bool>
-    <bool name="profile_supported_ba">true</bool>
-    <bool name="profile_supported_pan">true</bool>
-    <!-- For supporting emergency call through the hfp client connection service  -->
-    <bool name="hfp_client_connection_service_support_emergency_call">true</bool>
+    <bool name="profile_supported_hid_host">true</bool>
+    <bool name="profile_supported_pbap">true</bool>
+    <bool name="profile_supported_map">false</bool>
+    <bool name="profile_supported_opp">false</bool>
+    <bool name="enable_phone_policy">false</bool>
+
+    <!-- Enable sink profiles (typically used on a CarKit) in Bluetooth chip#0 (default) -->
+    <bool name="profile_supported_hfpclient">true</bool>
+    <bool name="hfp_client_connection_service_enabled">true</bool>
+    <bool name="profile_supported_avrcp_controller">true</bool>
+    <bool name="avrcp_controller_enable_cover_art">true</bool>
+    <bool name="profile_supported_a2dp_sink">true</bool>
+    <bool name="profile_supported_pbapclient">true</bool>
+    <bool name="profile_supported_pan">false</bool>
+    <bool name="profile_supported_mapmce">true</bool>
 </resources>

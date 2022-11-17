@@ -5229,6 +5229,11 @@ esac
 
 case "$target" in
     "msmnile")
+	target_variant=`getprop ro.build.product`
+	if [ "$target_variant" == "msmnile_au" ]; then
+		echo "33554432" > /proc/sys/net/core/rmem_max
+		echo "33554432" > /proc/sys/net/core/wmem_max
+	fi
 	# Core control parameters for gold
 	echo 2 > /sys/devices/system/cpu/cpu4/core_ctl/min_cpus
 	echo 60 > /sys/devices/system/cpu/cpu4/core_ctl/busy_up_thres

@@ -113,7 +113,11 @@ LOCAL_MODULE_STEM  := ueventd.rc
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES    := etc/ueventd.qcom.rc
+ifneq ($(call math_gt_or_eq,$(PRODUCT_SHIPPING_API_LEVEL),32),)
+LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)
+else
 LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR)
+endif
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)

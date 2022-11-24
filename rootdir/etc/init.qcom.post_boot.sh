@@ -3564,15 +3564,6 @@ case "$target" in
 
         case "$soc_id" in
             "355" | "369" | "377" | "380" | "384" )
-      target_type=`getprop ro.hardware.type`
-      if [ "$target_type" == "automotive" ]; then
-	# update frequencies
-	configure_sku_parameters
-	sku_identified=`getprop vendor.sku_identified`
-      else
-	sku_identified=0
-      fi
-
       # Core control parameters on silver
       echo 0 0 0 0 1 1 > /sys/devices/system/cpu/cpu0/core_ctl/not_preferred
       echo 4 > /sys/devices/system/cpu/cpu0/core_ctl/min_cpus
@@ -3620,8 +3611,8 @@ case "$target" in
       echo -6 >  /sys/devices/system/cpu/cpu7/sched_load_boost
       echo 85 > /sys/devices/system/cpu/cpu6/cpufreq/schedutil/hispeed_load
 
-      echo "0:1209600" > /sys/module/cpu_boost/parameters/input_boost_freq
-      echo 40 > /sys/module/cpu_boost/parameters/input_boost_ms
+      echo "0:1209600" > /sys/devices/system/cpu/cpu_boost/input_boost_freq
+      echo 40 > /sys/devices/system/cpu/cpu_boost/input_boost_ms
 
       # Set Memory parameters
       configure_memory_parameters
@@ -3697,7 +3688,17 @@ case "$target" in
 
             # Turn on sleep modes.
             echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
+
+      target_type=`getprop ro.hardware.type`
+      if [ "$target_type" == "automotive" ]; then
+	# update frequencies
+	configure_sku_parameters
+	sku_identified=`getprop vendor.sku_identified`
+      else
+	sku_identified=0
+      fi
             ;;
+
         esac
 
         #Apply settings for moorea
@@ -5157,6 +5158,7 @@ case "$target" in
 		echo 1 > /proc/sys/vm/watermark_scale_factor
 		# Enable oom_reaper
 		echo 1 > /proc/sys/vm/reap_mem_on_sigkill
+		echo fc > /sys/class/net/eth0/queues/rx-0/rps_cpus
 
 	else
 		# Core control parameters for gold
@@ -5218,8 +5220,8 @@ case "$target" in
 	echo 1 > /sys/devices/system/cpu/cpufreq/policy7/schedutil/pl
 
 	# configure input boost settings
-	echo "0:1324800" > /sys/module/cpu_boost/parameters/input_boost_freq
-	echo 120 > /sys/module/cpu_boost/parameters/input_boost_ms
+	echo "0:1324800" > /sys/devices/system/cpu/cpu_boost/input_boost_freq
+	echo 120 > /sys/devices/system/cpu/cpu_boost/input_boost_ms
 
 	# Disable wsf, beacause we are using efk.
 	# wsf Range : 1..1000 So set to bare minimum value 1.

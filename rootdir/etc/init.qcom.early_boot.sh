@@ -471,6 +471,13 @@ case "$product" in
         ;;
 esac
 case "$product" in
+        "qssi_au")
+         setprop vendor.display.lcd_density 160
+         ;;
+        *)
+        ;;
+esac
+case "$product" in
         "sm6150_au")
          setprop vendor.display.lcd_density 160
          ;;

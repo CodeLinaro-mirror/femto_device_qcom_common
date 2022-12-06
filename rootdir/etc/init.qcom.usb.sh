@@ -287,6 +287,15 @@ if [ -d /config/usb_gadget/g1/functions/uvc.0 ]; then
 	echo 333333 > streaming/mjpeg/m/1080p/dwDefaultFrameInterval
 	echo "333333\n666666\n1000000\n5000000\n" > streaming/mjpeg/m/1080p/dwFrameInterval
 
+	mkdir -p streaming/mjpeg/m/1440p
+	echo 2560 > streaming/mjpeg/m/1440p/wWidth
+	echo 1440 > streaming/mjpeg/m/1440p/wHeight
+	echo 117964800 > streaming/mjpeg/m/1440p/dwMinBitRate
+	echo 1769472000 > streaming/mjpeg/m/1440p/dwMaxBitRate
+	echo 7372800 > streaming/mjpeg/m/1440p/dwMaxVideoFrameBufferSize
+	echo 333333 > streaming/mjpeg/m/1440p/dwDefaultFrameInterval
+	echo "333333\n666666\n1000000\n5000000\n" > streaming/mjpeg/m/1440p/dwFrameInterval
+
 	mkdir -p streaming/mjpeg/m/2160p
 	echo 3840 > streaming/mjpeg/m/2160p/wWidth
 	echo 2160 > streaming/mjpeg/m/2160p/wHeight

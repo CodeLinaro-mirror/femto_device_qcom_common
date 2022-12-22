@@ -262,6 +262,7 @@ INIT += init.qcom.vendor.rc
 INIT += init.target.vendor.rc
 INIT += init.veth_ipa_config.sh
 ifeq ($(strip $(TARGET_BOARD_AUTO)),true)
+INIT += init.qti.soc-model.rc
 ifneq ($(strip $(ENABLE_HYP)),true)
 INIT += init.qti.can.sh
 endif
@@ -984,7 +985,8 @@ ifeq ($(strip $(TARGET_BOARD_AUTO)), true)
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/car_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/car_core_hardware.xml \
     frameworks/native/data/etc/android.hardware.screen.landscape.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.screen.landscape.xml \
-    frameworks/native/data/etc/android.software.activities_on_secondary_displays.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.activities_on_secondary_displays.xml
+    frameworks/native/data/etc/android.software.activities_on_secondary_displays.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.activities_on_secondary_displays.xml \
+    device/qcom/common/rootdir/etc/init.qti.soc-model.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.qti.soc-model.sh
 else
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml

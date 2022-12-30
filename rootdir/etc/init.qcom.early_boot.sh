@@ -461,37 +461,39 @@ product=`getprop ro.build.product`
 
 case "$product" in
         "msmnile_au")
-         setprop vendor.display.lcd_density 160
-         echo 902400000 > /sys/class/devfreq/soc:qcom,cpu0-cpu-l3-lat/min_freq
-         echo 1612800000 > /sys/class/devfreq/soc:qcom,cpu0-cpu-l3-lat/max_freq
-         echo 902400000 > /sys/class/devfreq/soc:qcom,cpu4-cpu-l3-lat/min_freq
-         echo 1612800000 > /sys/class/devfreq/soc:qcom,cpu4-cpu-l3-lat/max_freq
-         ;;
-        *)
-        ;;
-esac
-case "$product" in
+            setprop vendor.display.lcd_density 160
+            echo 902400000 > /sys/class/devfreq/soc:qcom,cpu0-cpu-l3-lat/min_freq
+            echo 1612800000 > /sys/class/devfreq/soc:qcom,cpu0-cpu-l3-lat/max_freq
+            echo 902400000 > /sys/class/devfreq/soc:qcom,cpu4-cpu-l3-lat/min_freq
+            echo 1612800000 > /sys/class/devfreq/soc:qcom,cpu4-cpu-l3-lat/max_freq
+            ;;
+        "msmnile_au_km4")
+            setprop vendor.display.lcd_density 160
+            echo 902400000 > /sys/class/devfreq/soc:qcom,cpu0-cpu-l3-lat/min_freq
+            echo 1612800000 > /sys/class/devfreq/soc:qcom,cpu0-cpu-l3-lat/max_freq
+            echo 902400000 > /sys/class/devfreq/soc:qcom,cpu4-cpu-l3-lat/min_freq
+            echo 1612800000 > /sys/class/devfreq/soc:qcom,cpu4-cpu-l3-lat/max_freq
+            ;;
         "sm6150_au")
-         setprop vendor.display.lcd_density 160
-         ;;
-        *)
-        ;;
-esac
-case "$product" in
+            setprop vendor.display.lcd_density 160
+            ;;
         "sdmshrike_au")
-         setprop vendor.display.lcd_density 160
-         ;;
+            setprop vendor.display.lcd_density 160
+            ;;
+        "msmnile_gvmq")
+            setprop vendor.display.lcd_density 160
+            ;;
+        "generic_arm64")
+            product_name=`getprop ro.product.name`
+            # setting display density for GSI for automotive
+            if [ "$product_name" = "gsi_car_arm64" ]
+            then
+                setprop vendor.display.lcd_density 160
+            fi
+            ;;
         *)
-        ;;
 esac
 
-case "$product" in
-        "msmnile_gvmq")
-         setprop vendor.display.lcd_density 160
-         ;;
-        *)
-        ;;
-esac
 # Setup display nodes & permissions
 # HDMI can be fb1 or fb2
 # Loop through the sysfs nodes and determine

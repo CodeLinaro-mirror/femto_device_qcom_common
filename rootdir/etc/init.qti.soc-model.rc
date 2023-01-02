@@ -1,0 +1,9 @@
+#! /vendor/etc/init
+
+# Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+# SPDX-License-Identifier: BSD-3-Clause-Clear
+
+on early-init
+     exec u:r:vendor_qti_init_shell:s0 -- /vendor/bin/init.qti.soc-model.sh
+     setprop ro.soc.model ${ro.vendor.qti.soc_model}
+

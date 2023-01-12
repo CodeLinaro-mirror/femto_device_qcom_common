@@ -348,6 +348,17 @@ case "$target" in
                 setprop vendor.display.enhance_idle_time 1
                 ;;
         esac
+        if [ -f /sys/devices/soc0/platform_subtype_id ]; then
+            platform_subtype_id=`cat /sys/devices/soc0/platform_subtype_id`
+        fi
+        case "$platform_subtype_id" in
+               "1")
+                   setprop ro.vendor.qc_aon_presence 0
+                   ;;
+               "0")
+                   setprop ro.vendor.qc_aon_presence 1
+                   ;;
+        esac
         ;;
     "bengal")
         case "$soc_hwid" in

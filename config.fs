@@ -25,6 +25,15 @@ value:2908
 [AID_VENDOR_SSGTZD]
 value:2912
 
+[AID_VENDOR_NXP_STRONGBOX]
+value:2910
+
+[vendor/bin/hw/android.hardware.security.keymint-service.strongbox]
+mode: 0755
+user: AID_VENDOR_NXP_STRONGBOX
+group: AID_SYSTEM
+caps: SYS_ADMIN SYS_NICE
+
 [vendor/bin/wcnss_filter]
 mode: 0755
 user: AID_BLUETOOTH

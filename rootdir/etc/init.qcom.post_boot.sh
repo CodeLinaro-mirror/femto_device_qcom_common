@@ -3620,8 +3620,8 @@ case "$target" in
       echo -6 >  /sys/devices/system/cpu/cpu7/sched_load_boost
       echo 85 > /sys/devices/system/cpu/cpu6/cpufreq/schedutil/hispeed_load
 
-      echo "0:1209600" > /sys/module/cpu_boost/parameters/input_boost_freq
-      echo 40 > /sys/module/cpu_boost/parameters/input_boost_ms
+      echo "0:1209600" > /sys/devices/system/cpu/cpu_boost/input_boost_freq
+      echo 40 > /sys/devices/system/cpu/cpu_boost/input_boost_ms
 
       # Set Memory parameters
       configure_memory_parameters
@@ -5157,6 +5157,7 @@ case "$target" in
 		echo 1 > /proc/sys/vm/watermark_scale_factor
 		# Enable oom_reaper
 		echo 1 > /proc/sys/vm/reap_mem_on_sigkill
+		echo fc > /sys/class/net/eth0/queues/rx-0/rps_cpus
 
 	else
 		# Core control parameters for gold
@@ -5218,8 +5219,8 @@ case "$target" in
 	echo 1 > /sys/devices/system/cpu/cpufreq/policy7/schedutil/pl
 
 	# configure input boost settings
-	echo "0:1324800" > /sys/module/cpu_boost/parameters/input_boost_freq
-	echo 120 > /sys/module/cpu_boost/parameters/input_boost_ms
+	echo "0:1324800" > /sys/devices/system/cpu/cpu_boost/input_boost_freq
+	echo 120 > /sys/devices/system/cpu/cpu_boost/input_boost_ms
 
 	# Disable wsf, beacause we are using efk.
 	# wsf Range : 1..1000 So set to bare minimum value 1.

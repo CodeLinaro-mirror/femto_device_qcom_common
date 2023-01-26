@@ -857,6 +857,9 @@ PRODUCT_PACKAGES := \
     Gallery2 \
     Music \
     netutils-wrapper-1.0 \
+    Contacts \
+    Browser2 \
+    UserDictionaryProvider \
     AccountAndSyncSettings \
     AlarmProvider \
     Calendar \

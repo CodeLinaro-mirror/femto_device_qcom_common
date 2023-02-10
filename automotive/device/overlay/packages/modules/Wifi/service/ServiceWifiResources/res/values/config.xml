@@ -79,6 +79,6 @@
     <bool translatable="false" name="config_wifiSaeH2eSupported">true</bool>
 
     <!-- Wifi driver Automatic channel selection (ACS) for softap to include DFS channels -->
-    <bool translatable="false" name="config_wifiSoftapAcsIncludeDfs">true</bool>
+    <bool translatable="false" name="config_wifiSoftapAcsIncludeDfs">false</bool>
 
 </resources>

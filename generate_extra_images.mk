@@ -78,21 +78,38 @@ endif
 # As of now this in empty at build and data is runtime generated only,
 # so create an empty fs
 #----------------------------------------------------------------------
+ifneq ($(BOARD_USES_METADATA_PARTITION),)
 ifneq ($(strip $(BOARD_METADATAIMAGE_PARTITION_SIZE)),)
 
 TARGET_OUT_METADATA := $(PRODUCT_OUT)/metadata
 
 INSTALLED_METADATAIMAGE_TARGET := $(PRODUCT_OUT)/metadata.img
 
+ifeq ($(BOARD_METADATAIMAGE_FILE_SYSTEM_TYPE),ext4)
 define build-metadataimage-target
     $(call pretty,"Target metadata fs image: $(INSTALLED_METADATAIMAGE_TARGET)")
     @mkdir -p $(TARGET_OUT_METADATA)
-    $(hide)PATH=$(HOST_OUT_EXECUTABLES):$${PATH} $(MKEXTUSERIMG) -s $(TARGET_OUT_METADATA) $@ ext4 metadata $(BOARD_METADATAIMAGE_PARTITION_SIZE)
+    $(hide)PATH=$(HOST_OUT_EXECUTABLES):$${PATH} $(MKEXTUSERIMG) -s $(TARGET_OUT_METADATA) $@ $(BOARD_METADATAIMAGE_FILE_SYSTEM_TYPE) metadata $(BOARD_METADATAIMAGE_PARTITION_SIZE)
     $(hide) chmod a+r $@
 endef
 
 $(INSTALLED_METADATAIMAGE_TARGET): $(MKEXTUSERIMG) $(MAKE_EXT4FS)
 	$(build-metadataimage-target)
+
+else
+ifeq ($(BOARD_METADATAIMAGE_FILE_SYSTEM_TYPE),f2fs)
+define build-metadataimage-target
+    $(call pretty,"Target metadata fs image: $(INSTALLED_METADATAIMAGE_TARGET)")
+    @mkdir -p $(TARGET_OUT_METADATA)
+    $(hide)PATH=$(HOST_OUT_EXECUTABLES):$${PATH} $(MKF2FSUSERIMG) $(INSTALLED_METADATAIMAGE_TARGET) $(BOARD_METADATAIMAGE_PARTITION_SIZE) -S -f $(TARGET_OUT_METADATA) -t metadata -L metadata $@
+    $(hide) chmod a+r $@
+endef
+
+$(INSTALLED_METADATAIMAGE_TARGET): $(MKF2FSUSERIMG)
+	$(build-metadataimage-target)
+
+endif
+endif
 
 ALL_DEFAULT_INSTALLED_MODULES += $(INSTALLED_METADATAIMAGE_TARGET)
 ALL_MODULES.$(LOCAL_MODULE).INSTALLED += $(INSTALLED_METADATAIMAGE_TARGET)
@@ -103,6 +120,7 @@ $(call dist-for-goals, droidcore, $(PRODUCT_OUT)/metadata.img)
 .PHONY: metadataimage
 metadataimage: $(INSTALLED_METADATAIMAGE_TARGET)
 
+endif
 endif
 
 #----------------------------------------------------------------------

@@ -11,11 +11,11 @@ else
     soc_id=`cat /sys/devices/system/soc/soc0/id`
 fi
 
-if [ "$soc_id" == "340" ] | [ "$soc_id" == "405" ]; then
+if [ "$soc_id" == "340" ] || [ "$soc_id" == "405" ]; then
     setprop ro.vendor.qti.soc_model SA8195P
 elif [ "$soc_id" == "460" ]; then
     setprop ro.vendor.qti.soc_model SA8295P
-elif [ "$soc_id" == "367" ] | [ "$soc_id" == "362" ]; then
+elif [ "$soc_id" == "367" ] || [ "$soc_id" == "362" ]; then
     setprop ro.vendor.qti.soc_model SA8155P
 fi
 

@@ -354,6 +354,7 @@ case "$target" in
     "bengal")
         case "$soc_hwid" in
             441|473)
+                echo 2016000 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_freq
                 # 441 is for scuba and 473 for scuba iot qcm
                 setprop vendor.fastrpc.disable.cdsprpcd.daemon 1
                 setprop vendor.media.target.version 2

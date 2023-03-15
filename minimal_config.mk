@@ -66,7 +66,10 @@ INIT += ueventd.qcom.rc
 INIT += qca6234-service.sh
 INIT += ssr_setup
 INIT += enable_swap.sh
+# not needed for two wheeler
+ifneq ($(TARGET_BUILD_2W), true)
 INIT += init.mdm.sh
+endif
 INIT += init.qcom.sensors.sh
 INIT += init.qcom.crashdata.sh
 INIT += init.qcom.vendor.rc

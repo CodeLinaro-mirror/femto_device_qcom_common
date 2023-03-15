@@ -317,7 +317,10 @@ INIT += ueventd.qcom.rc
 INIT += qca6234-service.sh
 INIT += ssr_setup
 INIT += enable_swap.sh
+# don't need for twowheeler
+ifneq ($(TARGET_BUILD_2W), true)
 INIT += init.mdm.sh
+endif
 INIT += fstab.qcom
 INIT += fstab.qti
 INIT += fstab.default

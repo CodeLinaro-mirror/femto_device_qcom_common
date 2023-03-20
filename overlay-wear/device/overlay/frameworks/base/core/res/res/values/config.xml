@@ -355,4 +355,6 @@
     <!-- Flag specifying whether or not IMS will use the dynamic ImsResolver -->
     <bool name="config_dynamic_bind_ims">true</bool>
 
+    <!-- Make the default config as UNKNOWN so that Modem configurtion would be retained -->
+    <integer name="config_default_cellular_usage_setting">-1</integer>
 </resources>

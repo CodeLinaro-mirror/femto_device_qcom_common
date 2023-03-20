@@ -89,6 +89,36 @@ enable_bengal_tracing_events()
     echo 1 > /sys/kernel/tracing/tracing_on
 }
 
+tracefs=/sys/kernel/tracing
+enable_buses_and_interconnect_tracefs_debug()
+{
+    if [ -d $tracefs ] && [ "$(getprop persist.vendor.tracing.enabled)" -eq "1" ]; then
+        #UART
+        mkdir $tracefs/instances/hsuart
+        echo 800 > $tracefs/instances/hsuart/buffer_size_kb
+        echo 1 > $tracefs/instances/hsuart/events/serial/enable
+        echo 1 > $tracefs/instances/hsuart/tracing_on
+
+        #SPI
+        mkdir $tracefs/instances/spi_qup
+        echo 20 > $tracefs/instances/spi_qup/buffer_size_kb
+        echo 1 > $tracefs/instances/spi_qup/events/qup_spi_trace/enable
+        echo 1 > $tracefs/instances/spi_qup/tracing_on
+
+        #I2C
+        mkdir $tracefs/instances/i2c_qup
+        echo 20 > $tracefs/instances/i2c_qup/buffer_size_kb
+        echo 1 > $tracefs/instances/i2c_qup/events/qup_i2c_trace/enable
+        echo 1 > $tracefs/instances/i2c_qup/tracing_on
+
+        #SLIMBUS
+        mkdir $tracefs/instances/slimbus
+        echo 20 > $tracefs/instances/slimbus/buffer_size_kb
+        echo 1 > $tracefs/instances/slimbus/events/slimbus/slimbus_dbg/enable
+        echo 1 > $tracefs/instances/slimbus/tracing_on
+    fi
+}
+
 # function to enable ftrace events
 enable_bengal_ftrace_event_tracing()
 {
@@ -1561,6 +1591,7 @@ enable_bengal_debug()
     enable_bengal_stm_hw_events
     if [ "$ftrace_disable" != "Yes" ]; then
         enable_bengal_ftrace_event_tracing
+        enable_buses_and_interconnect_tracefs_debug
     fi
     enable_bengal_dcc_config
     enable_bengal_core_hang_config

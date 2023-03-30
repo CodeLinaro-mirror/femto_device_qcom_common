@@ -48,8 +48,10 @@ QSD8K_BOARD_PLATFORMS := qsd8k
 TARGET_USE_VENDOR_CAMERA_EXT := true
 
 # Boot additions
+ifeq ($(strip $(WEAR_OS_BUILD_ENABLED)),false)
 ifeq ($(strip $(TARGET_USES_NQ_NFC)),true)
 PRODUCT_BOOT_JARS += com.nxp.nfc.nq
+endif
 endif
 #Camera QC extends API
 #ifeq ($(strip $(TARGET_USES_QTIC_EXTENSION)),true)

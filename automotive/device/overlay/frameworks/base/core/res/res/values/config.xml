@@ -273,7 +273,7 @@
     <string name="config_optionalPackageVerifierName" translatable="false">seemp.service</string>
 
     <!-- Whether the Unprocessed audio source supports the required frequency range and level -->
-    <bool name="config_supportAudioSourceUnprocessed">true</bool>
+    <bool name="config_supportAudioSourceUnprocessed">false</bool>
 
     <!-- Whether a software navigation bar should be shown. NOTE: in the future this may be
         autodetected from the Configuration. -->

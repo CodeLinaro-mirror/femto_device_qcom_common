@@ -548,6 +548,21 @@ enable_msmnile_dcc_config()
     echo 0x01700d00 1 > $DCC_PATH/config
 
     echo  1 > $DCC_PATH/enable
+
+#GCC_CLK_NOC
+     echo 0x118604 1 > $DCC_PATH/config
+     echo 0x118008 1 > $DCC_PATH/config
+     echo 0x118004 1 > $DCC_PATH/config
+     echo 0x15200C 1 > $DCC_PATH/config
+     echo 0x11800C 1 > $DCC_PATH/config
+     echo 0x118014 1 > $DCC_PATH/config
+     echo 0x118144 1 > $DCC_PATH/config
+     echo 0x118274 1 > $DCC_PATH/config
+     echo 0x1183A4 1 > $DCC_PATH/config
+     echo 0x1184D4 1 > $DCC_PATH/config
+     echo 0x118604 1 > $DCC_PATH/config
+     echo 0x118734 1 > $DCC_PATH/config
+
 }
 
 enable_msmnile_stm_hw_events()

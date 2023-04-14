@@ -244,12 +244,12 @@ function configure_automotive_sku_parameters() {
     echo 1612800000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/max_freq
     echo 1612800000 > /sys/class/devfreq/soc\:qcom,cpu4-cpu-l3-lat/max_freq
     echo 1612800000 > /sys/class/devfreq/soc\:qcom,cpu7-cpu-l3-lat/max_freq
-    echo 902400000  > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver
-    echo 902400000  > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
-    echo 902400000  > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:prime
-    echo 1612800000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver
-    echo 1612800000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
-    echo 1612800000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:prime
+    echo 902400  > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver/min_freq
+    echo 902400  > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold/min_freq
+    echo 902400  > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:prime/min_freq
+    echo 1612800 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver/max_freq
+    echo 1612800 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold/max_freq
+    echo 1612800 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:prime/max_freq
 
 
 #read feature id from nvram
@@ -284,10 +284,10 @@ function configure_automotive_sku_parameters_sa8195() {
         echo 940800000  > /sys/class/devfreq/soc\:qcom,cpu4-cpu-l3-lat/min_freq
         echo 1651200000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/max_freq
 	echo 1651200000 > /sys/class/devfreq/soc\:qcom,cpu4-cpu-l3-lat/max_freq
-	echo 940800000  > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
-        echo 940800000  > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:prime
-        echo 1651200000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold
-	echo 1651200000 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:prime
+	echo 940800  > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold/min_freq
+        echo 940800  > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver/min_freq
+        echo 1651200 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:gold/max_freq
+	echo 1651200 > /sys/devices/system/cpu/bus_dcvs/L3/soc\:qcom,memlat\:l3\:silver/max_freq
 
 	#read feature id
         reg_val=`cat /sys/devices/platform/soc/780130.qfprom/qfprom0/nvmem | od -An -t d4`

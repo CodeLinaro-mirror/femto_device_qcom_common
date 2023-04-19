@@ -34,6 +34,8 @@ on post-fs-data
     mkdir /data/vendor/gpu 0777 system system
     # Create directory for SCVE applications
     mkdir /data/vendor/scve 0777 system system
+    # Create directory for displayoffload
+    mkdir /data/vendor/displayoffload 0770 system system
 
 # Coresight early boot service
 service cs-early-boot /vendor/bin/sh /vendor/bin/init.qcom.debug.sh

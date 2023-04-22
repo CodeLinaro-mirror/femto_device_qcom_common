@@ -8,6 +8,7 @@
 # KBUILD_OPTIONS: Additional parameters to give to kbuild when compiling module
 # KBUILD_REQUIRED_KOS: Add dependency on another KO which exports headers and/or symbols
 # LOCAL_MODULE_DDK_BUILD: Enable the Bazel DDK build
+# LOCAL_MODULE_KO_DIRS: List of modules which should be copied to a subdirectory after build
 
 # Assign external kernel modules to the DLKM class
 LOCAL_MODULE_CLASS := DLKM
@@ -137,6 +138,8 @@ $(MODULE_KP_COMBINED_TARGET): kbuild_options := $(KBUILD_OPTIONS)
 $(MODULE_KP_COMBINED_TARGET): required_kos   := $(KBUILD_REQUIRED_KOS)
 $(MODULE_KP_COMBINED_TARGET): kbuild_symvers := $(sort $(foreach m,$(required_kos),$(call intermediates-dir-for,DLKM,$m)/Module.symvers))
 $(MODULE_KP_COMBINED_TARGET): ddk_build      := $(LOCAL_MODULE_DDK_BUILD)
+$(MODULE_KP_COMBINED_TARGET): inter_dir      := $(call intermediates-dir-for,DLKM,$(LOCAL_MODULE))
+$(MODULE_KP_COMBINED_TARGET): ko_dirs        := $(LOCAL_MODULE_KO_DIRS)
 $(MODULE_KP_COMBINED_TARGET): $(MODULE_KP_COMMON_TARGET) $(sort $(foreach m,$(KBUILD_REQUIRED_KOS),$(call intermediates-dir-for,DLKM,$m)/Module.symvers))
 	export ANDROID_BUILD_TOP=$$(pwd) ; export KP_OUT_DIR=$$(cd $(KP_DLKM_INTERMEDIATE)/kernel_platform ; pwd) ; \
 	(cd $(KERNEL_PLATFORM_PATH) && \
@@ -144,6 +147,8 @@ $(MODULE_KP_COMBINED_TARGET): $(MODULE_KP_COMMON_TARGET) $(sort $(foreach m,$(KB
 	    OUT_DIR=$${KP_OUT_DIR} \
 	    KERNEL_KIT=$${ANDROID_BUILD_TOP}/$(KERNEL_PREBUILT_DIR) \
 	    ENABLE_DDK_BUILD=$(ddk_build) \
+	    INTERMEDIATE_DIR=$${ANDROID_BUILD_TOP}/$(inter_dir) \
+	    KO_DIRS="$(ko_dirs)" \
 	    $(if $(kbuild_symvers),KBUILD_EXTRA_SYMBOLS="$(addprefix $${ANDROID_BUILD_TOP}/,$(kbuild_symvers))") \
 	    $(if $(required_kos),KCFLAGS="$(sort $(foreach d,$(required_kos),$(patsubst -I%,-I$${ANDROID_BUILD_TOP}/%,$(EXPORTS.$d.FLAGS))))") \
 	    ./build/build_module.sh $(kbuild_options) \
@@ -168,3 +173,4 @@ KBUILD_REQUIRED_KOS :=
 LOCAL_ADDITIONAL_DEPENDENCIES :=
 LOCAL_MODULE_KBUILD_NAME :=
 LOCAL_MODULE_DDK_BUILD :=
+LOCAL_MODULE_KO_DIRS :=

@@ -4,7 +4,11 @@ $(call inherit-product, device/qcom/common/base.mk)
 # Since we want use QC specific files, we should inherit
 # device-vendor.mk first to make sure QC specific files gets installed.
 $(call inherit-product-if-exists, $(QCPATH)/common/config/device-vendor.mk)
+ifeq ($(TARGET_SUPPORTS_32_BIT_APPS),false)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
+else
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
+endif
 ifneq ($(TARGET_BOARD_AUTO),true)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 endif

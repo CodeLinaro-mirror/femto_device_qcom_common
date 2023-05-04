@@ -99,6 +99,13 @@ start_msm_irqbalance_msmnile()
          fi
 }
 
+start_msm_irqbalance_gen4()
+{
+         if [ -f /vendor/bin/msm_irqbalance ]; then
+                start vendor.msm_irqbalance
+         fi
+}
+
 start_msm_irqbalance_kona()
 {
          if [ -f /vendor/bin/msm_irqbalance ]; then
@@ -317,6 +324,9 @@ case "$target" in
         ;;
     "msmnile")
         start_msm_irqbalance_msmnile
+        ;;
+    "gen4")
+        start_msm_irqbalance_gen4
         ;;
     "kona")
         start_msm_irqbalance_kona

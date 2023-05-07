@@ -62,7 +62,7 @@ on early-init
     chown root system /dev/kmsg
     chmod 0620 /dev/kmsg
     # Load WIGIG platform driver
-    exec u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -a -d /vendor/lib/modules msm_11ad_proxy
+    exec_background u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -a -d /vendor/lib/modules msm_11ad_proxy
 
 on init
 
@@ -90,7 +90,8 @@ on early-boot
     write /sys/devices/virtual/cvp/cvp/boot 1
     exec u:r:vendor_qti_init_shell:s0 -- /vendor/bin/init.qcom.early_boot.sh
     exec u:r:vendor_qti_init_shell:s0 -- /vendor/bin/init.qti.can.sh
-    setprop ro.sf.lcd_density ${vendor.display.lcd_density}
+    # this has been already set at build time for bengal_2w
+    #setprop ro.sf.lcd_density ${vendor.display.lcd_density}
 
     chown system system /mnt/vendor/persist/data/pfm/licenses
     chmod 0775 /mnt/vendor/persist/data/pfm/licenses
@@ -469,6 +470,7 @@ on property:persist.vendor.sys.rawdump_copy=0
     write /sys/kernel/dload/emmc_dload 0
 
 on property:sys.boot_completed=1
+    write /sys/kernel/boot_kpi/kpi_values "K - qcom.rc: Boot Complete"
     write /dev/kmsg "Boot completed "
     #Enable UFS clock scaling back
     write /sys/bus/platform/devices/1d84000.ufshc/clkscale_enable 1
@@ -480,6 +482,8 @@ on property:sys.boot_completed=1
     chown media audio /sys/kernel/wcd_cpe0/fw_name
     #Reinit lmkd to reconfigure lmkd properties
     setprop lmkd.reinit 1
+    start qcom-c_main-sh
+    start wcnss-service
 
 on property:persist.vendor.radio.atfwd.start=false
     stop vendor.atfwd
@@ -512,6 +516,7 @@ service qcom-c_main-sh /vendor/bin/init.class_main.sh
     user root
     group root system
     oneshot
+    disabled
 
 on property:vold.decrypt=trigger_restart_framework
     start qcom-c_main-sh
@@ -749,10 +754,11 @@ service hostapd_fst /vendor/bin/hw/hostapd -dd -g /data/vendor/wifi/hostapd/glob
     disabled
     oneshot
 
-service battery_monitor /system/bin/battery_monitor
-    user system
-    group system
-    disabled
+# for Two Wheeler, not needed
+#service battery_monitor /system/bin/battery_monitor
+#   user system
+#   group system
+#   disabled
 
 service vendor.ril-daemon2 /vendor/bin/hw/rild -c 2
     class main
@@ -774,6 +780,7 @@ service profiler_daemon /system/bin/profiler_daemon
     group root
     disabled
 
+# TODO: for bengal_2w is below valid
 service charger /system/bin/charger
     class charger
     user system
@@ -859,6 +866,8 @@ service esepmdaemon /system/vendor/bin/esepmdaemon
     user system
     group nfc
 
+# TODO: for bengal_2w is below valid
+# where will these move if not on charger
 on charger
     setprop persist.sys.usb.config mass_storage
     start qcom-post-boot

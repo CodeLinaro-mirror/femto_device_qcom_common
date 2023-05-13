@@ -36,11 +36,11 @@ on post-fs-data
     mkdir /data/vendor/scve 0777 system system
 
 # Coresight early boot service
-service cs-early-boot /vendor/bin/sh /vendor/bin/init.qcom.debug.sh
-    class core
-    user root
-    oneshot
-    seclabel u:r:qti-testscripts:s0
+#service cs-early-boot /vendor/bin/sh /vendor/bin/init.qcom.debug.sh
+#    class core
+#    user root
+#    oneshot
+#    seclabel u:r:qti-testscripts:s0
 
 on property:sys.boot_completed=1
     start cs-post-boot

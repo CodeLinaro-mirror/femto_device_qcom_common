@@ -25,7 +25,7 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 # Changes from Qualcomm Innovation Center are provided under the following license:
-# Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+# Copyright (c) 2022,2023 Qualcomm Innovation Center, Inc. All rights reserved.
 # SPDX-License-Identifier: BSD-3-Clause-Clear
 
 # Firmware directory Path
@@ -381,7 +381,10 @@ subsystem mem_buf_vm
 /dev/msm_rtac             0660   system     audio
 /dev/msm_voicememo        0660   system     audio
 /dev/msm_audio_ion        0660   system     audio
+/dev/msm_audio_ion_cma    0660   system     audio
 /dev/aud_pasthru_adsp     0660   system     audio
+/dev/aud_pasthru_modem    0660   system     audio
+/dev/virt_sndcard_ctl     0660   system     audio
 /dev/ttyHSL1              0660   system     system
 /dev/ttyHS1               0660   system     system
 /dev/mdm                  0660   system     radio

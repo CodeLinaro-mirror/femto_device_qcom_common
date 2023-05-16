@@ -81,7 +81,7 @@ ifneq ($(filter %.ko,$(LOCAL_MODULE_KBUILD_NAME)),)
 intermediate_export_symvers := $(call local-intermediates-dir)/Module.symvers
 $(intermediate_export_symvers): local_module_kbuild_name := $(LOCAL_MODULE_KBUILD_NAME)
 $(intermediate_export_symvers): $(MODULE_KP_OUT_DIR)/Module.symvers
-	-grep $(basename $(local_module_kbuild_name)) $< > $@
+	-grep $(basename $(notdir $(local_module_kbuild_name))) $< > $@
 	touch $@
 
 LOCAL_INTERMEDIATE_TARGETS += $(intermediate_export_symvers)

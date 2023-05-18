@@ -255,6 +255,9 @@ on post-fs-data
     mkdir /data/vendor/bluetooth 0770 bluetooth bluetooth
     mkdir /data/vendor/ramdump/bluetooth 0770 bluetooth bluetooth
 
+    write /sys/module/qcom_ramdump/parameters/enable_dump_collection 1
+    mkdir /data/vendor/ramdump_ssr 770 system system
+    start vendor.ss_ramdump
 
     # Create the directories used by the Wireless subsystem
     mkdir /data/vendor/wifi 0770 wifi wifi
@@ -272,7 +275,6 @@ on post-fs-data
     # Create the directories used by CnE subsystem
     mkdir /data/vendor/connectivity 0771 radio radio
     chown radio radio /data/vendor/connectivity
-
     # Create directory used by audio subsystem
     mkdir /data/vendor/audio 0770 audio audio
 
@@ -448,13 +450,9 @@ on property:persist.vendor.ssr.restart_level=*
     start vendor.ssr_setup
 
 on property:persist.vendor.ssr.enable_ramdumps=1
-    write /sys/module/subsystem_restart/parameters/enable_ramdumps 1
     write /sys/module/qcom_ramdump/parameters/enable_dump_collection 1
-    mkdir /data/vendor/ramdump_ssr 770 system system
-    start vendor.ss_ramdump
 
 on property:persist.vendor.ssr.enable_ramdumps=0
-    write /sys/module/subsystem_restart/parameters/enable_ramdumps 0
     write /sys/module/qcom_ramdump/parameters/enable_dump_collection 0
 
 on property:persist.vendor.sys.rawdump_copy=1

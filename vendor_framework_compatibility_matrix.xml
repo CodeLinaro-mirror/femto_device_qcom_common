@@ -119,6 +119,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <instance>default</instance>
         </interface>
     </hal>
+    <!-- HealthServices aidl hal -->
+    <hal format="aidl">
+        <name>vendor.google_clockwork.healthservices</name>
+        <version>1</version>
+        <interface>
+            <name>IHealthServices</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
     <!-- AONUtility hal -->
     <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.aonutility</name>

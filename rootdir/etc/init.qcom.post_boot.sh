@@ -4398,6 +4398,9 @@ case "$target" in
             # Quad-core device. disable core_ctl
             echo 0 > /sys/devices/system/cpu/cpu0/core_ctl/enable
 
+            # refer 2824122
+            echo 200 > /proc/sys/vm/dirty_expire_centisecs
+
             # Configure schedutil governor settings
             echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
             echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us

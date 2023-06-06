@@ -2593,7 +2593,7 @@ case "$coresight_config" in
             ;;
             "bengal")
                 soc_id=`cat /sys/devices/soc0/soc_id`
-                if [ "$soc_id" == "473" || "$soc_id" == "474" ]; then
+                if [ "$soc_id" == "473" || "$soc_id" == "474" || "$soc_id" == "621" || "$soc_id" == "622" ]; then
                     echo "Enabling DCC/STM/Debug events for scuba"
                     enable_scuba_debug
                     setprop ro.dbg.coresight.stm_cfg_done 1

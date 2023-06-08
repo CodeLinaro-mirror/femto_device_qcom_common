@@ -221,20 +221,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <instance>default</instance>
         </interface>
    </hal>
-   <!-- Bluetooth Offload HalService -->
-   <hal format="hidl">
-        <name>vendor.qti.hardware.bluetooth_offload</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-        <interface>
-            <name>IBluetoothOffload</name>
-            <instance>default</instance>
-        </interface>
-        <interface>
-            <name>IBluetoothOffloadService</name>
-            <instance>default</instance>
-        </interface>
-   </hal>
    <hal format="hidl" optional="true">
        <name>com.qualcomm.qti.imscmservice</name>
        <version>2.0-1</version>

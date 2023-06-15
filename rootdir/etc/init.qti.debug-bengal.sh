@@ -49,7 +49,7 @@ enable_bengal_tracing_events()
     echo 1 > /sys/kernel/tracing/events/sched/sched_wakeup_new/enable
     echo 1 > /sys/kernel/tracing/events/sched/sched_isolate/enable
     # video
-    echo 1 > /sys/kernel/tracing/events/msm_vidc_events/enable
+    echo 0 > /sys/kernel/tracing/events/msm_vidc_events/enable
     # clock
     echo 1 > /sys/kernel/tracing/events/power/clock_set_rate/enable
     echo 1 > /sys/kernel/tracing/events/power/clock_enable/enable

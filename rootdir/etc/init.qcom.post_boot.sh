@@ -4393,7 +4393,7 @@ case "$target" in
 
         # Scuba perf/power tunings
         case "$soc_id" in
-             "441" | "471" | "473" | "474" )
+             "441" | "471" | "473" | "474" | "621" | "622" )
 
             # Quad-core device. disable core_ctl
             echo 0 > /sys/devices/system/cpu/cpu0/core_ctl/enable

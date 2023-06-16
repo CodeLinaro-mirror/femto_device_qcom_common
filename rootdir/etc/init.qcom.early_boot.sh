@@ -511,6 +511,9 @@ case "$product" in
         "gen4_gvm")
             setprop vendor.display.lcd_density 160
             ;;
+        "gen4_gvm_gy")
+            setprop vendor.display.lcd_density 160
+            ;;
         "generic_arm64")
             product_name=`getprop ro.product.name`
             # setting display density for GSI for automotive

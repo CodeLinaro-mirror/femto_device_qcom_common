@@ -33,22 +33,33 @@
 
 export PATH=/vendor/bin
 
-# Set platform variables
-if [ -f /sys/devices/soc0/hw_platform ]; then
-    soc_hwplatform=`cat /sys/devices/soc0/hw_platform` 2> /dev/null
-else
-    soc_hwplatform=`cat /sys/devices/system/soc/soc0/hw_platform` 2> /dev/null
-fi
-if [ -f /sys/devices/soc0/soc_id ]; then
+# directly set instead of getprop
+product=`getprop ro.build.product`
+if [ $product == "bengal_2w" ]
+then
+    # to support 2nd soc id, this value must be read.
     soc_hwid=`cat /sys/devices/soc0/soc_id` 2> /dev/null
+    soc_hwplatform="IDP"
+    soc_hwver="65536"
 else
-    soc_hwid=`cat /sys/devices/system/soc/soc0/id` 2> /dev/null
+    # Set platform variables
+    if [ -f /sys/devices/soc0/hw_platform ]; then
+        soc_hwplatform=`cat /sys/devices/soc0/hw_platform` 2> /dev/null
+    else
+        soc_hwplatform=`cat /sys/devices/system/soc/soc0/hw_platform` 2> /dev/null
+    fi
+    if [ -f /sys/devices/soc0/soc_id ]; then
+        soc_hwid=`cat /sys/devices/soc0/soc_id` 2> /dev/null
+    else
+        soc_hwid=`cat /sys/devices/system/soc/soc0/id` 2> /dev/null
+    fi
+    if [ -f /sys/devices/soc0/platform_version ]; then
+        soc_hwver=`cat /sys/devices/soc0/platform_version` 2> /dev/null
+    else
+        soc_hwver=`cat /sys/devices/system/soc/soc0/platform_version` 2> /dev/null
+    fi
 fi
-if [ -f /sys/devices/soc0/platform_version ]; then
-    soc_hwver=`cat /sys/devices/soc0/platform_version` 2> /dev/null
-else
-    soc_hwver=`cat /sys/devices/system/soc/soc0/platform_version` 2> /dev/null
-fi
+# bengal_2w check ends
 
 if [ -f /sys/class/drm/card0-DSI-1/modes ]; then
     echo "detect" > /sys/class/drm/card0-DSI-1/status
@@ -463,11 +474,16 @@ esac
 #Since lcd density has read only
 #property, it will not overwrite previous set
 #property if any target is setting forcefully.
-set_density_by_fb
+# No need to set for bengal_2w, saves 20ms
+if [ $product != "bengal_2w" ]
+then
+   set_density_by_fb
+fi
+# bengal_2w check ends
 
-
+# Comment below for bengal_2w, takes 21ms
 # set Lilliput LCD density for ADP
-product=`getprop ro.build.product`
+#product=`getprop ro.build.product`
 
 case "$product" in
         "msmnile_au")
@@ -521,30 +537,42 @@ function set_perms() {
     chmod $3 $1
 }
 
-# check for the type of driver FB or DRM
-fb_driver=/sys/class/graphics/fb0
-if [ -e "$fb_driver" ]
+# for bengal_2w, Borqs h/w none of these nodes/files present
+# TODO : any side effects for anohter h/w from same build
+if [ $product != "bengal_2w" ]
 then
-    # check for mdp caps
-    file=/sys/class/graphics/fb0/mdp/caps
-    if [ -f "$file" ]
+    # check for the type of driver FB or DRM
+    fb_driver=/sys/class/graphics/fb0
+    if [ -e "$fb_driver" ]
     then
-        setprop vendor.gralloc.disable_ubwc 1
-        cat $file | while read line; do
-          case "$line" in
-                    *"ubwc"*)
-                    setprop vendor.gralloc.enable_fb_ubwc 1
-                    setprop vendor.gralloc.disable_ubwc 0
+        # check for mdp caps
+        file=/sys/class/graphics/fb0/mdp/caps
+        if [ -f "$file" ]
+        then
+            setprop vendor.gralloc.disable_ubwc 1
+            cat $file | while read line; do
+                case "$line" in
+                       *"ubwc"*)
+                       setprop vendor.gralloc.enable_fb_ubwc 1
+                       setprop vendor.gralloc.disable_ubwc 0
                 esac
-        done
+           done
+       fi
+    else
+        set_perms /sys/devices/virtual/hdcp/msm_hdcp/min_level_change system.graphics 0660
     fi
-else
-    set_perms /sys/devices/virtual/hdcp/msm_hdcp/min_level_change system.graphics 0660
-fi
 
-# allow system_graphics group to access pmic secure_mode node
-set_perms /sys/class/lcd_bias/secure_mode system.graphics 0660
-set_perms /sys/class/leds/wled/secure_mode system.graphics 0660
+    # allow system_graphics group to access pmic secure_mode node
+    set_perms /sys/class/lcd_bias/secure_mode system.graphics 0660
+    set_perms /sys/class/leds/wled/secure_mode system.graphics 0660
+
+    # copy GPU frequencies to vendor property
+    if [ -f /sys/class/kgsl/kgsl-3d0/gpu_available_frequencies ]; then
+       gpu_freq=`cat /sys/class/kgsl/kgsl-3d0/gpu_available_frequencies` 2> /dev/null
+       setprop vendor.gpu.available_frequencies "$gpu_freq"
+    fi
+fi
+# bengal_2w product neq check ends
 
 boot_reason=`cat /proc/sys/kernel/boot_reason`
 reboot_reason=`getprop ro.boot.alarmboot`
@@ -552,10 +580,4 @@ if [ "$boot_reason" = "3" ] || [ "$reboot_reason" = "true" ]; then
     setprop ro.vendor.alarm_boot true
 else
     setprop ro.vendor.alarm_boot false
-fi
-
-# copy GPU frequencies to vendor property
-if [ -f /sys/class/kgsl/kgsl-3d0/gpu_available_frequencies ]; then
-    gpu_freq=`cat /sys/class/kgsl/kgsl-3d0/gpu_available_frequencies` 2> /dev/null
-    setprop vendor.gpu.available_frequencies "$gpu_freq"
 fi

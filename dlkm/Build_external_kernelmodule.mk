@@ -9,6 +9,7 @@
 # KBUILD_REQUIRED_KOS: Add dependency on another KO which exports headers and/or symbols
 # LOCAL_MODULE_DDK_BUILD: Enable the Bazel DDK build
 # LOCAL_MODULE_KO_DIRS: List of modules which should be copied to a subdirectory after build
+# LOCAL_MODULE_DDK_ALLOW_UNSAFE_HEADERS: Allow unsafe (internal) headers to be used by DDK
 
 # Assign external kernel modules to the DLKM class
 LOCAL_MODULE_CLASS := DLKM
@@ -36,6 +37,12 @@ ALL_DEPS.$(LOCAL_MODULE).ALL_DEPS += $(KBUILD_REQUIRED_KOS)
 ifeq ($(LOCAL_MODULE_DDK_BUILD),)
     LOCAL_MODULE_DDK_BUILD := false
 endif
+
+# By default, do not allow unsafe headers to be used
+ifeq ($(LOCAL_MODULE_DDK_ALLOW_UNSAFE_HEADERS),)
+    LOCAL_MODULE_DDK_ALLOW_UNSAFE_HEADERS := false
+endif
+
 
 include $(BUILD_SYSTEM)/base_rules.mk
 
@@ -74,7 +81,7 @@ ifneq ($(filter %.ko,$(LOCAL_MODULE_KBUILD_NAME)),)
 intermediate_export_symvers := $(call local-intermediates-dir)/Module.symvers
 $(intermediate_export_symvers): local_module_kbuild_name := $(LOCAL_MODULE_KBUILD_NAME)
 $(intermediate_export_symvers): $(MODULE_KP_OUT_DIR)/Module.symvers
-	-grep $(basename $(local_module_kbuild_name)) $< > $@
+	-grep $(basename $(notdir $(local_module_kbuild_name))) $< > $@
 	touch $@
 
 LOCAL_INTERMEDIATE_TARGETS += $(intermediate_export_symvers)
@@ -138,6 +145,7 @@ $(MODULE_KP_COMBINED_TARGET): kbuild_options := $(KBUILD_OPTIONS)
 $(MODULE_KP_COMBINED_TARGET): required_kos   := $(KBUILD_REQUIRED_KOS)
 $(MODULE_KP_COMBINED_TARGET): kbuild_symvers := $(sort $(foreach m,$(required_kos),$(call intermediates-dir-for,DLKM,$m)/Module.symvers))
 $(MODULE_KP_COMBINED_TARGET): ddk_build      := $(LOCAL_MODULE_DDK_BUILD)
+$(MODULE_KP_COMBINED_TARGET): unsafe_hdrs    := $(LOCAL_MODULE_DDK_ALLOW_UNSAFE_HEADERS)
 $(MODULE_KP_COMBINED_TARGET): inter_dir      := $(call intermediates-dir-for,DLKM,$(LOCAL_MODULE))
 $(MODULE_KP_COMBINED_TARGET): ko_dirs        := $(LOCAL_MODULE_KO_DIRS)
 $(MODULE_KP_COMBINED_TARGET): $(MODULE_KP_COMMON_TARGET) $(sort $(foreach m,$(KBUILD_REQUIRED_KOS),$(call intermediates-dir-for,DLKM,$m)/Module.symvers))
@@ -147,6 +155,7 @@ $(MODULE_KP_COMBINED_TARGET): $(MODULE_KP_COMMON_TARGET) $(sort $(foreach m,$(KB
 	    OUT_DIR=$${KP_OUT_DIR} \
 	    KERNEL_KIT=$${ANDROID_BUILD_TOP}/$(KERNEL_PREBUILT_DIR) \
 	    ENABLE_DDK_BUILD=$(ddk_build) \
+	    ALLOW_UNSAFE_DDK_HEADERS=$(unsafe_hdrs) \
 	    INTERMEDIATE_DIR=$${ANDROID_BUILD_TOP}/$(inter_dir) \
 	    KO_DIRS="$(ko_dirs)" \
 	    $(if $(kbuild_symvers),KBUILD_EXTRA_SYMBOLS="$(addprefix $${ANDROID_BUILD_TOP}/,$(kbuild_symvers))") \
@@ -174,3 +183,4 @@ LOCAL_ADDITIONAL_DEPENDENCIES :=
 LOCAL_MODULE_KBUILD_NAME :=
 LOCAL_MODULE_DDK_BUILD :=
 LOCAL_MODULE_KO_DIRS :=
+LOCAL_MODULE_DDK_ALLOW_UNSAFE_HEADERS :=

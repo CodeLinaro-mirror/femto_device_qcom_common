@@ -123,6 +123,8 @@ subsystem mem_buf_vm
 /dev/smd3                 0660   bluetooth  bluetooth
 /dev/btpower              0660   bluetooth  system
 /dev/btfmslim             0660   bluetooth  system
+/dev/bt_cp_ctrl           0660   bluetooth  system
+/dev/btfmcodec_dev        0660   bluetooth  system
 
 #permissions for pta
 /dev/pta                  0660   system     system
@@ -259,7 +261,6 @@ subsystem mem_buf_vm
 /dev/msm_vidc_dec_sec     0660   system     audio
 /dev/msm_vidc_enc         0660   system     audio
 /dev/msm_rotator          0660   system     system
-/dev/hw_random            0600   root       root
 /dev/sdsprpc-smd          0660   system     system
 
 #permissions for audio
@@ -464,6 +465,15 @@ subsystem mem_buf_vm
 
 # USB Dynamic Disable
 /sys/bus/platform/devices/a600000.ssusb	dynamic_disable	0220	root	usb
+
+# USB autosuspend/wakeup settings
+/sys/bus/usb/devices/*      power/autosuspend          0660  system  usb
+/sys/bus/usb/devices/*      power/autosuspend_delay_ms 0660  system  usb
+/sys/bus/usb/devices/*      power/control              0660  system  usb
+/sys/bus/usb/devices/*      power/wakeup               0660  system  usb
+
+#USB root hub authorize setting
+/sys/bus/usb/devices/usb*   authorized                 0660  system  usb
 
 #Memory Offline
 /sys/devices/system/memory/memory* state    0660 system system

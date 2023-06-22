@@ -30,5 +30,5 @@
 
 <resources>
    <!-- configuration for SMS save location preference -->
-   <bool name="config_savelocation">true</bool>
+   <bool name="config_savelocation">false</bool>
 </resources>

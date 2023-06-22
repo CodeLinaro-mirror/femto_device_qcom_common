@@ -1069,6 +1069,16 @@ else
     configure_read_ahead_kb_values
 
     enable_swap
+
+    echo 1 > /proc/sys/vm/watermark_boost_factor
+    echo 2 > /proc/sys/vm/kswapd_threads
+    echo 10 > /proc/sys/vm/dirty_ratio
+    echo 150 > /proc/sys/vm/dirty_expire_centisecs
+    echo 3 > /proc/sys/vm/dirty_background_ratio
+    echo 400 > /proc/sys/vm/dirty_writeback_centisecs
+    echo 0 > /proc/sys/vm/page-cluster
+    echo 10240 > /proc/sys/vm/min_free_kbytes
+
 fi
 }
 

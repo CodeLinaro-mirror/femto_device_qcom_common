@@ -693,6 +693,7 @@ service mlid /vendor/bin/mlid
 
 service loc_launcher /system/vendor/bin/loc_launcher
     class late_start
+    disabled
     user gps
     disabled
     group gps

@@ -360,6 +360,7 @@ case "$target" in
                 setprop vendor.gralloc.disable_ubwc 1
                 setprop vendor.display.enhance_idle_time 1
                 setprop vendor.netflix.bsp_rev ""
+                setprop ro.sf.ro.sf.disable_triple_buffer 1
                 # 196609 is decimal for 0x30001 to report version 3.1
                 setprop vendor.opengles.version 196609
                 sku_ver=`cat /sys/devices/platform/soc/5a00000.qcom,vidc1/sku_version` 2> /dev/null

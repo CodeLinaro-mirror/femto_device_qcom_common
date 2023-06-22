@@ -872,29 +872,32 @@ endif
 
 PRODUCT_PACKAGES := \
     AccountAndSyncSettings \
-    DeskClock \
     AlarmProvider \
-    Calculator \
-    Calendar \
-    Camera \
     CellBroadcastReceiver \
     CertInstaller \
     DrmProvider \
-    Email \
-    Gallery2 \
-    LatinIME \
-    Music \
     netutils-wrapper-1.0 \
-    Phone \
     Provision \
-    Protips \
-    QuickSearchBox \
     Settings \
     Sync \
     SystemUI \
     Updater \
     CalendarProvider \
-    SyncProvider \
+    SyncProvider
+
+ifneq ($(TARGET_1G_DDR_RAM), true)
+PRODUCT_PACKAGES := \
+    DeskClock \
+    Calculator \
+    Calendar \
+    Camera \
+    Email \
+    Gallery2 \
+    LatinIME \
+    Music \
+    Phone \
+    Protips \
+    QuickSearchBox \
     SoundRecorder \
     IM \
     VoiceDialer \
@@ -903,6 +906,7 @@ PRODUCT_PACKAGES := \
     VideoEditor \
     SnapdragonLauncher \
     QtiDialer
+endif
 
 ifeq ($(TARGET_HAS_LOW_RAM),true)
     DELAUN := Launcher3QuickStepGo

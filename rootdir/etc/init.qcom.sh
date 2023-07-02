@@ -26,6 +26,9 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# Changes from Qualcomm Innovation Center are provided under the following license:
+# Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+# SPDX-License-Identifier: BSD-3-Clause-Clear
 
 target=`getprop ro.board.platform`
 low_ram=`getprop ro.config.low_ram`
@@ -93,6 +96,13 @@ start_msm_irqbalance_8939()
 }
 
 start_msm_irqbalance_msmnile()
+{
+         if [ -f /vendor/bin/msm_irqbalance ]; then
+                start vendor.msm_irqbalance
+         fi
+}
+
+start_msm_irqbalance_gen4()
 {
          if [ -f /vendor/bin/msm_irqbalance ]; then
                 start vendor.msm_irqbalance
@@ -317,6 +327,9 @@ case "$target" in
         ;;
     "msmnile")
         start_msm_irqbalance_msmnile
+        ;;
+    "gen4")
+        start_msm_irqbalance_gen4
         ;;
     "kona")
         start_msm_irqbalance_kona

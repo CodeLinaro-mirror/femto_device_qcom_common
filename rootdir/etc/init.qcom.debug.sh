@@ -26,11 +26,15 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# Changes from Qualcomm Innovation Center are provided under the following license:
+# Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+# SPDX-License-Identifier: BSD-3-Clause-Clear
 
 HERE=/vendor/bin
 source $HERE/init.qcom.debug-sdm660.sh
 source $HERE/init.qcom.debug-sdm710.sh
 source $HERE/init.qti.debug-msmnile.sh
+source $HERE/init.qti.debug-gen4.sh
 source $HERE/init.qti.debug-talos.sh
 source $HERE/init.qti.debug-kona.sh
 source $HERE/init.qti.debug-lito.sh
@@ -2457,6 +2461,10 @@ enable_core_gladiator_hang_config()
             echo "Enabling core & gladiator config for msmnile"
             enable_msmnile_core_hang_config
         ;;
+        "gen4")
+            echo "Enabling core & gladiator config for gen4"
+            enable_gen4_core_hang_config
+        ;;
         "sdm845")
             echo "Enabling core & gladiator config for sdm845"
             enable_sdm845_core_hang_config
@@ -2555,6 +2563,11 @@ case "$coresight_config" in
             "msmnile")
                 echo "Enabling DCC/STM/Debug events for msmnile"
                 enable_msmnile_debug
+                setprop ro.dbg.coresight.stm_cfg_done 1
+            ;;
+            "gen4")
+                echo "Enabling DCC/STM/Debug events for gen4"
+                enable_gen4_debug
                 setprop ro.dbg.coresight.stm_cfg_done 1
             ;;
             "kona")

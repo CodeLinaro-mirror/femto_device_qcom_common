@@ -26,6 +26,9 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# Changes from Qualcomm Innovation Center are provided under the following license:
+# Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+# SPDX-License-Identifier: BSD-3-Clause-Clear
 
 export PATH=/vendor/bin
 
@@ -311,6 +314,17 @@ case "$target" in
                 ;;
         esac
         ;;
+    "gen4")
+        case "$soc_hwplatform" in
+            *)
+                if [ $fb_width -le 1600 ]; then
+                    setprop vendor.display.lcd_density 560
+                else
+                    setprop vendor.display.lcd_density 640
+                fi
+                ;;
+        esac
+        ;;
     "kona")
         case "$soc_hwplatform" in
             *)
@@ -491,6 +505,9 @@ case "$product" in
             setprop vendor.display.lcd_density 160
             ;;
         "msmnile_gvmq")
+            setprop vendor.display.lcd_density 160
+            ;;
+        "gen4_gvm")
             setprop vendor.display.lcd_density 160
             ;;
         "generic_arm64")

@@ -2,6 +2,11 @@
 # SPDX-License-Identifier: BSD-3-Clause-Clear
 #
 
+# ipc logging char device nodes
+subsystem ipc_logging
+    devname uevent_devpath
+    dirname /dev/ipc_logging
+
 # qdss sysfs node attributes
 /sys/bus/coresight/devices/coresight-tmc-etf       curr_sink       0664   system   system
 /sys/bus/coresight/devices/coresight-tmc-etf       enable_sink     0664   system   system
@@ -19,3 +24,6 @@
 /sys/bus/coresight/devices/coresight-modem-diag    enable_source   0664   system   system
 /sys/bus/coresight/devices/coresight-tmc-etr1      enable_sink     0664   system   system
 /sys/bus/coresight/devices/coresight-tmc-etr1      out_mode        0664   system   system
+
+# ipc logging char device nodes
+/dev/ipc_logging/*                                                 0400   root     root

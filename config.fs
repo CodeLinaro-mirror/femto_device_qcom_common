@@ -43,6 +43,12 @@ user: AID_ROOT
 group: AID_SHELL
 caps: 0
 
+[vendor/bin/init.class_main.sh]
+mode: 0555
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
 [vendor/bin/init.mdm.sh]
 mode: 0744
 user: AID_ROOT
@@ -62,7 +68,13 @@ group: AID_SHELL
 caps: 0
 
 [vendor/bin/qca6234-service.sh]
-mode: 0744
+mode: 0555
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/bin/sku-info.sh]
+mode: 0555
 user: AID_ROOT
 group: AID_SHELL
 caps: 0

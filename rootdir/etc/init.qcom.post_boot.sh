@@ -5113,7 +5113,8 @@ esac
 case "$target" in
     "msmnile")
 	# cpuset parameters
-	target_varient=`getprop ro.build.product`
+	target_suffix=`getprop ro.vendor.board.suffix`
+	target_varient=$target$target_suffix
         if [ "$target_varient" == "msmnile_gvmq" ]; then
 		echo 4-7 > /dev/cpuset/background/cpus
 		echo 4-7 > /dev/cpuset/system-background/cpus

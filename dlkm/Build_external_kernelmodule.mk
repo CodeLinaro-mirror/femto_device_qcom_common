@@ -148,7 +148,6 @@ $(MODULE_KP_COMBINED_TARGET): ddk_build      := $(LOCAL_MODULE_DDK_BUILD)
 $(MODULE_KP_COMBINED_TARGET): unsafe_hdrs    := $(LOCAL_MODULE_DDK_ALLOW_UNSAFE_HEADERS)
 $(MODULE_KP_COMBINED_TARGET): inter_dir      := $(call intermediates-dir-for,DLKM,$(LOCAL_MODULE))
 $(MODULE_KP_COMBINED_TARGET): ko_dirs        := $(LOCAL_MODULE_KO_DIRS)
-$(MODULE_KP_COMBINED_TARGET): platform       := $(TARGET_BOARD_PLATFORM)
 $(MODULE_KP_COMBINED_TARGET): $(MODULE_KP_COMMON_TARGET) $(sort $(foreach m,$(KBUILD_REQUIRED_KOS),$(call intermediates-dir-for,DLKM,$m)/Module.symvers))
 	export ANDROID_BUILD_TOP=$$(pwd) ; export KP_OUT_DIR=$$(cd $(KP_DLKM_INTERMEDIATE)/kernel_platform ; pwd) ; \
 	(cd $(KERNEL_PLATFORM_PATH) && \
@@ -159,7 +158,6 @@ $(MODULE_KP_COMBINED_TARGET): $(MODULE_KP_COMMON_TARGET) $(sort $(foreach m,$(KB
 	    ALLOW_UNSAFE_DDK_HEADERS=$(unsafe_hdrs) \
 	    INTERMEDIATE_DIR=$${ANDROID_BUILD_TOP}/$(inter_dir) \
 	    KO_DIRS="$(ko_dirs)" \
-            TARGET_BOARD_PLATFORM=$(platform) \
 	    $(if $(kbuild_symvers),KBUILD_EXTRA_SYMBOLS="$(addprefix $${ANDROID_BUILD_TOP}/,$(kbuild_symvers))") \
 	    $(if $(required_kos),KCFLAGS="$(sort $(foreach d,$(required_kos),$(patsubst -I%,-I$${ANDROID_BUILD_TOP}/%,$(EXPORTS.$d.FLAGS))))") \
 	    ./build/build_module.sh $(kbuild_options) \

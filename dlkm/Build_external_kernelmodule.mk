@@ -10,6 +10,7 @@
 # LOCAL_MODULE_DDK_BUILD: Enable the Bazel DDK build
 # LOCAL_MODULE_KO_DIRS: List of modules which should be copied to a subdirectory after build
 # LOCAL_MODULE_DDK_ALLOW_UNSAFE_HEADERS: Allow unsafe (internal) headers to be used by DDK
+# LOCAL_MODULE_DDK_SUBTARGET_REGEX: Set a subtarget regular expression to match within a target/variant combo
 
 # Assign external kernel modules to the DLKM class
 LOCAL_MODULE_CLASS := DLKM
@@ -43,6 +44,10 @@ ifeq ($(LOCAL_MODULE_DDK_ALLOW_UNSAFE_HEADERS),)
     LOCAL_MODULE_DDK_ALLOW_UNSAFE_HEADERS := false
 endif
 
+# By default, match any dist target for the target/variant combo
+ifeq ($(LOCAL_MODULE_DDK_SUBTARGET_REGEX),)
+    LOCAL_MODULE_DDK_SUBTARGET_REGEX := ".*"
+endif
 
 include $(BUILD_SYSTEM)/base_rules.mk
 
@@ -149,6 +154,7 @@ $(MODULE_KP_COMBINED_TARGET): unsafe_hdrs    := $(LOCAL_MODULE_DDK_ALLOW_UNSAFE_
 $(MODULE_KP_COMBINED_TARGET): inter_dir      := $(call intermediates-dir-for,DLKM,$(LOCAL_MODULE))
 $(MODULE_KP_COMBINED_TARGET): ko_dirs        := $(LOCAL_MODULE_KO_DIRS)
 $(MODULE_KP_COMBINED_TARGET): platform       := $(TARGET_BOARD_PLATFORM)
+$(MODULE_KP_COMBINED_TARGET): subtarget_re   := $(LOCAL_MODULE_DDK_SUBTARGET_REGEX)
 $(MODULE_KP_COMBINED_TARGET): $(MODULE_KP_COMMON_TARGET) $(sort $(foreach m,$(KBUILD_REQUIRED_KOS),$(call intermediates-dir-for,DLKM,$m)/Module.symvers))
 	export ANDROID_BUILD_TOP=$$(pwd) ; export KP_OUT_DIR=$$(cd $(KP_DLKM_INTERMEDIATE)/kernel_platform ; pwd) ; \
 	(cd $(KERNEL_PLATFORM_PATH) && \
@@ -159,7 +165,8 @@ $(MODULE_KP_COMBINED_TARGET): $(MODULE_KP_COMMON_TARGET) $(sort $(foreach m,$(KB
 	    ALLOW_UNSAFE_DDK_HEADERS=$(unsafe_hdrs) \
 	    INTERMEDIATE_DIR=$${ANDROID_BUILD_TOP}/$(inter_dir) \
 	    KO_DIRS="$(ko_dirs)" \
-            TARGET_BOARD_PLATFORM=$(platform) \
+	    TARGET_BOARD_PLATFORM=$(platform) \
+	    SUBTARGET_REGEX=$(subtarget_re) \
 	    $(if $(kbuild_symvers),KBUILD_EXTRA_SYMBOLS="$(addprefix $${ANDROID_BUILD_TOP}/,$(kbuild_symvers))") \
 	    $(if $(required_kos),KCFLAGS="$(sort $(foreach d,$(required_kos),$(patsubst -I%,-I$${ANDROID_BUILD_TOP}/%,$(EXPORTS.$d.FLAGS))))") \
 	    ./build/build_module.sh $(kbuild_options) \
@@ -186,3 +193,4 @@ LOCAL_MODULE_KBUILD_NAME :=
 LOCAL_MODULE_DDK_BUILD :=
 LOCAL_MODULE_KO_DIRS :=
 LOCAL_MODULE_DDK_ALLOW_UNSAFE_HEADERS :=
+LOCAL_MODULE_DDK_SUBTARGET_REGEX :=

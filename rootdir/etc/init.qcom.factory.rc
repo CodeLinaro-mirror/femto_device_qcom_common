@@ -43,20 +43,35 @@ service mmi_diag /system_ext/bin/mmi_diag
         group root oem_2901
         disabled
 
-on property:vendor.sys.boot_mode=ffbm
+on property:vendor.sys.boot_mode=ffbm && property:ro.build.type=userdebug
     write ${persist.vendor.mmi.misc_dev_path} "ffbm-01"
 
-on property:vendor.sys.boot_mode=qmmi
+on property:vendor.sys.boot_mode=ffbm && property:ro.build.type=eng
+    write ${persist.vendor.mmi.misc_dev_path} "ffbm-01"
+
+on property:vendor.sys.boot_mode=qmmi && property:ro.build.type=userdebug
     write ${persist.vendor.mmi.misc_dev_path} "qmmi"
 
-on property:vendor.sys.boot_mode=normal
+on property:vendor.sys.boot_mode=qmmi && property:ro.build.type=eng
+    write ${persist.vendor.mmi.misc_dev_path} "qmmi"
+
+on property:vendor.sys.boot_mode=normal && property:ro.build.type=userdebug
+    write ${persist.vendor.mmi.misc_dev_path} "normal"
+
+on property:vendor.sys.boot_mode=normal && property:ro.build.type=eng
     write ${persist.vendor.mmi.misc_dev_path} "normal"
 
 # Creating a scratch storage on /data for factory testing.
-on factory-fs && property:ro.bootmode=ffbm-00
+on factory-fs && property:ro.bootmode=ffbm-00 && property:ro.build.type=userdebug
     mount tmpfs tmpfs /data
 
-on factory-fs && property:ro.bootmode=ffbm-01
+on factory-fs && property:ro.bootmode=ffbm-00 && property:ro.build.type=eng
+    mount tmpfs tmpfs /data
+
+on factory-fs && property:ro.bootmode=ffbm-01 && property:ro.build.type=userdebug
+    mount tmpfs tmpfs /data
+
+on factory-fs && property:ro.bootmode=ffbm-01 && property:ro.build.type=eng
     mount tmpfs tmpfs /data
 
 # aligned the usb port with system standard, otherwise if only diag be added
@@ -91,16 +106,28 @@ on mmi && property:ro.bootmode=ffbm-01
     start qcom-post-boot
     start mmi_diag
 
-on property:persist.vendor.usb.config=* && property:ro.bootmode=ffbm-00
+on property:persist.vendor.usb.config=* && property:ro.bootmode=ffbm-00 && property:ro.build.type=userdebug
     setprop sys.usb.config ${persist.vendor.usb.config}
 
-on property:persist.vendor.usb.config=* && property:ro.bootmode=ffbm-01
+on property:persist.vendor.usb.config=* && property:ro.bootmode=ffbm-00 && property:ro.build.type=eng
     setprop sys.usb.config ${persist.vendor.usb.config}
 
-on property:persist.vendor.usb.config=* && property:ro.bootmode=ffbm-02
+on property:persist.vendor.usb.config=* && property:ro.bootmode=ffbm-01 && property:ro.build.type=userdebug
     setprop sys.usb.config ${persist.vendor.usb.config}
 
-on property:persist.vendor.usb.config=* && property:ro.bootmode=qmmi
+on property:persist.vendor.usb.config=* && property:ro.bootmode=ffbm-01 && property:ro.build.type=eng
+    setprop sys.usb.config ${persist.vendor.usb.config}
+
+on property:persist.vendor.usb.config=* && property:ro.bootmode=ffbm-02 && property:ro.build.type=userdebug
+    setprop sys.usb.config ${persist.vendor.usb.config}
+
+on property:persist.vendor.usb.config=* && property:ro.bootmode=ffbm-02 && property:ro.build.type=eng
+    setprop sys.usb.config ${persist.vendor.usb.config}
+
+on property:persist.vendor.usb.config=* && property:ro.bootmode=qmmi && property:ro.build.type=userdebug
+    setprop sys.usb.config ${persist.vendor.usb.config}
+
+on property:persist.vendor.usb.config=* && property:ro.bootmode=qmmi && property:ro.build.type=eng
     setprop sys.usb.config ${persist.vendor.usb.config}
 
 on ffbm

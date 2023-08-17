@@ -103,6 +103,9 @@ on property:persist.vendor.usb.config=* && property:ro.bootmode=ffbm-02
 on property:persist.vendor.usb.config=* && property:ro.bootmode=qmmi
     setprop sys.usb.config ${persist.vendor.usb.config}
 
+on property:persist.vendor.wfd.source.hdmi.enable=*
+    setprop persist.sys.wfd.source.hdmi.enable ${persist.vendor.wfd.source.hdmi.enable}
+
 on ffbm
     trigger early-fs
     trigger factory-fs

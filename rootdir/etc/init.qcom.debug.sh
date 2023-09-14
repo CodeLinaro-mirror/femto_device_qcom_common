@@ -31,17 +31,6 @@
 # SPDX-License-Identifier: BSD-3-Clause-Clear
 
 HERE=/vendor/bin
-source $HERE/init.qcom.debug-sdm660.sh
-source $HERE/init.qcom.debug-sdm710.sh
-source $HERE/init.qti.debug-msmnile.sh
-source $HERE/init.qti.debug-gen4.sh
-source $HERE/init.qti.debug-talos.sh
-source $HERE/init.qti.debug-kona.sh
-source $HERE/init.qti.debug-lito.sh
-source $HERE/init.qti.debug-trinket.sh
-source $HERE/init.qti.debug-atoll.sh
-source $HERE/init.qti.debug-lagoon.sh
-source $HERE/init.qti.debug-bengal.sh
 
 enable_tracing_events()
 {
@@ -2314,6 +2303,7 @@ enable_dcc_config()
 
         "sdm660")
             echo "Enabling DCC config for sdm660."
+            source $HERE/init.qcom.debug-sdm660.sh
             enable_sdm660_dcc_config
             ;;
 
@@ -2455,14 +2445,17 @@ enable_core_gladiator_hang_config()
     case "$target" in
         "kona")
             echo "Enabling core & gladiator config for kona"
+            source $HERE/init.qti.debug-kona.sh
             enable_kona_core_hang_config
         ;;
         "msmnile")
             echo "Enabling core & gladiator config for msmnile"
+            source $HERE/init.qti.debug-msmnile.sh
             enable_msmnile_core_hang_config
         ;;
         "gen4")
             echo "Enabling core & gladiator config for gen4"
+            source $HERE/init.qti.debug-gen4.sh
             enable_gen4_core_hang_config
         ;;
         "sdm845")
@@ -2532,10 +2525,12 @@ case "$coresight_config" in
         case "$target" in
             "sdm660")
                 echo "Enabling STM/Debug events for SDM660"
+                source $HERE/init.qcom.debug-sdm660.sh
                 enable_sdm660_debug
             ;;
             "sdm710" | "qcs605")
                 echo "Enabling DCC/STM/Debug events for sdm710 and qcs605"
+                source $HERE/init.qcom.debug-sdm710.sh
                 enable_sdm710_debug
                 setprop ro.dbg.coresight.stm_cfg_done 1
             ;;
@@ -2551,21 +2546,25 @@ case "$coresight_config" in
             ;;
             "sm6150")
                 echo "Enabling DCC/STM/Debug events for talos"
+                source $HERE/init.qti.debug-talos.sh
                 enable_talos_debug
                 setprop ro.dbg.coresight.stm_cfg_done 1
             ;;
             "msmnile")
                 echo "Enabling DCC/STM/Debug events for msmnile"
+                source $HERE/init.qti.debug-msmnile.sh
                 enable_msmnile_debug
                 setprop ro.dbg.coresight.stm_cfg_done 1
             ;;
             "gen4")
                 echo "Enabling DCC/STM/Debug events for gen4"
+                source $HERE/init.qti.debug-gen4.sh
                 enable_gen4_debug
                 setprop ro.dbg.coresight.stm_cfg_done 1
             ;;
             "kona")
                 echo "Enabling DCC/STM/Debug events for kona"
+                source $HERE/init.qti.debug-kona.sh
                 enable_kona_debug
                 setprop ro.dbg.coresight.stm_cfg_done 1
             ;;
@@ -2573,26 +2572,31 @@ case "$coresight_config" in
                 soc_id=`cat /sys/devices/soc0/soc_id`
                 if [ "$soc_id" == "434" || "$soc_id" == "459" ]; then
                     echo "Enabling DCC/STM/Debug events for lagoon"
+                    source $HERE/init.qti.debug-lagoon.sh
                     enable_lagoon_debug
                     setprop ro.dbg.coresight.stm_cfg_done 1
                 else
                     echo "Enabling DCC/STM/Debug events for lito"
+                    source $HERE/init.qti.debug-lito.sh
                     enable_lito_debug
                     setprop ro.dbg.coresight.stm_cfg_done 1
                 fi
             ;;
             "trinket")
                 echo "Enabling DCC/STM/Debug events for trinket"
+                source $HERE/init.qti.debug-trinket.sh
                 enable_trinket_debug
                 setprop ro.dbg.coresight.stm_cfg_done 1
             ;;
             "atoll")
                 echo "Enabling DCC/STM/Debug events for atoll"
+                source $HERE/init.qti.debug-atoll.sh
                 enable_atoll_debug
                 setprop ro.dbg.coresight.stm_cfg_done 1
             ;;
             "bengal")
                 soc_id=`cat /sys/devices/soc0/soc_id`
+                source $HERE/init.qti.debug-bengal.sh
                 if [ "$soc_id" == "473" || "$soc_id" == "474" ]; then
                     echo "Enabling DCC/STM/Debug events for scuba"
                     enable_scuba_debug

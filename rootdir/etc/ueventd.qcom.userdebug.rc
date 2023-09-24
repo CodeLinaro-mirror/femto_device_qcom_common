@@ -27,3 +27,6 @@ subsystem ipc_logging
 
 # ipc logging char device nodes
 /dev/ipc_logging/*                                                 0400   root     root
+
+# Q2SPI UWB device
+/dev/q2spiuwbtest    0664    uwb    uwb

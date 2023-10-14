@@ -2557,12 +2557,6 @@ case "$coresight_config" in
                 enable_atoll_debug
                 setprop ro.dbg.coresight.stm_cfg_done 1
             ;;
-            "bengal")
-                echo "Enabling DCC/STM/Debug events for bengal"
-                source $HERE/init.qti.debug-bengal.sh
-                enable_bengal_debug
-                setprop ro.dbg.coresight.stm_cfg_done 1
-            ;;
             *)
                 echo "Invalid target"
             ;;

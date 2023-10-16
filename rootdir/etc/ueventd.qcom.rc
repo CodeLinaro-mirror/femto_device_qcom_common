@@ -341,6 +341,7 @@ subsystem mem_buf_vm
 /dev/spidev22.0           0660   system     audio
 /dev/spidev16.0           0660   system     audio
 /dev/spidev10.0           0660   system     audio
+/dev/gpiochip0            0660   system     audio
 
 # DVB devices
 /dev/dvb/adapter0/demux*  0440   media       media

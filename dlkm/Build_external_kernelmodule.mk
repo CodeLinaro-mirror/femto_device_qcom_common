@@ -11,6 +11,7 @@
 # LOCAL_MODULE_KO_DIRS: List of modules which should be copied to a subdirectory after build
 # LOCAL_MODULE_DDK_ALLOW_UNSAFE_HEADERS: Allow unsafe (internal) headers to be used by DDK
 # LOCAL_MODULE_DDK_SUBTARGET_REGEX: Set a subtarget regular expression to match within a target/variant combo
+# LOCAL_MODULE_DDK_EXTRA_ARGS: Extra arguments to pass to the Bazel build invocation
 
 # Assign external kernel modules to the DLKM class
 LOCAL_MODULE_CLASS := DLKM
@@ -47,6 +48,11 @@ endif
 # By default, match any dist target for the target/variant combo
 ifeq ($(LOCAL_MODULE_DDK_SUBTARGET_REGEX),)
     LOCAL_MODULE_DDK_SUBTARGET_REGEX := ".*"
+endif
+
+# By default, no extra arguments will be passed
+ifeq ($(LOCAL_MODULE_DDK_EXTRA_ARGS),)
+    LOCAL_MODULE_DDK_EXTRA_ARGS :=
 endif
 
 include $(BUILD_SYSTEM)/base_rules.mk
@@ -155,6 +161,7 @@ $(MODULE_KP_COMBINED_TARGET): inter_dir      := $(call intermediates-dir-for,DLK
 $(MODULE_KP_COMBINED_TARGET): ko_dirs        := $(LOCAL_MODULE_KO_DIRS)
 $(MODULE_KP_COMBINED_TARGET): platform       := $(TARGET_BOARD_PLATFORM)
 $(MODULE_KP_COMBINED_TARGET): subtarget_re   := $(LOCAL_MODULE_DDK_SUBTARGET_REGEX)
+$(MODULE_KP_COMBINED_TARGET): extra_args     := $(LOCAL_MODULE_DDK_EXTRA_ARGS)
 $(MODULE_KP_COMBINED_TARGET): $(MODULE_KP_COMMON_TARGET) $(sort $(foreach m,$(KBUILD_REQUIRED_KOS),$(call intermediates-dir-for,DLKM,$m)/Module.symvers))
 	export ANDROID_BUILD_TOP=$$(pwd) ; export KP_OUT_DIR=$$(cd $(KP_DLKM_INTERMEDIATE)/kernel_platform ; pwd) ; \
 	(cd $(KERNEL_PLATFORM_PATH) && \
@@ -167,6 +174,7 @@ $(MODULE_KP_COMBINED_TARGET): $(MODULE_KP_COMMON_TARGET) $(sort $(foreach m,$(KB
 	    KO_DIRS="$(ko_dirs)" \
 	    TARGET_BOARD_PLATFORM=$(platform) \
 	    SUBTARGET_REGEX=$(subtarget_re) \
+	    EXTRA_DDK_ARGS="$(extra_args)" \
 	    $(if $(kbuild_symvers),KBUILD_EXTRA_SYMBOLS="$(addprefix $${ANDROID_BUILD_TOP}/,$(kbuild_symvers))") \
 	    $(if $(required_kos),KCFLAGS="$(sort $(foreach d,$(required_kos),$(patsubst -I%,-I$${ANDROID_BUILD_TOP}/%,$(EXPORTS.$d.FLAGS))))") \
 	    ./build/build_module.sh $(kbuild_options) \
@@ -194,3 +202,4 @@ LOCAL_MODULE_DDK_BUILD :=
 LOCAL_MODULE_KO_DIRS :=
 LOCAL_MODULE_DDK_ALLOW_UNSAFE_HEADERS :=
 LOCAL_MODULE_DDK_SUBTARGET_REGEX :=
+LOCAL_MODULE_DDK_EXTRA_ARGS :=

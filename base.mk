@@ -269,6 +269,9 @@ ifneq ($(strip $(ENABLE_HYP)),true)
 INIT += init.qti.can.sh
 endif
 endif
+ifeq ($(strip $(TARGET_BOARD_AUTO)),true)
+INIT += load_dlkm
+endif
 
 #IPROUTE2
 IPROUTE2 := ip

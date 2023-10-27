@@ -268,6 +268,9 @@ ifneq ($(strip $(ENABLE_HYP)),true)
 INIT += init.qti.can.sh
 endif
 endif
+ifneq (,$(filter $(TARGET_BOARD_PLATFORM)$(TARGET_BOARD_SUFFIX), msmnile_au))
+INIT += load_dlkm
+endif
 
 #IPROUTE2
 IPROUTE2 := ip

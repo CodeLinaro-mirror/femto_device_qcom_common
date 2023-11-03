@@ -24,6 +24,9 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# Changes from Qualcomm Innovation Center are provided under the following license:
+# Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+# SPDX-License-Identifier: BSD-3-Clause-Clear
 
 # Firmware directory Path
 # Below macro will be read by uevent and path will
@@ -194,6 +197,9 @@ firmware_directories /vendor/firmware_mnt/image/
 #display - glink
 /dev/glink_pkt_slate_display_ctrl   0660  system  system
 /dev/glink_pkt_slate_display_data   0660  system  system
+
+#slate-dfu - glink
+/dev/glink_pkt_slate_dfu            0660  system  system
 
 #slate-ux-ctl - glink
 /dev/glink_pkt_slate_ux_ctl         0660  system  system

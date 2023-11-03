@@ -195,6 +195,9 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/glink_pkt_slate_display_ctrl   0660  system  system
 /dev/glink_pkt_slate_display_data   0660  system  system
 
+#slate-dfu - glink
+/dev/glink_pkt_slate_dfu            0660  system  system
+
 #slate-ux-ctl - glink
 /dev/glink_pkt_slate_ux_ctl         0660  system  system
 

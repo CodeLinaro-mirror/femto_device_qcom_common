@@ -336,6 +336,7 @@ subsystem mem_buf_vm
 /dev/i2c-5                0660   media       media
 /dev/i2c-4                0660   system     audio
 /dev/i2c-6                0660   system     audio
+/dev/i2c-11               0660   system     audio
 /dev/avtimer              0660   system     audio
 /dev/spidev2.0            0660   system     audio
 /dev/spidev22.0           0660   system     audio

@@ -9,10 +9,12 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
 else
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 endif
+ifneq ($(TARGET_BOARD_DERIVATIVE_SUFFIX), _microdroid)
 ifeq ($(TARGET_BOARD_AUTO), true)
   $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 else
   $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
+endif
 endif
 
 

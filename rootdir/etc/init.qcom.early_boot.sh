@@ -467,6 +467,9 @@ case "$product" in
             echo 902400000 > /sys/class/devfreq/soc:qcom,cpu4-cpu-l3-lat/min_freq
             echo 1612800000 > /sys/class/devfreq/soc:qcom,cpu4-cpu-l3-lat/max_freq
             ;;
+        "qssi_au")
+            setprop vendor.display.lcd_density 160
+            ;;
         "msmnile_au_ota")
             setprop vendor.display.lcd_density 160
             echo 902400000 > /sys/class/devfreq/soc:qcom,cpu0-cpu-l3-lat/min_freq

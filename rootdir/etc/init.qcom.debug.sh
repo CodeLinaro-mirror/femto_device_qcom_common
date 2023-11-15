@@ -35,50 +35,50 @@ HERE=/vendor/bin
 enable_tracing_events()
 {
     # timer
-    echo 1 > /sys/kernel/debug/tracing/events/timer/timer_expire_entry/enable
-    echo 1 > /sys/kernel/debug/tracing/events/timer/timer_expire_exit/enable
-    echo 1 > /sys/kernel/debug/tracing/events/timer/hrtimer_cancel/enable
-    echo 1 > /sys/kernel/debug/tracing/events/timer/hrtimer_expire_entry/enable
-    echo 1 > /sys/kernel/debug/tracing/events/timer/hrtimer_expire_exit/enable
-    echo 1 > /sys/kernel/debug/tracing/events/timer/hrtimer_init/enable
-    echo 1 > /sys/kernel/debug/tracing/events/timer/hrtimer_start/enable
+    echo 1 > /sys/kernel/tracing/events/timer/timer_expire_entry/enable
+    echo 1 > /sys/kernel/tracing/events/timer/timer_expire_exit/enable
+    echo 1 > /sys/kernel/tracing/events/timer/hrtimer_cancel/enable
+    echo 1 > /sys/kernel/tracing/events/timer/hrtimer_expire_entry/enable
+    echo 1 > /sys/kernel/tracing/events/timer/hrtimer_expire_exit/enable
+    echo 1 > /sys/kernel/tracing/events/timer/hrtimer_init/enable
+    echo 1 > /sys/kernel/tracing/events/timer/hrtimer_start/enable
     #enble FTRACE for softirq events
-    echo 1 > /sys/kernel/debug/tracing/events/irq/enable
+    echo 1 > /sys/kernel/tracing/events/irq/enable
     #enble FTRACE for Workqueue events
-    echo 1 > /sys/kernel/debug/tracing/events/workqueue/enable
+    echo 1 > /sys/kernel/tracing/events/workqueue/enable
     # schedular
-    echo 1 > /sys/kernel/debug/tracing/events/sched/sched_cpu_hotplug/enable
-    echo 1 > /sys/kernel/debug/tracing/events/sched/sched_migrate_task/enable
-    echo 1 > /sys/kernel/debug/tracing/events/sched/sched_pi_setprio/enable
-    echo 1 > /sys/kernel/debug/tracing/events/sched/sched_switch/enable
-    echo 1 > /sys/kernel/debug/tracing/events/sched/sched_wakeup/enable
-    echo 1 > /sys/kernel/debug/tracing/events/sched/sched_wakeup_new/enable
-    echo 1 > /sys/kernel/debug/tracing/events/sched/sched_isolate/enable
+    echo 1 > /sys/kernel/tracing/events/sched/sched_cpu_hotplug/enable
+    echo 1 > /sys/kernel/tracing/events/sched/sched_migrate_task/enable
+    echo 1 > /sys/kernel/tracing/events/sched/sched_pi_setprio/enable
+    echo 1 > /sys/kernel/tracing/events/sched/sched_switch/enable
+    echo 1 > /sys/kernel/tracing/events/sched/sched_wakeup/enable
+    echo 1 > /sys/kernel/tracing/events/sched/sched_wakeup_new/enable
+    echo 1 > /sys/kernel/tracing/events/sched/sched_isolate/enable
     # sound
-    echo 1 > /sys/kernel/debug/tracing/events/asoc/snd_soc_reg_read/enable
-    echo 1 > /sys/kernel/debug/tracing/events/asoc/snd_soc_reg_write/enable
+    echo 1 > /sys/kernel/tracing/events/asoc/snd_soc_reg_read/enable
+    echo 1 > /sys/kernel/tracing/events/asoc/snd_soc_reg_write/enable
     # mdp
-    echo 1 > /sys/kernel/debug/tracing/events/mdss/mdp_video_underrun_done/enable
+    echo 1 > /sys/kernel/tracing/events/mdss/mdp_video_underrun_done/enable
     # video
-    echo 1 > /sys/kernel/debug/tracing/events/msm_vidc/enable
+    echo 1 > /sys/kernel/tracing/events/msm_vidc/enable
     # clock
-    echo 1 > /sys/kernel/debug/tracing/events/power/clock_set_rate/enable
-    echo 1 > /sys/kernel/debug/tracing/events/power/clock_enable/enable
-    echo 1 > /sys/kernel/debug/tracing/events/power/clock_disable/enable
+    echo 1 > /sys/kernel/tracing/events/power/clock_set_rate/enable
+    echo 1 > /sys/kernel/tracing/events/power/clock_enable/enable
+    echo 1 > /sys/kernel/tracing/events/power/clock_disable/enable
     # regulator
-    echo 1 > /sys/kernel/debug/tracing/events/regulator/enable
+    echo 1 > /sys/kernel/tracing/events/regulator/enable
     # power
-    echo 1 > /sys/kernel/debug/tracing/events/msm_low_power/enable
+    echo 1 > /sys/kernel/tracing/events/msm_low_power/enable
     #thermal
-    echo 1 > /sys/kernel/debug/tracing/events/thermal/thermal_pre_core_offline/enable
-    echo 1 > /sys/kernel/debug/tracing/events/thermal/thermal_post_core_offline/enable
-    echo 1 > /sys/kernel/debug/tracing/events/thermal/thermal_pre_core_online/enable
-    echo 1 > /sys/kernel/debug/tracing/events/thermal/thermal_post_core_online/enable
-    echo 1 > /sys/kernel/debug/tracing/events/thermal/thermal_pre_frequency_mit/enable
-    echo 1 > /sys/kernel/debug/tracing/events/thermal/thermal_post_frequency_mit/enable
+    echo 1 > /sys/kernel/tracing/events/thermal/thermal_pre_core_offline/enable
+    echo 1 > /sys/kernel/tracing/events/thermal/thermal_post_core_offline/enable
+    echo 1 > /sys/kernel/tracing/events/thermal/thermal_pre_core_online/enable
+    echo 1 > /sys/kernel/tracing/events/thermal/thermal_post_core_online/enable
+    echo 1 > /sys/kernel/tracing/events/thermal/thermal_pre_frequency_mit/enable
+    echo 1 > /sys/kernel/tracing/events/thermal/thermal_post_frequency_mit/enable
 
     #rmph_send_msg
-    echo 1 > /sys/kernel/debug/tracing/events/rpmh/rpmh_send_msg/enable
+    echo 1 > /sys/kernel/tracing/events/rpmh/rpmh_send_msg/enable
 
     #enable aop with timestamps
     echo 33 0x680000 > /sys/bus/coresight/devices/coresight-tpdm-swao-0/cmb_msr
@@ -90,7 +90,7 @@ enable_tracing_events()
     echo 4 2 > /sys/bus/coresight/devices/coresight-cti-swao_cti0/map_trigin
     echo 4 2 > /sys/bus/coresight/devices/coresight-cti-swao_cti0/map_trigout
 
-    echo 1 > /sys/kernel/debug/tracing/tracing_on
+    echo 1 > /sys/kernel/tracing/tracing_on
 }
 
 # function to enable ftrace events
@@ -103,7 +103,7 @@ enable_ftrace_event_tracing()
     fi
 
     # bail out if ftrace events aren't present
-    if [ ! -d /sys/kernel/debug/tracing/events ]
+    if [ ! -d /sys/kernel/tracing/events ]
     then
         return
     fi
@@ -125,7 +125,7 @@ enable_stm_events()
         return
     fi
     # bail out if ftrace events aren't present
-    if [ ! -d /sys/kernel/debug/tracing/events ]
+    if [ ! -d /sys/kernel/tracing/events ]
     then
         return
     fi
@@ -133,7 +133,7 @@ enable_stm_events()
     echo $etr_size > /sys/bus/coresight/devices/coresight-tmc-etr/mem_size
     echo 1 > /sys/bus/coresight/devices/coresight-tmc-etr/$sinkenable
     echo 1 > /sys/bus/coresight/devices/coresight-stm/$srcenable
-    echo 1 > /sys/kernel/debug/tracing/tracing_on
+    echo 1 > /sys/kernel/tracing/tracing_on
     echo 0 > /sys/bus/coresight/devices/coresight-stm/hwevent_enable
     enable_tracing_events
 }
@@ -151,61 +151,61 @@ enable_sdm632_stm_events()
         return
     fi
     # bail out if ftrace events aren't present
-    if [ ! -d /sys/kernel/debug/tracing/events ]
+    if [ ! -d /sys/kernel/tracing/events ]
     then
         return
     fi
 
     echo 0x2000000 > /sys/bus/coresight/devices/coresight-tmc-etr/mem_size
-    echo 4096 > /sys/kernel/debug/tracing/buffer_size_kb
+    echo 4096 > /sys/kernel/tracing/buffer_size_kb
     echo 1 > /sys/bus/coresight/devices/coresight-tmc-etr/$sinkenable
     echo 1 > /sys/bus/coresight/devices/coresight-stm/$srcenable
-    echo 1 > /sys/kernel/debug/tracing/tracing_on
+    echo 1 > /sys/kernel/tracing/tracing_on
     echo 0 > /sys/bus/coresight/devices/coresight-stm/hwevent_enable
 
     # clock
-    echo 1 > /sys/kernel/debug/tracing/events/power/clock_set_rate/enable
+    echo 1 > /sys/kernel/tracing/events/power/clock_set_rate/enable
     # power
-    echo 1 > /sys/kernel/debug/tracing/events/msm_low_power/enable
+    echo 1 > /sys/kernel/tracing/events/msm_low_power/enable
     #cpufreq
-    echo 1 > /sys/kernel/debug/tracing/events/power/cpu_frequency_switch_start/enable
-    echo 1 > /sys/kernel/debug/tracing/events/power/cpu_frequency_switch_end/enable
+    echo 1 > /sys/kernel/tracing/events/power/cpu_frequency_switch_start/enable
+    echo 1 > /sys/kernel/tracing/events/power/cpu_frequency_switch_end/enable
     # regulator
-    echo 1 > /sys/kernel/debug/tracing/events/regulator/enable
+    echo 1 > /sys/kernel/tracing/events/regulator/enable
 
     # timer
-    echo 1 > /sys/kernel/debug/tracing/events/timer/timer_expire_entry/enable
-    echo 1 > /sys/kernel/debug/tracing/events/timer/timer_expire_exit/enable
-    echo 1 > /sys/kernel/debug/tracing/events/timer/hrtimer_cancel/enable
-    echo 1 > /sys/kernel/debug/tracing/events/timer/hrtimer_expire_entry/enable
-    echo 1 > /sys/kernel/debug/tracing/events/timer/hrtimer_expire_exit/enable
-    echo 1 > /sys/kernel/debug/tracing/events/timer/hrtimer_init/enable
-    echo 1 > /sys/kernel/debug/tracing/events/timer/hrtimer_start/enable
+    echo 1 > /sys/kernel/tracing/events/timer/timer_expire_entry/enable
+    echo 1 > /sys/kernel/tracing/events/timer/timer_expire_exit/enable
+    echo 1 > /sys/kernel/tracing/events/timer/hrtimer_cancel/enable
+    echo 1 > /sys/kernel/tracing/events/timer/hrtimer_expire_entry/enable
+    echo 1 > /sys/kernel/tracing/events/timer/hrtimer_expire_exit/enable
+    echo 1 > /sys/kernel/tracing/events/timer/hrtimer_init/enable
+    echo 1 > /sys/kernel/tracing/events/timer/hrtimer_start/enable
     #enble FTRACE for softirq events
-    echo 1 > /sys/kernel/debug/tracing/events/irq/enable
+    echo 1 > /sys/kernel/tracing/events/irq/enable
     #enble FTRACE for Workqueue events
-    echo 1 > /sys/kernel/debug/tracing/events/workqueue/enable
+    echo 1 > /sys/kernel/tracing/events/workqueue/enable
 
     # schedular
-    echo 1 > /sys/kernel/debug/tracing/events/sched/sched_cpu_hotplug/enable
-    echo 1 > /sys/kernel/debug/tracing/events/sched/sched_migrate_task/enable
-    echo 1 > /sys/kernel/debug/tracing/events/sched/sched_switch/enable
-    echo 1 > /sys/kernel/debug/tracing/events/sched/sched_wakeup_new/enable
-    echo 1 > /sys/kernel/debug/tracing/events/sched/sched_wakeup/enable
+    echo 1 > /sys/kernel/tracing/events/sched/sched_cpu_hotplug/enable
+    echo 1 > /sys/kernel/tracing/events/sched/sched_migrate_task/enable
+    echo 1 > /sys/kernel/tracing/events/sched/sched_switch/enable
+    echo 1 > /sys/kernel/tracing/events/sched/sched_wakeup_new/enable
+    echo 1 > /sys/kernel/tracing/events/sched/sched_wakeup/enable
     # sound
-    echo 1 > /sys/kernel/debug/tracing/events/asoc/snd_soc_reg_read/enable
-    echo 1 > /sys/kernel/debug/tracing/events/asoc/snd_soc_reg_write/enable
+    echo 1 > /sys/kernel/tracing/events/asoc/snd_soc_reg_read/enable
+    echo 1 > /sys/kernel/tracing/events/asoc/snd_soc_reg_write/enable
     # mdp
-    echo 1 > /sys/kernel/debug/tracing/events/mdss/mdp_video_underrun_done/enable
+    echo 1 > /sys/kernel/tracing/events/mdss/mdp_video_underrun_done/enable
     # video
-    echo 1 > /sys/kernel/debug/tracing/events/msm_vidc/enable
+    echo 1 > /sys/kernel/tracing/events/msm_vidc/enable
     #thermal
-    echo 1 > /sys/kernel/debug/tracing/events/thermal/thermal_pre_core_offline/enable
-    echo 1 > /sys/kernel/debug/tracing/events/thermal/thermal_post_core_offline/enable
-    echo 1 > /sys/kernel/debug/tracing/events/thermal/thermal_pre_core_online/enable
-    echo 1 > /sys/kernel/debug/tracing/events/thermal/thermal_post_core_online/enable
-    echo 1 > /sys/kernel/debug/tracing/events/thermal/thermal_pre_frequency_mit/enable
-    echo 1 > /sys/kernel/debug/tracing/events/thermal/thermal_post_frequency_mit/enable
+    echo 1 > /sys/kernel/tracing/events/thermal/thermal_pre_core_offline/enable
+    echo 1 > /sys/kernel/tracing/events/thermal/thermal_post_core_offline/enable
+    echo 1 > /sys/kernel/tracing/events/thermal/thermal_pre_core_online/enable
+    echo 1 > /sys/kernel/tracing/events/thermal/thermal_post_core_online/enable
+    echo 1 > /sys/kernel/tracing/events/thermal/thermal_pre_frequency_mit/enable
+    echo 1 > /sys/kernel/tracing/events/thermal/thermal_post_frequency_mit/enable
 }
 
 # Function SDM845 DCC configuration
@@ -2477,12 +2477,6 @@ enable_core_gladiator_hang_config()
 
 enable_schedstats()
 {
-    # bail out if its perf config
-    if [ ! -d /sys/module/msm_rtb ]
-    then
-        return
-    fi
-
     if [ -f /proc/sys/kernel/sched_schedstats ]
     then
         echo 1 > /proc/sys/kernel/sched_schedstats
@@ -2499,7 +2493,7 @@ etr_size="0x2000000"
 #Android turns off tracing by default. Make sure tracing is turned on after boot is done
 if [ ! -z $coresight_stm_cfg_done ]
 then
-    #echo 1 > /sys/kernel/debug/tracing/tracing_on
+    #echo 1 > /sys/kernel/tracing/tracing_on
     exit
 fi
 

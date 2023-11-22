@@ -254,6 +254,7 @@ subsystem dma_heap
 /dev/glink_pkt_ss_bt_data        0660  bluetooth  bluetooth
 /dev/glink_pkt_ss_bt_le_data     0660  bluetooth  bluetooth
 /dev/glink_pkt_ss_bt_ssr_data    0660  bluetooth  bluetooth
+/dev/glink_pkt_ss_bt_obex_data   0660  bluetooth  bluetooth
 
 #rawdump
 /dev/block/platform/soc/4744000.sdhci/by-name/rawdump       0660   root     system

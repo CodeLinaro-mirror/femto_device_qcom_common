@@ -1,0 +1,21 @@
+/*
+ * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause-Clear
+ */
+
+cc_binary {
+    name: "load_dlkm",
+    vendor: true,
+    owner: "qti",
+    srcs: ["load_dlkm.cpp"],
+    static_libs: [
+        "libmodprobe",
+    ],
+    shared_libs: [
+        "libbase",
+        "libcutils",
+        "liblog",
+        "libutils",
+    ],
+    cflags: ["-Werror"],
+}

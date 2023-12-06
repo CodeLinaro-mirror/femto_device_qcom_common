@@ -507,6 +507,9 @@ case "$product" in
         "msmnile_gvmq")
             setprop vendor.display.lcd_density 160
             ;;
+        "msmnile_gvmq_ext4")
+            setprop vendor.display.lcd_density 160
+            ;;
         "gen4_gvm")
             setprop vendor.display.lcd_density 160
             ;;

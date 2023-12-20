@@ -357,4 +357,9 @@
 
     <!-- Make the default config as UNKNOWN so that Modem configurtion would be retained -->
     <integer name="config_default_cellular_usage_setting">-1</integer>
+
+    <!-- Package names to use with vendor iwlan implementation. -->
+    <string name="config_wlan_data_service_package" translatable="false">vendor.qti.iwlan</string>
+    <string name="config_wlan_network_service_package" translatable="false">vendor.qti.iwlan</string>
+    <string name="config_qualified_networks_service_package" translatable="false">vendor.qti.iwlan</string>
 </resources>

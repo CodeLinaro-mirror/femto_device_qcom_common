@@ -28,16 +28,49 @@
 #
 
 HERE=/vendor/bin
-source $HERE/init.qcom.debug-sdm660.sh
-source $HERE/init.qcom.debug-sdm710.sh
-source $HERE/init.qti.debug-msmnile.sh
-source $HERE/init.qti.debug-talos.sh
-source $HERE/init.qti.debug-kona.sh
-source $HERE/init.qti.debug-lito.sh
-source $HERE/init.qti.debug-trinket.sh
-source $HERE/init.qti.debug-atoll.sh
-source $HERE/init.qti.debug-lagoon.sh
-source $HERE/init.qti.debug-bengal.sh
+
+target=`getprop ro.board.platform`
+
+case "$target" in 
+    "sdm660")
+        source $HERE/init.qcom.debug-sdm660.sh
+        ;;
+    "sdm710" | "qcs605")
+        source $HERE/init.qcom.debug-sdm710.sh
+        ;;
+    "msmnile")
+        source $HERE/init.qti.debug-msmnile.sh
+        ;;
+    "sm6150")
+        source $HERE/init.qti.debug-talos.sh
+        ;;
+    "kona")
+        source $HERE/init.qti.debug-kona.sh
+        ;;
+    "lito")
+        soc_id=`cat /sys/devices/soc0/soc_id`/
+        if [ "$soc_id" == "434" || "$soc_id" == "459" ]; then
+            source $HERE/init.qti.debug-lagoon.sh
+        else
+            source $HERE/init.qti.debug-lito.sh
+        fi
+        ;;
+    "trinket")
+        source $HERE/init.qti.debug-trinket.sh
+        ;;
+    "atoll")
+        source $HERE/init.qti.debug-atoll.sh
+        ;;
+    "bengal")
+        source $HERE/init.qti.debug-bengal.sh
+        ;;
+    "blair")
+        exit 0
+        ;;
+    *)
+        echo "continue"
+        ;;
+esac
 
 enable_tracing_events()
 {
@@ -2466,6 +2499,27 @@ enable_schedstats()
     fi
 }
 
+set_permission()
+{
+    if [ -e /sys/devices/platform/soc/*/coresight-tmc-etr/mem_size ]
+    then
+        chown -h root.oem_2902 /sys/devices/platform/soc/*/coresight-tmc-etr/block_size
+        chmod 660 /sys/devices/platform/soc/*/coresight-tmc-etr/block_size
+        chown -h root.oem_2902 /sys/devices/platform/soc/*/coresight-tmc-etr/mem_type
+        chmod 660 /sys/devices/platform/soc/*/coresight-tmc-etr/mem_type
+        chown -h root.oem_2902 /sys/devices/platform/soc/*/coresight-tmc-etr/mem_size
+        chmod 660 /sys/devices/platform/soc/*/coresight-tmc-etr/mem_size
+    elif [ -e /sys/devices/platform/soc/*/coresight-tmc-etr/buffer_size ]
+    then
+        chown -h root.oem_2902 /sys/devices/platform/soc/*/coresight-tmc-etr/block_size
+        chmod 660 /sys/devices/platform/soc/*/coresight-tmc-etr/block_size
+        chown -h root.oem_2902 /sys/devices/platform/soc/*/coresight-tmc-etr/buffer_size
+        chmod 660 /sys/devices/platform/soc/*/coresight-tmc-etr/buffer_size
+    else
+        /* We will not get here*/
+        echo "unsupport platform"
+    fi
+}
 coresight_config=`getprop persist.debug.coresight.config`
 coresight_stm_cfg_done=`getprop ro.dbg.coresight.stm_cfg_done`
 ftrace_disable=`getprop persist.debug.ftrace_events_disable`
@@ -2480,15 +2534,7 @@ then
     exit
 fi
 
-#add permission for block_size, mem_type, mem_size nodes to collect diag over QDSS by ODL
-#application by "oem_2902" group
-chown -h root.oem_2902 /sys/devices/platform/soc/6048000.tmc/coresight-tmc-etr/block_size
-chmod 660 /sys/devices/platform/soc/6048000.tmc/coresight-tmc-etr/block_size
-chown -h root.oem_2902 /sys/devices/platform/soc/6048000.tmc/coresight-tmc-etr/mem_type
-chmod 660 /sys/devices/platform/soc/6048000.tmc/coresight-tmc-etr/mem_type
-chown -h root.oem_2902 /sys/devices/platform/soc/6048000.tmc/coresight-tmc-etr/mem_size
-chmod 660 /sys/devices/platform/soc/6048000.tmc/coresight-tmc-etr/mem_size
-
+set_permission
 enable_dcc_config
 enable_core_gladiator_hang_config
 

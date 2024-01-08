@@ -230,7 +230,6 @@ INIT += init.target.rc
 INIT += init.qti.ims.sh
 INIT += init.qcom.coex.sh
 INIT += init.qcom.early_boot.sh
-INIT += init.qcom.post_boot.sh
 INIT += sku-info.sh
 INIT += init.qcom.syspart_fixup.sh
 INIT += init.qcom.rc

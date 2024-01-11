@@ -893,7 +893,6 @@ PRODUCT_PACKAGES := \
     Sync \
     SystemUI \
     Updater \
-    CalendarProvider \
     SyncProvider \
     SoundRecorder \
     IM \
@@ -903,6 +902,11 @@ PRODUCT_PACKAGES := \
     VideoEditor \
     SnapdragonLauncher \
     QtiDialer
+
+ifneq ($(TARGET_1G_DDR_RAM), true)
+    PRODUCT_PACKAGES += \
+            CalendarProvider
+endif
 
 ifeq ($(TARGET_HAS_LOW_RAM),true)
     DELAUN := Launcher3QuickStepGo

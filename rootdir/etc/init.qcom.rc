@@ -222,6 +222,10 @@ on boot
 
     # limit discard size to 128MB in order to avoid long IO latency
     write /sys/block/sda/queue/discard_max_bytes 134217728
+    chown system system /sys/bus/platform/drivers/xhci-hcd/unbind
+    chown system system /sys/bus/platform/drivers/xhci-hcd/bind
+    chmod 0660 /sys/bus/platform/drivers/xhci-hcd/unbind
+    chmod 0660 /sys/bus/platform/drivers/xhci-hcd/bind
 
 # msm specific files that need to be created on /data
 on post-fs-data
@@ -696,13 +700,6 @@ service qcom-sh /vendor/bin/init.qcom.sh
 #    user root
 #    oneshot
 
-service qcom-post-boot /vendor/bin/init.qcom.post_boot.sh
-    class late_start
-    user root
-    group root system wakelock graphics
-    disabled
-    oneshot
-
 service wifi-sdio-on /vendor/bin/init.qcom.sdio.sh
     class late_start
     group wifi inet
@@ -714,9 +711,6 @@ service wifi-crda /vendor/bin/init.crda.sh
    user root
    disabled
    oneshot
-
-on property:sys.boot_completed=1
-    start qcom-post-boot
 
 on property:ro.vendor.ril.mbn_copy_completed=1
     write /data/vendor/radio/copy_complete 1

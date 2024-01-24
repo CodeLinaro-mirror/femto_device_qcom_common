@@ -230,7 +230,6 @@ INIT += init.target.rc
 INIT += init.qti.ims.sh
 INIT += init.qcom.coex.sh
 INIT += init.qcom.early_boot.sh
-INIT += init.qcom.post_boot.sh
 INIT += sku-info.sh
 INIT += init.qcom.syspart_fixup.sh
 INIT += init.qcom.rc
@@ -269,6 +268,9 @@ INIT += init.qti.soc-model.rc
 ifneq ($(strip $(ENABLE_HYP)),true)
 INIT += init.qti.can.sh
 endif
+endif
+ifeq ($(strip $(TARGET_BOARD_AUTO)),true)
+INIT += load_dlkm
 endif
 
 #IPROUTE2

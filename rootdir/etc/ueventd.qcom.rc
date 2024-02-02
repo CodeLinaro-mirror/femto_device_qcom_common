@@ -76,6 +76,10 @@ firmware_directories /vendor/firmware_mnt/image/
 #permissions for pta
 /dev/pta                  0660   system     system
 
+#permission for ptp
+/dev/ptp0                 0660   system     oem_2910
+/dev/gptp_shm             0660   system     oem_2910
+
 /dev/radio0               0640   system     system
 /dev/rfcomm0              0660   bluetooth  bluetooth
 /dev/ttyUSB0              0660   bluetooth  bluetooth

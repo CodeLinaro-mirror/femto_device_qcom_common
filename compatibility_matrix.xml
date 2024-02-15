@@ -24,6 +24,10 @@ BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Changes from Qualcomm Innovation Center, Inc. are provided under the following license:
+Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+SPDX-License-Identifier: BSD-3-Clause-Clear
 -->
 <compatibility-matrix version="1.0" type="device">
     <hal format="hidl" optional="false">
@@ -66,16 +70,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <instance>default</instance>
         </interface>
     </hal>
-    <hal format="hidl" optional="true">
-        <name>vendor.qti.hardware.sigma_miracast</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-        <interface>
-            <name>Isigma_miracast</name>
-            <instance>sigmahal</instance>
-            <instance>sigmahal64</instance>
-        </interface>
-   </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.qti.hardware.sigma_miracast_aidl</name>
+        <version>1</version>
+        <fqname>ISigma_miracast/default</fqname>
+    </hal>
       <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.qccsyshal</name>
         <transport>hwbinder</transport>

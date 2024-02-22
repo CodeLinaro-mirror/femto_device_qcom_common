@@ -1085,10 +1085,6 @@ ifeq ($(TARGET_USES_QCOM_BSP_ATEL),true)
     PRODUCT_PROPERTY_OVERRIDES += persist.radio.multisim.config=dsds
 endif
 
-# VNDK-SP:
-PRODUCT_PACKAGES += \
-    vndk-sp \
-
 # Temporary handling
 #
 # Include config.fs get only if legacy device/qcom/<target>/android_filesystem_config.h

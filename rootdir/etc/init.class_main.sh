@@ -34,6 +34,7 @@ baseband=`getprop ro.baseband`
 sgltecsfb=`getprop persist.vendor.radio.sglte_csfb`
 datamode=`getprop persist.vendor.data.mode`
 low_ram=`getprop ro.config.low_ram`
+hw_type=`getprop ro.hardware.type`
 qcrild_status=true
 
 case "$baseband" in
@@ -126,13 +127,17 @@ case "$baseband" in
 
     case "$datamode" in
         "tethered")
-            start vendor.dataqti
+            if [ "$hw_type" != "automotive" ]; then
+              start vendor.dataqti
+            fi
             if [ "$low_ram" != "true" ]; then
               start vendor.dataadpl
             fi
             ;;
         "concurrent")
-            start vendor.dataqti
+            if [ "$hw_type" != "automotive" ]; then
+              start vendor.dataqti
+            fi
             if [ "$low_ram" != "true" ]; then
               start vendor.dataadpl
             fi

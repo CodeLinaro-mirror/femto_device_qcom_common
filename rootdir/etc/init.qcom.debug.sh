@@ -2497,8 +2497,8 @@ case "$coresight_config" in
                 source $HERE/init.qcom.debug-sdm660.sh
                 enable_sdm660_debug
             ;;
-            "sdm710" | "qcs605")
-                echo "Enabling DCC/STM/Debug events for sdm710 and qcs605"
+            "sdm710")
+                echo "Enabling DCC/STM/Debug events for sdm710"
                 source $HERE/init.qcom.debug-sdm710.sh
                 enable_sdm710_debug
                 setprop ro.dbg.coresight.stm_cfg_done 1

@@ -739,7 +739,7 @@ WPA += hs20-osu-client
 #ZLIB
 ZLIB := gzip
 ZLIB += libunz
-ZLIB_HOST += minigzip
+#ZLIB_HOST += minigzip
 
 #Charger
 CHARGER := charger
@@ -1084,10 +1084,6 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 ifeq ($(TARGET_USES_QCOM_BSP_ATEL),true)
     PRODUCT_PROPERTY_OVERRIDES += persist.radio.multisim.config=dsds
 endif
-
-# VNDK-SP:
-PRODUCT_PACKAGES += \
-    vndk-sp \
 
 # Temporary handling
 #

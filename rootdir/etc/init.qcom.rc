@@ -127,7 +127,6 @@ on boot
     chown system  system /sys/class/drm/sde-conn-0-DSI-1/twm_enable
     chown system  system /sys/class/drm/sde-conn-0-DSI-1/panel_power_state
     chown system  system /sys/bus/i2c/devices/1-0024/pt_touch_offload
-    chown system  system /sys/bus/i2c/devices/0-0039/raydium_touch_offload
 
     chmod 0660 /dev/ttyHS2
     chown bluetooth bluetooth /dev/ttyHS2
@@ -449,10 +448,6 @@ on property:persist.vendor.ssr.restart_level=*
 on property:persist.vendor.ssr.enable_ramdumps=1
     write /sys/module/subsystem_restart/parameters/enable_ramdumps 1
     write /sys/module/qcom_ramdump/parameters/enable_dump_collection 1
-    write /sys/class/remoteproc/remoteproc0/coredump inline
-    write /sys/class/remoteproc/remoteproc1/coredump inline
-    write /sys/class/remoteproc/remoteproc2/coredump inline
-
     mkdir /data/vendor/ramdump_ssr 770 system system
     start vendor.ss_ramdump
 

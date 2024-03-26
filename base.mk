@@ -47,6 +47,9 @@ QCOM_BOARD_PLATFORMS += $(TRINKET)
 QSD8K_BOARD_PLATFORMS := qsd8k
 
 TARGET_USE_VENDOR_CAMERA_EXT := true
+ifeq ($(TARGET_SINGLE_TREE), true)
+  TARGET_WONT_SUPPORT_SVA_APK := true
+endif #TARGET_SINGLE_TREE
 
 # Boot additions
 ifeq ($(strip $(TARGET_USES_NQ_NFC)),true)
@@ -257,7 +260,8 @@ INIT += init.mdm.sh
 INIT += fstab.qcom
 INIT += fstab.qti
 INIT += fstab.default
-INIT += fstab.emmc
+INIT += fstab.gen3.ufs.qcom
+INIT += fstab.gen3.emmc.qcom
 INIT += init.qcom.sensors.sh
 INIT += init.qcom.crashdata.sh
 INIT += init.qcom.vendor.rc
@@ -1029,6 +1033,7 @@ endif
 
 # include additional build utilities
 -include device/qcom/common/utils.mk
+#-include vendor/qcom/opensource/core-utils/build/utils.mk
 
 # Copy the vulkan feature level file.
 # Targets listed in VULKAN_FEATURE_LEVEL_0_TARGETS_LIST supports only vulkan feature level 0.
@@ -1169,9 +1174,16 @@ PRODUCT_PACKAGES += libvndfwk_detect_jni.qti
 PRODUCT_PACKAGES += libqti_vndfwk_detect
 PRODUCT_PACKAGES += libvndfwk_detect_jni.qti.vendor
 PRODUCT_PACKAGES += libqti_vndfwk_detect.vendor
+ifeq ($(TARGET_SINGLE_TREE), true)
+  PRODUCT_PACKAGES += libqti_vndfwk_detect_system
+  PRODUCT_PACKAGES += libqti_vndfwk_detect_vendor
+  PRODUCT_PACKAGES += libvndfwk_detect_jni.qti_system
+  PRODUCT_PACKAGES += libvndfwk_detect_jni.qti_vendor
+endif #TARGET_SINGLE_TREE
 
 # vndservicemanager
 PRODUCT_PACKAGES += vndservicemanager
+
 
 #soong namespace for qssi vs vendor differentiation
 SOONG_CONFIG_NAMESPACES += qssi_vs_vendor
@@ -1185,3 +1197,16 @@ SOONG_CONFIG_aosp_vs_qva_aosp_or_qva := qva
 else
 SOONG_CONFIG_aosp_vs_qva_aosp_or_qva := aosp
 endif
+
+ifeq ($(TARGET_SINGLE_TREE), true)
+  SOONG_CONFIG_NAMESPACES += bredr_vs_btadva
+  SOONG_CONFIG_bredr_vs_btadva += bredr_or_btadva
+
+  ifneq "$(wildcard vendor/qcom/proprietary/commonsys/bt/bt_adv_audio)" ""
+      $(warning bt_adv_audio dir is present)
+      SOONG_CONFIG_bredr_vs_btadva_bredr_or_btadva := btadva
+  else
+      $(warning bt_adv_audio dir is not present)
+      SOONG_CONFIG_bredr_vs_btadva_bredr_or_btadva := bredr
+  endif #ifneq "$(wildcard vendor/qcom/proprietary/commonsys/bt/bt_adv_audio)" ""
+endif #TARGET_SINGLE_TREE

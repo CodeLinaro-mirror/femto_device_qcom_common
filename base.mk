@@ -260,6 +260,7 @@ INIT += init.mdm.sh
 INIT += fstab.qcom
 INIT += fstab.qti
 INIT += fstab.default
+INIT += fstab.emmc
 INIT += fstab.gen3.ufs.qcom
 INIT += fstab.gen3.emmc.qcom
 INIT += init.qcom.sensors.sh

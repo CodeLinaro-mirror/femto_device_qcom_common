@@ -215,6 +215,9 @@ subsystem dma_heap
 #slate-ux-ctl - glink
 /dev/glink_pkt_slate_ux_ctl         0660  system  system
 
+#slate-rma - glink
+/dev/glink_pkt_slate_rma            0660  system  system
+
 #slate-qcli - glink
 /dev/glink_pkt_slate_qcli           0660  system  system
 

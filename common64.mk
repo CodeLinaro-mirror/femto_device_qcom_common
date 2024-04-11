@@ -4,6 +4,11 @@ $(call inherit-product, device/qcom/common/base.mk)
 # Since we want use QC specific files, we should inherit
 # device-vendor.mk first to make sure QC specific files gets installed.
 $(call inherit-product-if-exists, $(QCPATH)/common/config/device-vendor.mk)
+ifeq ($(TARGET_SINGLE_TREE), true)
+$(call inherit-product-if-exists, $(QCPATH)/common/config/device-vendor-qssi.mk)
+#$(call inherit-product-if-exists, vendor/qcom/opensource/commonsys/wifi/configs/qtiwifi-ship-product-defs-system.mk)
+#$(call inherit-product-if-exists, vendor/qcom/opensource/commonsys-intf/data/data_commonsys-intf_system_product_noship.mk)
+endif
 ifeq ($(DEVICE_SUPPORTS_64_BIT_APPS_ONLY),true)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
 else
@@ -27,6 +32,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=libqti-perfd-client.so \
     sys.vendor.shutdown.waittime=500
 
+ifeq ($(TARGET_SINGLE_TREE), true)
+  PRODUCT_PROPERTY_OVERRIDES += persist.backup.ntpServer=0.pool.ntp.org
+endif
 
 ifneq ($(TARGET_BOARD_AUTO), true)
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -62,8 +70,11 @@ endif
 # Permission for Wi-Fi passpoint support
 PRODUCT_COPY_FILES += frameworks/native/data/etc/android.hardware.wifi.passpoint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.passpoint.xml
 
-PRODUCT_PRIVATE_KEY := device/qcom/common/qcom.key
-
+ifeq ($(TARGET_SINGLE_TREE), true)
+  PRODUCT_PRIVATE_KEY := vendor/qcom/opensource/core-utils/build/qcom.key
+else
+  PRODUCT_PRIVATE_KEY := device/qcom/common/qcom.key
+endif
 ifneq ($(TARGET_DEFINES_DALVIK_HEAP), true)
 ifneq ($(TARGET_HAS_LOW_RAM), true)
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)

@@ -254,7 +254,7 @@ if [ $feature_id == 0 ]; then
        echo 2131200 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
        echo 2419200 > /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
        echo 0 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
-elif [ $feature_id == 1 ]; then
+elif [ $feature_id == 1 || $feature_id == 2 ]; then
         echo "SKU Configured : SA8150P"
         echo 1920000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
         echo 2227200 > /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq

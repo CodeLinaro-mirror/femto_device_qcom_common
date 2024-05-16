@@ -357,6 +357,18 @@ service vendor.audio_tc21 /vendor/bin/mm-audio-ftm -tc 21 -file /data/vendor/aud
     disabled
     oneshot
 
+service vendor.audio_tc22 /vendor/bin/mm-audio-ftm -tc 22 -file /data/vendor/audio/ftm_mic7_record.wav
+    user audio
+    group audio
+    disabled
+    oneshot
+
+service vendor.audio_tc23 /vendor/bin/mm-audio-ftm -tc 23 -file /data/vendor/audio/ftm_mic8_record.wav
+    user audio
+    group audio
+    disabled
+    oneshot
+
 service vendor.audio_tc101 /vendor/bin/mm-audio-ftm -tc 101 -file /data/vendor/audio/ftm_mic1_record.wav
     user audio
     group audio

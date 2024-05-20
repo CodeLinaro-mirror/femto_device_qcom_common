@@ -470,6 +470,7 @@ esac
 set_density_by_fb
 
 
+<<<<<<< HEAD   (e65aca clean up code for msmnile board)
 # set Lilliput LCD density for ADP
 product=`getprop ro.build.product`
 
@@ -509,6 +510,8 @@ case "$product" in
         *)
 esac
 
+=======
+>>>>>>> CHANGE (21004a common: Remove ro.build.product as part of makefile violatio)
 # Setup display nodes & permissions
 # HDMI can be fb1 or fb2
 # Loop through the sysfs nodes and determine

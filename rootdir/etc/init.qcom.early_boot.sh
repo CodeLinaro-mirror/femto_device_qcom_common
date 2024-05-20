@@ -470,48 +470,6 @@ esac
 set_density_by_fb
 
 
-# set Lilliput LCD density for ADP
-product=`getprop ro.build.product`
-
-case "$product" in
-        "msmnile_au")
-            setprop vendor.display.lcd_density 160
-            ;;
-        "qssi_au")
-            setprop vendor.display.lcd_density 160
-            ;;
-        "msmnile_au_km4")
-            setprop vendor.display.lcd_density 160
-            ;;
-        "msmnile_au_ar")
-            setprop vendor.display.lcd_density 160
-            ;;
-        "sm6150_au")
-            setprop vendor.display.lcd_density 160
-            ;;
-        "sdmshrike_au")
-            setprop vendor.display.lcd_density 160
-            ;;
-        "msmnile_gvmq")
-            setprop vendor.display.lcd_density 160
-            ;;
-        "gen4_gvm")
-            setprop vendor.display.lcd_density 160
-            ;;
-        "gen4_gvm_gy")
-            setprop vendor.display.lcd_density 160
-            ;;
-        "generic_arm64")
-            product_name=`getprop ro.product.name`
-            # setting display density for GSI for automotive
-            if [ "$product_name" = "gsi_car_arm64" ]
-            then
-                setprop vendor.display.lcd_density 160
-            fi
-            ;;
-        *)
-esac
-
 # Setup display nodes & permissions
 # HDMI can be fb1 or fb2
 # Loop through the sysfs nodes and determine

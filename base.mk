@@ -818,11 +818,12 @@ else
             VisualizationWallpapers
 
     DELAUN := Launcher3
-
+ifneq ($(strip $(TARGET_BOARD_AUTO)),true)
     #servicetracker HAL
     PRODUCT_PACKAGES += \
             vendor.qti.hardware.servicetracker@1.2-impl \
             vendor.qti.hardware.servicetracker@1.2-service
+endif
 endif
 
 PRODUCT_PACKAGES += $(ALSA_HARDWARE)

@@ -522,3 +522,4 @@ subsystem mem_buf_vm
 /dev/gnss_sirf             0660   gps     gps
 
 /sys/devices/platform/soc/ae00000.qcom,mdss_mdp power/control 0664 system graphics
+/dev/block/platform/soc/1d84000.ufshc/by-name/softsku       0600   system     system

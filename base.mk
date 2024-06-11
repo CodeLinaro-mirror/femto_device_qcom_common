@@ -1035,7 +1035,7 @@ endif
 # Copy the vulkan feature level file.
 # Targets listed in VULKAN_FEATURE_LEVEL_0_TARGETS_LIST supports only vulkan feature level 0.
 ifneq ($(TARGET_NOT_SUPPORT_VULKAN),true)
-ifeq ($(call is-product-in-list,$(VULKAN_FEATURE_LEVEL_0_TARGETS_LIST)), true)
+ifeq ($(call is-board-platform-in-list,$(VULKAN_FEATURE_LEVEL_0_TARGETS_LIST)), true)
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.vulkan.level-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level-0.xml
 else
@@ -1112,14 +1112,10 @@ ifeq ($(TARGET_USES_QCOM_BSP_ATEL),true)
     PRODUCT_PROPERTY_OVERRIDES += persist.radio.multisim.config=dsds
 endif
 
-ifeq ( ,$(filter 12 S 13 T U 14 UpsideDownCake,$(PLATFORM_VERSION)))
+ifeq ( ,$(filter 12 S 13 T U 14 UpsideDownCake V VanillaIceCream 15,$(PLATFORM_VERSION)))
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     vendor.usb.diag.func.name=diag
 endif
-
-# VNDK-SP:
-PRODUCT_PACKAGES += \
-    vndk-sp \
 
 # Temporary handling
 #

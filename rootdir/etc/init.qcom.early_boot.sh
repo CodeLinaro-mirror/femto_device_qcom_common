@@ -470,33 +470,22 @@ esac
 set_density_by_fb
 
 
+<<<<<<< HEAD   (e65aca clean up code for msmnile board)
 # set Lilliput LCD density for ADP
 product=`getprop ro.build.product`
 
 case "$product" in
         "msmnile_au")
             setprop vendor.display.lcd_density 160
-            echo 902400000 > /sys/class/devfreq/soc:qcom,cpu0-cpu-l3-lat/min_freq
-            echo 1612800000 > /sys/class/devfreq/soc:qcom,cpu0-cpu-l3-lat/max_freq
-            echo 902400000 > /sys/class/devfreq/soc:qcom,cpu4-cpu-l3-lat/min_freq
-            echo 1612800000 > /sys/class/devfreq/soc:qcom,cpu4-cpu-l3-lat/max_freq
             ;;
         "qssi_au")
             setprop vendor.display.lcd_density 160
             ;;
         "msmnile_au_km4")
             setprop vendor.display.lcd_density 160
-            echo 902400000 > /sys/class/devfreq/soc:qcom,cpu0-cpu-l3-lat/min_freq
-            echo 1612800000 > /sys/class/devfreq/soc:qcom,cpu0-cpu-l3-lat/max_freq
-            echo 902400000 > /sys/class/devfreq/soc:qcom,cpu4-cpu-l3-lat/min_freq
-            echo 1612800000 > /sys/class/devfreq/soc:qcom,cpu4-cpu-l3-lat/max_freq
             ;;
         "msmnile_au_ar")
             setprop vendor.display.lcd_density 160
-            echo 902400000 > /sys/class/devfreq/soc:qcom,cpu0-cpu-l3-lat/min_freq
-            echo 1612800000 > /sys/class/devfreq/soc:qcom,cpu0-cpu-l3-lat/max_freq
-            echo 902400000 > /sys/class/devfreq/soc:qcom,cpu4-cpu-l3-lat/min_freq
-            echo 1612800000 > /sys/class/devfreq/soc:qcom,cpu4-cpu-l3-lat/max_freq
             ;;
         "sm6150_au")
             setprop vendor.display.lcd_density 160
@@ -521,6 +510,8 @@ case "$product" in
         *)
 esac
 
+=======
+>>>>>>> CHANGE (21004a common: Remove ro.build.product as part of makefile violatio)
 # Setup display nodes & permissions
 # HDMI can be fb1 or fb2
 # Loop through the sysfs nodes and determine

@@ -28,6 +28,10 @@
 # Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
 # SPDX-License-Identifier: BSD-3-Clause-Clear
 
+#Import rc file
+import /vendor/etc/ueventd.qcom.userdebug.rc
+
+
 # Firmware directory Path
 # Below macro will be read by uevent and path will
 # be added to search path for firmware loading
@@ -214,6 +218,9 @@ subsystem dma_heap
 
 #slate-ux-ctl - glink
 /dev/glink_pkt_slate_ux_ctl         0660  system  system
+
+#slate-rma - glink
+/dev/glink_pkt_slate_rma            0660  system  system
 
 #slate-qcli - glink
 /dev/glink_pkt_slate_qcli           0660  system  system

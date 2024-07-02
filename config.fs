@@ -228,3 +228,21 @@ mode: 0771
 user: AID_MEDIA
 group: AID_MEDIA
 caps: 0
+
+[vendor/bin/init.qti.can.sh]
+mode: 0555
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/bin/init.qti.soc-model.sh]
+mode: 0555
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/bin/ais_v4l2loopback_config.xml]
+mode: 0644
+user: AID_ROOT
+group: AID_SHELL
+caps: 0

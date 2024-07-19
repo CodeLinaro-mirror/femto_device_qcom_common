@@ -82,6 +82,12 @@ user: AID_SYSTEM
 group: AID_SYSTEM
 caps: BLOCK_SUSPEND NET_ADMIN
 
+[vendor/bin/hw/android.hardware.bluetooth@aidl-service-qti]
+mode: 0755
+user: AID_BLUETOOTH
+group: AID_BLUETOOTH
+caps: BLOCK_SUSPEND NET_ADMIN
+
 [system/bin/cnss-daemon]
 mode: 0755
 user: AID_BLUETOOTH

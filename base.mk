@@ -35,6 +35,7 @@ QCOM_BOARD_PLATFORMS += sdm845
 QCOM_BOARD_PLATFORMS += msmnile
 QCOM_BOARD_PLATFORMS += sdmshrike
 QCOM_BOARD_PLATFORMS += sdm710
+QCOM_BOARD_PLATFORMS += msmnile_tb
 QCOM_BOARD_PLATFORMS += msmnile_au
 QCOM_BOARD_PLATFORMS += gen4
 QCOM_BOARD_PLATFORMS += qcs605
@@ -267,9 +268,6 @@ INIT += init.qti.soc-model.rc
 ifneq ($(strip $(ENABLE_HYP)),true)
 INIT += init.qti.can.sh
 endif
-endif
-ifneq (,$(filter $(TARGET_BOARD_PLATFORM)$(TARGET_BOARD_SUFFIX), msmnile_au))
-INIT += load_dlkm
 endif
 
 #IPROUTE2
@@ -958,16 +956,21 @@ PRODUCT_COPY_FILES := \
     frameworks/native/data/etc/android.software.verified_boot.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.verified_boot.xml
 
 ifeq ($(strip $(TARGET_BOARD_AUTO)), true)
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/car_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/car_core_hardware.xml \
-    frameworks/native/data/etc/android.hardware.screen.landscape.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.screen.landscape.xml \
-    frameworks/native/data/etc/android.software.activities_on_secondary_displays.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.activities_on_secondary_displays.xml \
-    device/qcom/common/rootdir/etc/init.qti.soc-model.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.qti.soc-model.sh
+    PRODUCT_COPY_FILES += \
+        frameworks/native/data/etc/android.hardware.screen.landscape.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.screen.landscape.xml \
+        frameworks/native/data/etc/android.software.activities_on_secondary_displays.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.activities_on_secondary_displays.xml \
+        device/qcom/common/rootdir/etc/init.qti.soc-model.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.qti.soc-model.sh
+    ifeq (,$(filter $(TARGET_BOARD_DERIVATIVE_SUFFIX), _tb))
+        PRODUCT_COPY_FILES += \
+            frameworks/native/data/etc/car_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/car_core_hardware.xml
+    else
+        PRODUCT_COPY_FILES += \
+            frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml
+    endif
 else
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml
+    PRODUCT_COPY_FILES += \
+        frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml
 endif
-
 
 ifneq ($(strip $(TARGET_BOARD_AUTO)),true)
 PRODUCT_COPY_FILES +=

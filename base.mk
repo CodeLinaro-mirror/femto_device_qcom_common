@@ -37,6 +37,7 @@ QCOM_BOARD_PLATFORMS += sdmshrike
 QCOM_BOARD_PLATFORMS += sdm710
 QCOM_BOARD_PLATFORMS += msmnile_au
 QCOM_BOARD_PLATFORMS += gen4
+QCOM_BOARD_PLATFORMS += gen5
 QCOM_BOARD_PLATFORMS += qcs605
 QCOM_BOARD_PLATFORMS += $(MSMSTEPPE)
 QCOM_BOARD_PLATFORMS += kona
@@ -1039,7 +1040,7 @@ endif
 # Copy the vulkan feature level file.
 # Targets listed in VULKAN_FEATURE_LEVEL_0_TARGETS_LIST supports only vulkan feature level 0.
 ifneq ($(TARGET_NOT_SUPPORT_VULKAN),true)
-ifeq ($(call is-product-in-list,$(VULKAN_FEATURE_LEVEL_0_TARGETS_LIST)), true)
+ifeq ($(call is-board-platform-in-list,$(VULKAN_FEATURE_LEVEL_0_TARGETS_LIST)), true)
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.vulkan.level-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level-0.xml
 else

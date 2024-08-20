@@ -129,10 +129,9 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </interface>
     </hal>
     <!-- AONUtility hal -->
-    <hal format="hidl" optional="true">
+    <hal format="aidl" optional="true">
         <name>vendor.qti.hardware.aonutility</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
+        <version>1</version>
             <interface>
             <name>IAONUtility</name>
             <instance>default</instance>

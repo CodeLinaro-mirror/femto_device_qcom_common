@@ -1231,9 +1231,6 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     vendor.usb.diag.func.name=diag
 endif
 
-# VNDK-SP:
-PRODUCT_PACKAGES += \
-    vndk-sp \
 
 # Temporary handling
 #

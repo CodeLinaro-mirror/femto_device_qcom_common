@@ -225,8 +225,10 @@ on boot
     write /sys/block/sda/queue/discard_max_bytes 134217728
     chown system system /sys/bus/platform/drivers/xhci-hcd/unbind
     chown system system /sys/bus/platform/drivers/xhci-hcd/bind
-    chmod 0660 /sys/bus/platform/drivers/xhci-hcd/unbind
-    chmod 0660 /sys/bus/platform/drivers/xhci-hcd/bind
+    # Setting rw permission for 'others' since QtiCarPowerService doesnt run as system.
+    # any unauthorized access will be blocked by sepolicy
+    chmod 0666 /sys/bus/platform/drivers/xhci-hcd/unbind
+    chmod 0666 /sys/bus/platform/drivers/xhci-hcd/bind
 
 # msm specific files that need to be created on /data
 on post-fs-data

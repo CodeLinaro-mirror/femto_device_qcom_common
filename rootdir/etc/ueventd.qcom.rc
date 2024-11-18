@@ -89,6 +89,13 @@ subsystem mem_buf_vm
 #permissions for pta
 /dev/pta                  0660   system     system
 
+#permission for ptp
+/dev/ptp0                 0660   system     oem_2910
+/dev/ptp1                 0660   system     oem_2910
+/dev/gptp_shm             0660   system     oem_2910
+/dev/sctptpshm            0660   system     oem_2910
+/dev/ptpshm               0660   system     oem_2910
+
 /dev/radio0               0640   system     system
 /dev/rfcomm0              0660   bluetooth  bluetooth
 /dev/ttyUSB0              0660   bluetooth  bluetooth
@@ -435,6 +442,11 @@ subsystem mem_buf_vm
 /sys/devices/virtual/input/input*                   enable_ps_sensor 0660  system   input
 /sys/devices/virtual/input/input*                   set_delay_ms     0660  system   input
 /sys/devices/virtual/input/input*                   do_flush         0660  system   input
+
+# Usb mode access
+# Setting rw permission for 'others' since QtiCarPowerService doesnt run as system.
+# any unauthorized access will be blocked by sepolicy
+/sys/devices/platform/soc/a*00000.*susb             mode             0666  root     system
 
 # vm_bms
 /dev/vm_bms               0660   system     system

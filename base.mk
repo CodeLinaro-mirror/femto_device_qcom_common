@@ -960,8 +960,6 @@ PRODUCT_PACKAGES_DEBUG += init.qcom.debug.sh
 PRODUCT_PACKAGES_DEBUG += $(TELEPHONY_DBG)
 
 PRODUCT_COPY_FILES := \
-    frameworks/native/data/etc/android.hardware.camera.autofocus.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.autofocus.xml \
-    frameworks/native/data/etc/android.hardware.camera.front.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.front.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.gps.xml \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
@@ -1119,7 +1117,7 @@ ifeq ($(TARGET_USES_QCOM_BSP_ATEL),true)
     PRODUCT_PROPERTY_OVERRIDES += persist.radio.multisim.config=dsds
 endif
 
-ifeq ( ,$(filter 12 S 13 T U 14 UpsideDownCake V VanillaIceCream 15,$(PLATFORM_VERSION)))
+ifeq ( ,$(filter 12 S 13 T U 14 UpsideDownCake V VanillaIceCream 15 W Baklava 16,$(PLATFORM_VERSION)))
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     vendor.usb.diag.func.name=diag
 endif

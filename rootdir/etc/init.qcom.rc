@@ -283,12 +283,8 @@ on post-fs-data
     # Create dir for SOME/IP
     mkdir /data/vendor/someip 0770 system system
     chmod 0770 /data/vendor/someip
-    mkdir /data/someip 0770 system system
-    chmod 0770 /data/someip
     mkdir /storage/vendor/someip 0770 system system
     chmod 0770 /storage/vendor/someip
-    mkdir /storage/someip 0770 system system
-    chmod 0770 /storage/someip
 
     # Create the directories used by CnE subsystem
     mkdir /data/vendor/connectivity 0771 radio radio

@@ -24,3 +24,14 @@ elif [ "$soc_id" == "534" ]; then
 elif [ "$soc_id" == "606" ]; then
     setprop ro.vendor.qti.soc_model SA7255P
 fi
+
+if [ -f /sys/devices/soc0/machine ]; then
+    soc_platform=`cat /sys/devices/soc0/machine`
+fi
+
+if [ "$soc_platform" == "SA_QX_VM" ]; then
+    setprop ro.vendor.qti.platform SA_QX_VM
+elif [ "$soc_platform" == "SA_GUNYAH_VM" ]; then
+    setprop ro.vendor.qti.platform SA_GUNYAH_VM
+fi
+

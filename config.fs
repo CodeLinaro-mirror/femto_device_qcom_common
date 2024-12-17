@@ -25,6 +25,9 @@ value:2908
 [AID_VENDOR_QTR]
 value:2909
 
+[AID_VENDOR_B2C]
+value:2910
+
 [AID_VENDOR_SSGTZD]
 value:2912
 

@@ -407,18 +407,18 @@ on post-fs-data
     #Create dir for TUI
     mkdir /data/vendor/tui 0700 system drmrpc
 
-service nqnfcinfo /system/vendor/bin/nqnfcinfo
-    class late_start
-    group nfc
-    user system
-    oneshot
+#service nqnfcinfo /system/vendor/bin/nqnfcinfo
+#    class late_start
+#    group nfc
+#    user system
+#    oneshot
 
-service iop /system/vendor/bin/iop
-    class main
-    user root
-    group root
-    disabled
-    socket iop seqpacket 0666 root system
+#service iop /system/vendor/bin/iop
+#    class main
+#    user root
+#    group root
+#    disabled
+#    socket iop seqpacket 0666 root system
 
 service qcomsysd /system/vendor/bin/qcom-system-daemon
     class main
@@ -718,10 +718,10 @@ service wifi-crda /vendor/bin/init.crda.sh
 on property:ro.vendor.ril.mbn_copy_completed=1
     write /data/vendor/radio/copy_complete 1
 
-service qvop-daemon /vendor/bin/qvop-daemon
-    class late_start
-    user system
-    group system drmrpc
+#service qvop-daemon /vendor/bin/qvop-daemon
+#    class late_start
+#    user system
+#    group system drmrpc
 
 service vendor.atfwd /vendor/bin/ATFWD-daemon
     class late_start
@@ -797,10 +797,10 @@ on property:persist.sys.qlogd=1
 on property:persist.sys.qlogd=0
     stop qlogd
 
-service vm_bms /vendor/bin/vm_bms
-    class main
-    user root
-    group system wakelock
+#service vm_bms /vendor/bin/vm_bms
+#    class main
+#    user root
+#    group system wakelock
 
 service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /system/vendor/etc/msm_irqbalance.conf
     class core
@@ -836,15 +836,15 @@ service vendor.LKCore-rel /vendor/bin/LKCore
     user system
     group system log diag
 
-service qseeproxydaemon /system/vendor/bin/qseeproxydaemon
-    class late_start
-    user system
-    group system
+#service qseeproxydaemon /system/vendor/bin/qseeproxydaemon
+#    class late_start
+#    user system
+#    group system
 
-service esepmdaemon /system/vendor/bin/esepmdaemon
-    class core
-    user system
-    group nfc
+#service esepmdaemon /system/vendor/bin/esepmdaemon
+#    class core
+#    user system
+#    group nfc
 
 on charger
     setprop persist.sys.usb.config mass_storage

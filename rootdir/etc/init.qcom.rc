@@ -281,9 +281,9 @@ on post-fs-data
     mkdir /data/vendor/sensing 0770 system wifi
 
     # Create dir for SOME/IP
-    mkdir /data/vendor/someip 0770 system system
+    mkdir /data/vendor/someip 0770 vendor_someip vendor_someip
     chmod 0770 /data/vendor/someip
-    mkdir /storage/vendor/someip 0770 system system
+    mkdir /storage/vendor/someip 0770 vendor_someip vendor_someip
     chmod 0770 /storage/vendor/someip
 
     # Create the directories used by CnE subsystem

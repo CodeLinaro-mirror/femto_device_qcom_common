@@ -285,6 +285,7 @@ subsystem mem_buf_vm
 /dev/spidev0.0            0660   system     audio
 /dev/i2c-7                0660   system     audio
 /dev/msm_lsm_cdev         0660   system     audio
+/dev/virt_sndcard_ctl     0660   system     audio
 /dev/msm_camera/*         0660   system     camera
 /dev/gemini/              0660   system     camera
 /dev/mercury0             0660   system     camera

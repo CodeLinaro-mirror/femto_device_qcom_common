@@ -314,6 +314,7 @@ INIT += init.qcom.crashdata.sh
 INIT += init.qcom.vendor.rc
 INIT += init.target.vendor.rc
 INIT += init.qti.can.sh
+INIT += init.qcom.lxc.sh
 
 #IPROUTE2
 IPROUTE2 := ip
@@ -1132,7 +1133,8 @@ PRODUCT_PACKAGES_DEBUG += \
     init.qti.debug-lito.sh \
     init.qti.debug-trinket.sh \
     init.qti.debug-atoll.sh \
-    init.qti.debug-lagoon.sh
+    init.qti.debug-lagoon.sh \
+    init.qcom.lxc.sh
 
 PRODUCT_PACKAGES += liboemaids_system
 PRODUCT_PACKAGES += liboemaids_vendor

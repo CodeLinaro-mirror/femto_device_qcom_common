@@ -585,3 +585,7 @@ subsystem dma_heap
 
 # devcoredump data attribute
 /sys/class/devcoredump/devcd*	data	 0660	system	system
+
+# RemoteProc attributes
+/sys/class/remoteproc/remoteproc*   state     0660    root  system
+/sys/class/remoteproc/remoteproc*   recovery  0660    root  system

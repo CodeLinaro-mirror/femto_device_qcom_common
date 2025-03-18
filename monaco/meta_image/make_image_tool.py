@@ -88,7 +88,7 @@ input_cmdargs += sys.argv[1].split()
 for i in range(1,len(input_cmdargs)):
 	if input_cmdargs[i] == "-v" :
 		options_version = input_cmdargs[i+1]
-		print "=========options_version:"+ options_version + "\n"
+		print("=========options_version:"+ options_version + "\n")
 		break
 	if i%2 : # Odd argument is partition name,
 		temp_param_holder = input_cmdargs[i]
@@ -138,7 +138,7 @@ class ImageHeader(object):
 	def file(self):
 		return self._file
 
-for image_name, image_rel_path in image_name_list.iteritems():
+for image_name, image_rel_path in image_name_list.items():
 	#print image_name
 	#print image_rel_path
 	image_path = image_name_list[image_name]
@@ -154,10 +154,10 @@ for image_name, image_rel_path in image_name_list.iteritems():
 		image_info_list.append(header)
 		#pp.pprint(image_info_list)
 	except IOError as e:
-		print str(e)
-		print "Failed to open " + image_path
+		print(str(e))
+		print("Failed to open " + image_path)
 	except:
-		print "Unknown Error"
+		print("Unknown Error")
 		exit()
 
 try:
@@ -167,29 +167,29 @@ try:
 	f_bootloader.write(struct.pack('<I', META_HEADER_MAGIC))
 	f_bootloader.write(struct.pack('<H', 1))
 	f_bootloader.write(struct.pack('<H', 0))
-	print "version " + options_version
+	print("version " + options_version)
 	length = len(options_version)
 	length = META_IMAGE_VERSION_SIZE-length
 	if length <= 0:
 		length = 0
-	f_bootloader.write(options_version)
+	f_bootloader.write(options_version.encode('utf-8'))
 	for i in range(0,length):
-		f_bootloader.write(struct.pack('<c', '\0'))
+		f_bootloader.write(struct.pack('<c', b'\0'))
 	f_bootloader.write(struct.pack('<H', META_HEADER_SIZE))
 	f_bootloader.write(struct.pack('<H', IMAGE_HEADER_SIZE*len(image_name_list)))
 
 	#write the image header
-	print "Generation single bootloader image with:"
-	print "     Partition\t\toffset\t\tsize"
+	print("Generation single bootloader image with:")
+	print("     Partition\t\toffset\t\tsize")
 	for image_info in image_info_list:
-		print "-->  %s\t\t%s\t\t%s" %(image_info.ptn_name, image_info.start_offset, image_info.size)
+		print("-->  %s\t\t%s\t\t%s" %(image_info.ptn_name, image_info.start_offset, image_info.size))
 		length = len(image_info.ptn_name)
 		length = MAX_GPT_NAME_SIZE-length
 		if length <= 0:
 			length = 0
-		f_bootloader.write(image_info.ptn_name)
+		f_bootloader.write(image_info.ptn_name.encode('utf-8'))
 		for i in range(0,length):
-			f_bootloader.write(struct.pack('<c', '\0'))
+			f_bootloader.write(struct.pack('<c', b'\0'))
 		f_bootloader.write(struct.pack('<I', image_info.start_offset))
 		f_bootloader.write(struct.pack('<I', image_info.size))
 
@@ -198,7 +198,7 @@ try:
 		f_bootloader.write(image_info.file.read())
 	f_bootloader.close()
 except IOError as e:
-	print str(e)
+	print(str(e))
 except:
-	print "Unknown Error"
+	print("Unknown Error")
 

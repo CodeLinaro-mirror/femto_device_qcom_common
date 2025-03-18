@@ -28,6 +28,9 @@ value:2909
 [AID_VENDOR_PTP]
 value:2910
 
+[AID_VENDOR_SOMEIP]
+value:2911
+
 [vendor/bin/wcnss_filter]
 mode: 0755
 user: AID_BLUETOOTH

@@ -544,6 +544,7 @@ subsystem mem_buf_vm
 */
 
 /sys/devices/platform/soc/9800000.qcom,mdss_mdp power/control 0664 system graphics
+/sys/devices/platform/soc/ae00000.qcom,mdss_mdp power/control 0664 system graphics
 
 #asm330 sensor
 #common sensors files
@@ -617,8 +618,9 @@ subsystem mem_buf_vm
 # SPI UWB device
 /dev/spiuwb    0660    uwb    uwb
 
-# RemoteProc state
-/sys/class/remoteproc/remoteproc*   state    0660    root  system
+# RemoteProc attributes
+/sys/class/remoteproc/remoteproc*   state     0660    root  system
+/sys/class/remoteproc/remoteproc*   recovery  0660    root  system
 
 # IPA Events
 /dev/ipa_events         0660   radio      radio

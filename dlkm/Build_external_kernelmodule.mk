@@ -12,6 +12,7 @@
 # LOCAL_MODULE_DDK_ALLOW_UNSAFE_HEADERS: Allow unsafe (internal) headers to be used by DDK
 # LOCAL_MODULE_DDK_SUBTARGET_REGEX: Set a subtarget regular expression to match within a target/variant combo
 # LOCAL_MODULE_DDK_EXTRA_ARGS: Extra arguments to pass to the Bazel build invocation
+# LOCAL_USE_PREBUILT_COPY: Flag to determine if prebuilt KO can be directly copied
 
 # Assign external kernel modules to the DLKM class
 LOCAL_MODULE_CLASS := DLKM
@@ -23,6 +24,26 @@ ifeq ($(LOCAL_MODULE_KBUILD_NAME),)
     LOCAL_MODULE_KBUILD_NAME := $(LOCAL_MODULE)
 endif
 LOCAL_MODULE_KBUILD_NAME := $(strip $(LOCAL_MODULE_KBUILD_NAME))
+
+KERNEL_PREBUILT_DIR ?= device/qcom/$(TARGET_BOARD_PLATFORM)-kernel
+
+# The vendor_dlkm directory will include KOs from both the soc_repo second stage
+# modules and the techpack modules.
+KERNEL_TECHPACK_PREBUILT_DIR := $(KERNEL_PREBUILT_DIR)/vendor_dlkm
+
+# If techpack.built exists, it indicates that TECHPACK_BUILD is being used. In this
+# case, check if the KOs are already been built and then directly copy them to the
+# destination. Additionally, Module.symvers will be copied to resolve dependencies.
+ifneq ($(wildcard $(KERNEL_PREBUILT_DIR)/techpack.built),)
+KBUILD_REQUIRED_KOS :=
+ifeq ($(LOCAL_MODULE_STEM), Module.symvers)
+	LOCAL_USE_PREBUILT_COPY := true
+endif
+
+ifneq ($(wildcard $(KERNEL_TECHPACK_PREBUILT_DIR)/$(LOCAL_MODULE)),)
+	LOCAL_USE_PREBUILT_COPY := true
+endif
+endif
 
 # See binary.mk and base_rules.mk
 LOCAL_REQUIRED_MODULES += $(KBUILD_REQUIRED_KOS)
@@ -82,6 +103,8 @@ MODULE_KP_COMBINED_TARGET := $(MODULE_KP_OUT_DIR)/buildko.timestamp
 # When MODULE_KP_COMBINED_TARGET is built, then out pops the MODULE_KP_TARGET (by essentially running `make modules`)
 MODULE_KP_TARGET := $(MODULE_KP_OUT_DIR)/$(LOCAL_MODULE_KBUILD_NAME)
 
+ifneq ($(LOCAL_USE_PREBUILT_COPY),true)
+
 # The final built module for Android Build System
 $(LOCAL_BUILT_MODULE): $(MODULE_KP_TARGET) | $(ACP)
 	$(transform-prebuilt-to-target)
@@ -116,7 +139,6 @@ $(MODULE_KP_COMBINED_TARGET): $(foreach file,$(LOCAL_SRC_FILES), \
 						$(or $(wildcard $(local_path)/$(file)), \
 						  $(wildcard $(file)), \
 						  $(error File: $(file) doesn't exist)))
-KERNEL_PREBUILT_DIR ?= device/qcom/$(TARGET_BOARD_PLATFORM)-kernel
 
 # Use $(wildcard $(KERNEL_PREBUILT_DIR)/.config) as an indicator of KERNEL_KIT support
 # KERNEL_KIT support removes the requirement on a full prebuilt kernel platform output tree,
@@ -189,6 +211,29 @@ $(error Old full prebulit kernel platform is deprecated. Upgrade to newer kernel
 
 endif
 
+else
+
+$(info $(KERNEL_TECHPACK_PREBUILT_DIR)/$(LOCAL_MODULE) exist)
+
+ifeq ($(LOCAL_MODULE_STEM), Module.symvers)
+	LOCAL_PREBUILT_PATH := $(KERNEL_PREBUILT_DIR)/Module.symvers
+else
+	LOCAL_PREBUILT_PATH := $(KERNEL_TECHPACK_PREBUILT_DIR)/$(LOCAL_MODULE)
+endif
+
+$(LOCAL_BUILT_MODULE): $(MODULE_KP_TARGET) | $(ACP)
+	$(transform-prebuilt-to-target)
+
+$(MODULE_KP_TARGET): $(LOCAL_ADDITIONAL_DEPENDENCIES)
+$(MODULE_KP_TARGET): src_path := $(LOCAL_PREBUILT_PATH)
+$(MODULE_KP_TARGET): target_path := $(MODULE_KP_TARGET)
+$(MODULE_KP_TARGET): $(LOCAL_PREBUILT_PATH)
+	echo "Copy $(src_path) to $(target_path)..."
+	mkdir -p $(shell dirname $(target_path))
+	cp -ardf ${src_path} $(target_path)
+
+endif
+
 # Once the KBUILD_OPTIONS variable has been used for the target
 # that's specific to the LOCAL_PATH, clear it. If this isn't done,
 # then every kernel module would need to explicitly set KBUILD_OPTIONS,
@@ -203,3 +248,5 @@ LOCAL_MODULE_KO_DIRS :=
 LOCAL_MODULE_DDK_ALLOW_UNSAFE_HEADERS :=
 LOCAL_MODULE_DDK_SUBTARGET_REGEX :=
 LOCAL_MODULE_DDK_EXTRA_ARGS :=
+LOCAL_USE_PREBUILT_COPY :=
+

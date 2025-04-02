@@ -28,6 +28,9 @@ value:2909
 [AID_VENDOR_PTP]
 value:2910
 
+[AID_VENDOR_SOMEIP]
+value:2911
+
 [vendor/bin/wcnss_filter]
 mode: 0755
 user: AID_BLUETOOTH
@@ -293,6 +296,42 @@ group: AID_SHELL
 caps: 0
 
 [vendor/bin/ais_v4l2loopback_config.xml]
+mode: 0644
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/bin/*.sh]
+mode: 0555
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/etc/*.sh]
+mode: 0555
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/bin/*.json]
+mode: 0644
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/etc/*.json]
+mode: 0644
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/bin/*.xml]
+mode: 0644
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/etc/*.xml]
 mode: 0644
 user: AID_ROOT
 group: AID_SHELL

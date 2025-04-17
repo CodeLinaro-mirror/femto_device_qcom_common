@@ -2,6 +2,14 @@
 colon := $(empty):$(empty)
 underscore := $(empty)_$(empty)
 
+ifeq ($(wildcard vendor/qcom/ar1-la3),vendor/qcom/ar1-la3)
+    $(call soong_config_set, qcom_vendor_config, ar1_la3_path, true)
+    PRJ_PATH := ar1-la3/
+else
+    $(call soong_config_set, qcom_vendor_config, qcom_path, true)
+    PRJ_PATH :=
+endif
+
 # $(call match-word,w1,w2)
 # checks if w1 == w2
 # How it works

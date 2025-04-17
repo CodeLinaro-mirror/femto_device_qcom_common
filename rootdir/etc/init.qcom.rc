@@ -747,7 +747,26 @@ service wifi-crda /vendor/bin/init.crda.sh
 on property:sys.boot_completed=1
     start qcom-post-boot
     start qti-testscripts
+    exec u:r:vendor_qti_init_shell:s0 -- /vendor/bin/init.qti.fifo.sh
     exec u:r:vendor_qti_init_shell:s0 -- /vendor/bin/init.qcom.lxc.sh
+    start vendor.qti.audio-play
+    start vendor.qti.audio-stop
+
+service vendor.qti.audio-stop /vendor/bin/init.qti.audio-stop.sh
+    class late_start
+    user audio
+    group audio system
+    seclabel u:object_r:vendor_qti_init_shell:s0
+    oneshot
+    disabled
+
+service vendor.qti.audio-play /vendor/bin/init.qti.audio-play.sh
+    class late_start
+    user audio
+    group audio system
+    seclabel u:object_r:vendor_qti_init_shell:s0
+    oneshot
+    disabled
 
 on property:ro.vendor.ril.mbn_copy_completed=1
     write /data/vendor/radio/copy_complete 1

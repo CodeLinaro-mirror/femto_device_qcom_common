@@ -429,6 +429,8 @@ on property:persist.vendor.qcomsysd.enabled=0
     stop qcomsysd
 
 service vendor.ssr_setup /system/vendor/bin/ssr_setup
+    user root
+    group root
     oneshot
     disabled
 
@@ -556,6 +558,8 @@ service vendor.wigig_supplicant /vendor/bin/hw/wpa_supplicant \
     #   after setting up the capabilities required for WEXT
     #   user wifi
     #   group wifi inet keystore
+    user root
+    group root
     class main
     socket wigig/wpa_wigig0 dgram 660 wifi wifi
     disabled
@@ -589,41 +593,57 @@ service vendor.sensingdaemon /vendor/bin/sensingdaemon
     disabled
 
 service dhcpcd_wlan0 /system/bin/dhcpcd -ABKLG
+    user root
+    group root
     class late_start
     disabled
     oneshot
 
 service dhcpcd_bond0 /system/bin/dhcpcd -ABKLG
+    user root
+    group root
     class late_start
     disabled
     oneshot
 
 service dhcpcd_p2p /system/bin/dhcpcd -ABKLG
+    user root
+    group root
     class late_start
     disabled
     oneshot
 
 service dhcpcd_wigig0 /system/bin/dhcpcd -ABKLG
+    user root
+    group root
     class late_start
     disabled
     oneshot
 
 service iprenew_wlan0 /system/bin/dhcpcd -n
+    user root
+    group root
     class late_start
     disabled
     oneshot
 
 service iprenew_bond0 /system/bin/dhcpcd -n
+    user root
+    group root
     class late_start
     disabled
     oneshot
 
 service iprenew_p2p /system/bin/dhcpcd -n
+    user root
+    group root
     class late_start
     disabled
     oneshot
 
 service iprenew_wigig0 /system/bin/dhcpcd -n
+    user root
+    group root
     class late_start
     disabled
     oneshot
@@ -662,11 +682,15 @@ on property:sys.shutdown.requested=*
     stop cnss-daemon
 
 service dhcpcd_bt-pan /system/bin/dhcpcd -BKLG
+    user root
+    group root
     class late_start
     disabled
     oneshot
 
 service iprenew_bt-pan /system/bin/dhcpcd -n
+    user root
+    group root
     class late_start
     disabled
     oneshot
@@ -700,6 +724,8 @@ service qcom-sh /vendor/bin/init.qcom.sh
 #    oneshot
 
 service wifi-sdio-on /vendor/bin/init.qcom.sdio.sh
+    user root
+    group root
     class late_start
     group wifi inet
     disabled
@@ -785,6 +811,8 @@ service diag_mdlog_stop /system/vendor/bin/diag_mdlog -k
     oneshot
 
 service qlogd /system/xbin/qlogd
+    user root
+    group root
     socket qlogd stream 0662 system system
     class main
     disabled
@@ -868,6 +896,8 @@ on property:ro.vendor.radio.noril=*
     setprop ro.radio.noril ${ro.vendor.radio.noril}
 
 service vendor.power_off_alarm /vendor/bin/power_off_alarm
+    user root
+    group root
     class core
     group system
     disabled
@@ -891,6 +921,8 @@ on property:vendor.chre.enabled=0
    stop chre
 
 service bugreport /system/bin/dumpstate -d -p -B -z -o /data/user_de/0/com.android.shell/files/bugreports/bugreport
+    user root
+    group root
     class main
     disabled
     oneshot

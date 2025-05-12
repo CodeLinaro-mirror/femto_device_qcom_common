@@ -24,10 +24,8 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# Changes from Qualcomm Innovation Center are provided under the following
-# license:
-#
-# Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+# changes from Qualcomm Technologies, Inc. are provided under the following license:
+# Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted (subject to the limitations in the
@@ -309,6 +307,7 @@ on post-fs-data
     # Create directory used by audio subsystem
     mkdir /data/vendor/audio 0770 audio audio
     mkdir /data/vendor/audio_dsp 0770 media media
+    mkdir /dev/socket/agm 0770 audio audio
 
     # Create directory for audio delta files
     mkdir /data/vendor/audio/acdbdata 0770 media audio
@@ -747,10 +746,19 @@ service wifi-crda /vendor/bin/init.crda.sh
 on property:sys.boot_completed=1
     start qcom-post-boot
     start qti-testscripts
+    start agm-localsocket-backend
     exec u:r:vendor_qti_init_shell:s0 -- /vendor/bin/init.qti.fifo.sh
     exec u:r:vendor_qti_init_shell:s0 -- /vendor/bin/init.qcom.lxc.sh
     start vendor.qti.audio-play
     start vendor.qti.audio-stop
+
+service agm-localsocket-backend /vendor/bin/agm_ls_be
+    class late_start
+    user audio
+    group audio system
+    seclabel u:object_r:vendor_qti_init_shell:s0
+    oneshot
+    disabled
 
 service vendor.qti.audio-stop /vendor/bin/init.qti.audio-stop.sh
     class late_start

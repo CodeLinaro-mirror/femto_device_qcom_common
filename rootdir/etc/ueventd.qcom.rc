@@ -82,6 +82,7 @@ subsystem mem_buf_vm
 
 /dev/genlock              0666   system     system
 /dev/wlan                 0660   wifi       wifi
+/dev/txpb                 0660   wifi       wifi
 /dev/kgsl                 0666   system     system
 /dev/kgsl-3d0             0666   system     system
 /dev/kgsl-2d0             0666   root       root
@@ -645,3 +646,9 @@ subsystem mem_buf_vm
 /sys/kernel/fastrpc/lpass* type               0444   root     system
 /sys/kernel/fastrpc/lpass* legacy_name        0444   root     system
 /sys/kernel/fastrpc/lpass* legacy_id          0444   root     system
+
+# MPAM
+/sys/devices/platform/soc/soc:qcom,cache-allocation   enable_monitor                   0660    root system
+/sys/devices/platform/soc/soc:qcom,cache-allocation   sampling_time_ms                 0660    root system
+/sys/devices/platform/soc/soc:qcom,cache-allocation   prefer_cpu_thresh                0660    root system
+/sys/devices/platform/soc/soc:qcom,cache-allocation   prefer_gpu_thresh                0660    root system

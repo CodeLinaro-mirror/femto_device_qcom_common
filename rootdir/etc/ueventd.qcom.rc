@@ -116,6 +116,9 @@ subsystem mem_buf_vm
 #permissions for UFS RPMB BSG device node
 /dev/0:0:0:49476          0600   system     system
 
+#permissions for eMMC RPMB device node
+/dev/mmcblk0rpmb          0600   system     system
+
 #permissions for GPT listener on LUN4
 /dev/0:0:0:4              0600   system     root
 
@@ -440,6 +443,7 @@ subsystem mem_buf_vm
 /dev/block/platform/soc/7c4000.sdhci/by-name/frp        0600   system     system
 /dev/block/platform/soc/4744000.sdhci/by-name/frp       0600   system     system
 /dev/block/platform/soc/4804000.ufshc/by-name/frp       0600   system     system
+/dev/block/platform/soc/b24000.sdhci/by-name/frp        0600   system     system
 
 # This is temporary while using SD card for initial bring-up
 /dev/block/platform/soc/8804000.sdhci/by-name/frp       0600   system     system

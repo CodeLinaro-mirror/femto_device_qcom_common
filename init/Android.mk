@@ -1,3 +1,4 @@
+ifeq ($(TARGET_BOARD_PLATFORM), monaco)
 ifeq ($(TARGET_INIT_VENDOR_LIB),libinit_msm)
 
 LOCAL_PATH := $(call my-dir)
@@ -19,3 +20,4 @@ LOCAL_MODULE := libinit_msm
 include $(BUILD_STATIC_LIBRARY)
 
 endif
+endif #TARGET_BOARD_PLATFORM

@@ -31,6 +31,9 @@ value:2910
 [AID_VENDOR_SOMEIP]
 value:2911
 
+[AID_VENDOR_SOA]
+value:2912
+
 [vendor/bin/wcnss_filter]
 mode: 0755
 user: AID_BLUETOOTH
@@ -336,3 +339,15 @@ mode: 0644
 user: AID_ROOT
 group: AID_SHELL
 caps: 0
+
+[vendor/bin/vsomeip_daemon]
+mode: 0755
+user: AID_VENDOR_SOA
+group: AID_VENDOR_SOA
+caps: SETUID SETGID
+
+[system/vendor/bin/vsomeip_daemon]
+mode: 0755
+user: AID_VENDOR_SOA
+group: AID_VENDOR_SOA
+caps: SETUID SETGID

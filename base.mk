@@ -8,6 +8,8 @@ else
 TARGET_USES_NEW_ION := true
 endif
 
+TARGET_USES_NQ_NFC := false
+
 # Board platforms lists to be used for
 # TARGET_BOARD_PLATFORM specific featurization
 QCOM_BOARD_PLATFORMS += msm8974
@@ -882,7 +884,6 @@ PRODUCT_PACKAGES := \
     Sync \
     SystemUI \
     Updater \
-    CalendarProvider \
     SyncProvider
 
 ifneq ($(TARGET_1G_DDR_RAM), true)
@@ -898,6 +899,7 @@ PRODUCT_PACKAGES := \
     Phone \
     Protips \
     QuickSearchBox \
+    CalendarProvider \
     SoundRecorder \
     IM \
     VoiceDialer \
@@ -1197,7 +1199,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.oem_unlock_supported=1
 
 ifeq ($(TARGET_USES_QCOM_BSP_ATEL),true)
-    PRODUCT_PROPERTY_OVERRIDES += persist.radio.multisim.config=dsds
+    PRODUCT_PROPERTY_OVERRIDES += persist.radio.multisim.config=ssss
 endif
 
 ifeq ( ,$(filter 12 S ,$(PLATFORM_VERSION)))

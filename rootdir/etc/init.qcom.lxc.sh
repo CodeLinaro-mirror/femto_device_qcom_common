@@ -3,5 +3,6 @@
 # SPDX-License-Identifier: BSD-3-Clause-Clear
 
 mkdir -p /mnt/lxc/run
-/system/bin/brctl addbr lxcbr0
+brctl addbr lxcbr0
+restorecon -RF /vendor/vm-system
 lxc-start lv

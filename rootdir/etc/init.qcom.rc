@@ -743,32 +743,19 @@ service wifi-crda /vendor/bin/init.crda.sh
    disabled
    oneshot
 
+service vendor.qti.lxc /vendor/bin/init.qcom.lxc.sh
+    class main
+    user root
+    disabled
+    oneshot
+
 on property:sys.boot_completed=1
     start qcom-post-boot
     start qti-testscripts
     start agm-localsocket-backend
-    exec u:r:vendor_qti_init_shell:s0 -- /vendor/bin/init.qti.fifo.sh
-    exec u:r:vendor_qti_init_shell:s0 -- /vendor/bin/init.qcom.lxc.sh
-    start vendor.qti.audio-play
-    start vendor.qti.audio-stop
+    start vendor.qti.lxc
 
 service agm-localsocket-backend /vendor/bin/agm_ls_be
-    class late_start
-    user audio
-    group audio system
-    seclabel u:object_r:vendor_qti_init_shell:s0
-    oneshot
-    disabled
-
-service vendor.qti.audio-stop /vendor/bin/init.qti.audio-stop.sh
-    class late_start
-    user audio
-    group audio system
-    seclabel u:object_r:vendor_qti_init_shell:s0
-    oneshot
-    disabled
-
-service vendor.qti.audio-play /vendor/bin/init.qti.audio-play.sh
     class late_start
     user audio
     group audio system

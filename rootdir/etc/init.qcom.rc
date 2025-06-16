@@ -753,7 +753,6 @@ on property:sys.boot_completed=1
     start qcom-post-boot
     start qti-testscripts
     start agm-localsocket-backend
-    start vendor.qti.lxc
 
 service agm-localsocket-backend /vendor/bin/agm_ls_be
     class late_start

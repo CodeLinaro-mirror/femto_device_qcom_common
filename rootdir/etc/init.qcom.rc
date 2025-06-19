@@ -303,6 +303,7 @@ on post-fs-data
     mkdir /data/vendor/wifi/wigig_hostapd 0770 wifi wifi
     mkdir /data/vendor/wifi/wpa 0770 wifi wifi
     mkdir /data/vendor/wifi/wpa/sockets 0770 wifi wifi
+    mkdir /data/vendor/tx_powerboost 0770 wifi wifi
 
     # Create the directories used by WiGig Sensing
     mkdir /data/vendor/sensing 0770 system wifi
@@ -565,14 +566,6 @@ service qmiproxy /system/bin/qmiproxy
     user radio
     group radio diag
     disabled
-
-# Data Migration
-service vendor.move_wifi_data /system/bin/move_wifi_data.sh
-    class main
-    user  wifi
-    group wifi
-    disabled
-    oneshot
 
 service wigignpt /vendor/bin/wigignpt
     interface vendor.qti.hardware.wigig.netperftuner@1.0::INetPerfTuner default

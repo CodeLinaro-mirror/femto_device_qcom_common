@@ -541,6 +541,7 @@ subsystem mem_buf_vm
 */
 
 /sys/devices/platform/soc/ae00000.qcom,mdss_mdp power/control 0664 system graphics
+/sys/devices/platform/soc/9800000.qcom,mdss_mdp power/control 0664 system graphics
 
 #asm330 sensor
 #common sensors files

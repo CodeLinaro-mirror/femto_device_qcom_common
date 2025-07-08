@@ -1,3 +1,4 @@
+ifeq ($(TARGET_BOARD_PLATFORM), monaco)
 ifeq ($(BOARD_COMMON_DIR),)
     BOARD_COMMON_DIR := device/qcom/common
 endif
@@ -84,6 +85,7 @@ ifneq ($(TARGET_HAS_LOW_RAM), true)
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 endif
 endif
+endif #TARGET_BOARD_PLATFORM
 
 #$(call inherit-product, frameworks/base/data/fonts/fonts.mk)
 #$(call inherit-product, frameworks/base/data/keyboards/keyboards.mk)

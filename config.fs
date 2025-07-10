@@ -268,3 +268,39 @@ user: AID_VENDOR_SOA
 group: AID_VENDOR_SOA
 caps: SETUID SETGID
 
+
+[vendor/bin/*.sh]
+mode: 0555
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/etc/*.sh]
+mode: 0555
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/bin/*.json]
+mode: 0644
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/etc/*.json]
+mode: 0644
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/bin/*.xml]
+mode: 0644
+user: AID_ROOT
+group: AID_SHELL
+caps: 0
+
+[vendor/etc/*.xml]
+mode: 0644
+user: AID_ROOT
+group: AID_SHELL
+caps: 0

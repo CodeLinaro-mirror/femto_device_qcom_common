@@ -617,7 +617,3 @@ subsystem mem_buf_vm
 
 # SPI UWB device
 /dev/spiuwb    0660    uwb    uwb
-
-#power_state device node
-/dev/power_state           0660   system      system
-

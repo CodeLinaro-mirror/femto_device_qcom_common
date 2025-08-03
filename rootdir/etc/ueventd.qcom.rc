@@ -393,6 +393,11 @@ subsystem mem_buf_vm
 /sys/devices/virtual/input/input*                   set_delay_ms     0660  system   input
 /sys/devices/virtual/input/input*                   do_flush         0660  system   input
 
+# Usb mode access
+# Setting rw permission for 'others' since QtiCarPowerService doesnt run as system.
+# any unauthorized access will be blocked by sepolicy
+/sys/devices/platform/soc/a*00000.*susb             mode             0666  root     system
+
 # vm_bms
 /dev/vm_bms               0660   system     system
 /dev/battery_data         0660   system     system

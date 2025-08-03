@@ -222,6 +222,12 @@ on boot
 
     # limit discard size to 128MB in order to avoid long IO latency
     write /sys/block/sda/queue/discard_max_bytes 134217728
+    chown system system /sys/bus/platform/drivers/xhci-hcd/unbind
+    chown system system /sys/bus/platform/drivers/xhci-hcd/bind
+    # Setting rw permission for 'others' since QtiCarPowerService doesnt run as system.
+    # any unauthorized access will be blocked by sepolicy
+    chmod 0666 /sys/bus/platform/drivers/xhci-hcd/unbind
+    chmod 0666 /sys/bus/platform/drivers/xhci-hcd/bind
 
     chown system system /sys/power/mem_sleep
     chmod 0660 /sys/power/mem_sleep

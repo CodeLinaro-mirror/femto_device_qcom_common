@@ -38,3 +38,18 @@ on property:ro.boot.usbcontroller=*
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+
+service console /system/bin/sh
+    class core
+    console
+    user root
+    group root log readproc
+    seclabel u:r:recovery:s0
+    setenv HOSTNAME console
+
+on boot
+    start console
+    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /vendor/firmware_mnt
+    symlink /vendor/firmware_mnt/image /lib/firmware
+    wait /sys/kernel/boot_adsp/boot
+    write /sys/kernel/boot_adsp/boot 1

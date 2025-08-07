@@ -28,9 +28,36 @@ value:2912
 [AID_VENDOR_NXP_STRONGBOX]
 value:2910
 
+[AID_VENDOR_THALES_STRONGBOX]
+value:2913
+
+[AID_VENDOR_THALES_WEAVER]
+value:2916
+
+[AID_VENDOR_THALES_AUTHSECRET]
+value:2917
+
 [vendor/bin/hw/android.hardware.security.keymint-service.strongbox]
 mode: 0755
 user: AID_VENDOR_NXP_STRONGBOX
+group: AID_SYSTEM
+caps: SYS_ADMIN SYS_NICE
+
+[vendor/bin/hw/android.hardware.security.keymint-service.strongbox-thales]
+mode: 0755
+user: AID_VENDOR_THALES_STRONGBOX
+group: AID_SYSTEM
+caps: SYS_ADMIN SYS_NICE
+
+[vendor/bin/hw/android.hardware.weaver-service.thales]
+mode: 0755
+user: AID_VENDOR_THALES_WEAVER
+group: AID_SYSTEM
+caps: SYS_ADMIN SYS_NICE
+
+[vendor/bin/hw/android.hardware.authsecret-service.thales-qti]
+mode: 0755
+user: AID_VENDOR_THALES_AUTHSECRET
 group: AID_SYSTEM
 caps: SYS_ADMIN SYS_NICE
 

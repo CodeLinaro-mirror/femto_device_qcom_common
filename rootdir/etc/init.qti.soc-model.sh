@@ -21,6 +21,6 @@ elif [ "$soc_id" == "532" ]; then
     setprop ro.vendor.qti.soc_model SA8255P
 elif [ "$soc_id" == "534" ]; then
     setprop ro.vendor.qti.soc_model SA8775P
-elif [ "$soc_id" == "606" ]; then
+elif [ "$soc_id" == "606" ] || [ "$soc_id" == "695" ]; then
     setprop ro.vendor.qti.soc_model SA7255P
 fi

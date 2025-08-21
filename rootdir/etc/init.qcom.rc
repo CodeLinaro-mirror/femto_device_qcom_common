@@ -281,14 +281,10 @@ on post-fs-data
     mkdir /data/vendor/sensing 0770 system wifi
 
     # Create dir for SOME/IP
-    mkdir /data/vendor/someip 0770 system system
+    mkdir /data/vendor/someip 0770 vendor_someip vendor_someip
     chmod 0770 /data/vendor/someip
-    mkdir /data/someip 0770 system system
-    chmod 0770 /data/someip
-    mkdir /storage/vendor/someip 0770 system system
+    mkdir /storage/vendor/someip 0770 vendor_someip vendor_someip
     chmod 0770 /storage/vendor/someip
-    mkdir /storage/someip 0770 system system
-    chmod 0770 /storage/someip
 
     # Create the directories used by CnE subsystem
     mkdir /data/vendor/connectivity 0771 radio radio
@@ -572,25 +568,6 @@ service vendor.move_wifi_data /system/bin/move_wifi_data.sh
     group wifi
     disabled
     oneshot
-
-service wigignpt /vendor/bin/wigignpt
-    interface vendor.qti.hardware.wigig.netperftuner@1.0::INetPerfTuner default
-    class hal
-    socket wigig/wigignpt stream 660 system wifi
-    user system
-    group wifi
-    capabilities NET_ADMIN
-    disabled
-
-on property:persist.vendor.wigig.npt.enable=1
-    start wigignpt
-
-service vendor.sensingdaemon /vendor/bin/sensingdaemon
-    class hal
-    socket wigig/sensingdaemon stream 660 system wifi
-    user system
-    group wifi
-    disabled
 
 service dhcpcd_wlan0 /system/bin/dhcpcd -ABKLG
     class late_start

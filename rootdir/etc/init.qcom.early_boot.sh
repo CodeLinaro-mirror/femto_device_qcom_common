@@ -354,7 +354,7 @@ case "$target" in
         ;;
     "parrot")
          case "$soc_hwid" in
-             602|568|654|653|582|581)
+             602|568|654|653|582|581|715)
                  setprop vendor.fastrpc.disable.cdsprpcd.daemon 1
                  ;;
          esac

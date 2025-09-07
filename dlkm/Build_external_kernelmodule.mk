@@ -154,11 +154,11 @@ ifndef $(MODULE_KP_COMMON_TARGET)_RULE
 $(MODULE_KP_COMMON_TARGET)_RULE := 1
 
 $(MODULE_KP_COMMON_TARGET): $(KERNEL_PREBUILT_DIR)/.config $(KERNEL_PREBUILT_DIR)/Module.symvers
+	export ANDROID_BUILD_TOP=$$(pwd) ; \
 	(cd $(KERNEL_PLATFORM_PATH) && \
 	    OUT_DIR=$(KERNEL_PLATFORM_TO_ROOT)/$(KP_DLKM_INTERMEDIATE)/kernel_platform \
 	    KERNEL_KIT=$(KERNEL_PLATFORM_TO_ROOT)/$(KERNEL_PREBUILT_DIR) \
 	    ./build/build_module.sh $(kbuild_options) \
-	    ANDROID_BUILD_TOP=$$(realpath $$(pwd)/$(KERNEL_PLATFORM_TO_ROOT)) \
 	)
 	touch $@
 endif

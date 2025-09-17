@@ -34,12 +34,12 @@ on property:ro.boot.usbcontroller=* && property:ro.boot.hwversion=1
     setprop sys.usb.controller ${ro.boot.usbcontroller}
     write /sys/class/udc/${ro.boot.usbcontroller}/device/../mode peripheral
 
-on property:ro.boot.usbcontroller=* && property:ro.boot.hwversion=2 && property:ro.product.name=gen4_gvm_cdccomm
+on property:ro.boot.usbcontroller=* && property:ro.boot.hwversion=2
     write /sys/devices/platform/soc/a600000.ssusb/mode peripheral
     write /sys/devices/platform/soc/a400000.hsusb/mode host
     setprop sys.usb.controller ${ro.boot.usbcontroller}
 
-on property:ro.boot.usbcontroller=* && property:ro.boot.hwversion=3 && property:ro.product.name=gen4_gvm_cdccomm
+on property:ro.boot.usbcontroller=* && property:ro.boot.hwversion=3
     write /sys/devices/platform/soc/a600000.ssusb/mode host
     write /sys/devices/platform/soc/a400000.hsusb/mode peripheral
     setprop sys.usb.controller ${ro.boot.usbcontroller}

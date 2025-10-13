@@ -8,6 +8,10 @@ else
 TARGET_USES_NEW_ION := true
 endif
 
+ifeq ($(TARGET_HAS_QTI_OPTIMIZATIONS), true)
+TARGET_USES_NQ_NFC := false
+endif #TARGET_HAS_QTI_OPTIMIZATIONS
+
 # Board platforms lists to be used for
 # TARGET_BOARD_PLATFORM specific featurization
 QCOM_BOARD_PLATFORMS += msm8974
@@ -801,29 +805,32 @@ endif
 
 PRODUCT_PACKAGES := \
     AccountAndSyncSettings \
-    DeskClock \
     AlarmProvider \
-    Calculator \
-    Calendar \
-    Camera \
     CellBroadcastReceiver \
     CertInstaller \
     DrmProvider \
-    Email \
-    Gallery2 \
-    LatinIME \
-    Music \
     netutils-wrapper-1.0 \
-    Phone \
     Provision \
-    Protips \
-    QuickSearchBox \
     Settings \
     Sync \
     SystemUI \
     Updater \
+    SyncProvider
+
+ifneq ($(TARGET_HAS_QTI_OPTIMIZATIONS), true)
+PRODUCT_PACKAGES := \
+    DeskClock \
+    Calculator \
+    Calendar \
     CalendarProvider \
-    SyncProvider \
+    Camera \
+    Email \
+    Gallery2 \
+    LatinIME \
+    Music \
+    Phone \
+    Protips \
+    QuickSearchBox \
     SoundRecorder \
     IM \
     VoiceDialer \
@@ -832,6 +839,7 @@ PRODUCT_PACKAGES := \
     VideoEditor \
     SnapdragonLauncher \
     QtiDialer
+endif #TARGET_HAS_QTI_OPTIMIZATIONS
 
 ifeq ($(TARGET_HAS_LOW_RAM),true)
     DELAUN := Launcher3QuickStepGo
@@ -1094,7 +1102,11 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.oem_unlock_supported=1
 
 ifeq ($(TARGET_USES_QCOM_BSP_ATEL),true)
-    PRODUCT_PROPERTY_OVERRIDES += persist.radio.multisim.config=dsds
+    ifneq ($(TARGET_HAS_QTI_OPTIMIZATIONS), true)
+        PRODUCT_PROPERTY_OVERRIDES += persist.radio.multisim.config=dsds
+    else
+        PRODUCT_PROPERTY_OVERRIDES += persist.radio.multisim.config=ssss
+    endif #TARGET_HAS_QTI_OPTIMIZATIONS
 endif
 
 # VNDK-SP:

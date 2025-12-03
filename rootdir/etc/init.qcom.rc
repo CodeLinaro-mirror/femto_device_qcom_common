@@ -104,6 +104,7 @@ on init
     chmod 0660 /sys/fs/cgroup/memory/bg/tasks
 
 on post-fs
+    setprop sys.fsmount_completed 1
 
 on early-boot
     # set RLIMIT_MEMLOCK to 64KB

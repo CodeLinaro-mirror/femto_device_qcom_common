@@ -23,6 +23,10 @@ elif [ "$soc_id" == "534" ]; then
     setprop ro.vendor.qti.soc_model SA8775P
 elif [ "$soc_id" == "606" ]; then
     setprop ro.vendor.qti.soc_model SA7255P
+elif [ "$soc_id" == "695" ]; then
+    setprop ro.vendor.qti.soc_model SA7775P
+elif [ "$soc_id" == "690" ]; then
+    setprop ro.vendor.qti.soc_model SA8797P
 fi
 
 if [ -f /sys/devices/soc0/machine ]; then

@@ -73,6 +73,8 @@ on init
     chown root system /sys/fs/cgroup/memory/bg/tasks
     write /sys/kernel/icnss/wpss_boot 1
     chmod 0660 /sys/fs/cgroup/memory/bg/tasks
+    chown system system  /sys/devices/platform/qcom_power_mode/power_mode
+    chmod 0660  /sys/devices/platform/qcom_power_mode/power_mode
 
 on post-fs
     chmod 0755 /sys/kernel/debug/tracing

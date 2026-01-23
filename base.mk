@@ -822,7 +822,7 @@ PRODUCT_PACKAGES := \
     DeskClock \
     Calculator \
     Calendar \
-    CalendarProvider
+    CalendarProvider \
     Camera \
     Email \
     Gallery2 \
@@ -1001,7 +1001,7 @@ PRODUCT_COPY_FILES := \
     frameworks/native/data/etc/android.software.verified_boot.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.verified_boot.xml
 
 ifneq ($(TARGET_HAS_QTI_OPTIMIZATIONS), true)
-PRODUCT_COPY_FILES := \
+PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml
 endif #TARGET_HAS_QTI_OPTIMIZATIONS
 

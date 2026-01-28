@@ -1,6 +1,5 @@
 # define flag to determine the kernel
-TARGET_KERNEL_VERSION ?= $(shell ls kernel | grep "msm-*" | sed 's/msm-//')
-
+TARGET_KERNEL_VERSION ?= $(patsubst msm-%, %, $(notdir $(wildcard kernel/msm-*)))
 # Set TARGET_USES_NEW_ION for 4.14 and higher kernels
 ifeq ($(TARGET_KERNEL_VERSION),$(filter $(TARGET_KERNEL_VERSION),3.18 4.4 4.9))
 TARGET_USES_NEW_ION := false
@@ -1028,7 +1027,7 @@ endif
 # Copy the vulkan feature level file.
 # Targets listed in VULKAN_FEATURE_LEVEL_0_TARGETS_LIST supports only vulkan feature level 0.
 ifneq ($(TARGET_NOT_SUPPORT_VULKAN),true)
-ifeq ($(call is-board-platform-in-list,$(VULKAN_FEATURE_LEVEL_0_TARGETS_LIST)), true)
+ifneq (,$(call is-board-platform-in-list2,$(VULKAN_FEATURE_LEVEL_0_TARGETS_LIST)))
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.vulkan.level-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level-0.xml
 else
@@ -1167,27 +1166,15 @@ PRODUCT_PACKAGES += vndservicemanager
 
 
 #soong namespace for qssi vs vendor differentiation
-SOONG_CONFIG_NAMESPACES += qssi_vs_vendor
-SOONG_CONFIG_qssi_vs_vendor += qssi_or_vendor
-SOONG_CONFIG_qssi_vs_vendor_qssi_or_vendor := vendor
-
-SOONG_CONFIG_NAMESPACES += aosp_vs_qva
-SOONG_CONFIG_aosp_vs_qva += aosp_or_qva
-ifeq ($(TARGET_FWK_SUPPORTS_FULL_VALUEADDS),true)
-SOONG_CONFIG_aosp_vs_qva_aosp_or_qva := qva
-else
-SOONG_CONFIG_aosp_vs_qva_aosp_or_qva := aosp
-endif
+$(call soong_config_set,qssi_vs_vendor,qssi_or_vendor,vendor)
+$(call soong_config_set,aosp_vs_qva,aosp_or_qva,$(if $(TARGET_FWK_SUPPORTS_FULL_VALUEADDS),qva,aosp))
 
 ifeq ($(TARGET_SINGLE_TREE), true)
-  SOONG_CONFIG_NAMESPACES += bredr_vs_btadva
-  SOONG_CONFIG_bredr_vs_btadva += bredr_or_btadva
-
-  ifneq "$(wildcard vendor/qcom/proprietary/commonsys/bt/bt_adv_audio)" ""
+  ifneq ($(wildcard vendor/qcom/proprietary/commonsys/bt/bt_adv_audio),)
       $(warning bt_adv_audio dir is present)
-      SOONG_CONFIG_bredr_vs_btadva_bredr_or_btadva := btadva
+      $(call soong_config_set,bredr_vs_btadva,bredr_or_btadva,btadva)
   else
       $(warning bt_adv_audio dir is not present)
-      SOONG_CONFIG_bredr_vs_btadva_bredr_or_btadva := bredr
+      $(call soong_config_set,bredr_vs_btadva,bredr_or_btadva,bredr)
   endif #ifneq "$(wildcard vendor/qcom/proprietary/commonsys/bt/bt_adv_audio)" ""
 endif #TARGET_SINGLE_TREE

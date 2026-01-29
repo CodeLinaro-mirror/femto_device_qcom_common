@@ -134,6 +134,9 @@ subsystem mem_buf_vm
 /dev/btfmcodec_dev        0660   bluetooth  system
 /dev/threadpower          0660   thread_network  system
 /dev/spithrq              0660   thread_network  system
+/dev/glink_pkt_hci_arbiter_chnl           0660   bluetooth  system
+/dev/glink_pkt_bt_socket_hal_chnl         0660   bluetooth  system
+/dev/glink_pkt_bt_gatt_offload_chnl       0660   bluetooth  system
 
 #permissions for pta
 /dev/pta                  0660   system     system
@@ -449,6 +452,7 @@ subsystem mem_buf_vm
 /dev/block/platform/soc/4744000.sdhci/by-name/frp       0600   system     system
 /dev/block/platform/soc/4804000.ufshc/by-name/frp       0600   system     system
 /dev/block/platform/soc/1bf8000.pcie/by-name/frp        0600   system     system
+/dev/block/platform/soc/b24000.sdhci/by-name/frp        0600   system     system
 
 # This is temporary while using SD card for initial bring-up
 /dev/block/platform/soc/8804000.sdhci/by-name/frp       0600   system     system
@@ -479,6 +483,7 @@ subsystem mem_buf_vm
 #Haptics class devices
 /sys/class/qcom-haptics    visense_enabled     0400    system    system
 /sys/class/qcom-haptics    primitive_duration  0600    system    system
+/sys/class/qcom-haptics    swr_play            0640    system    system
 /sys/class/qcom-haptics    v_gain_error        0440    system    audio
 /sys/class/qcom-haptics    i_gain_error        0440    system    audio
 /sys/class/qcom-haptics    lra_frequency_hz    0440    system    audio

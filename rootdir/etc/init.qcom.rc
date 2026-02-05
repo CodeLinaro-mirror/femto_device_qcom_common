@@ -250,6 +250,20 @@ on boot
     # limit discard size to 128MB in order to avoid long IO latency
     write /sys/block/sda/queue/discard_max_bytes 134217728
 
+    # mount cgroup v1 controller for lxc start/stop manually
+    write /dev/kmsg "[cgroup_mount] begin"
+    mkdir /sys/fs/cgroup/cpu,cpuacct 0755 root root
+    mount cgroup none /sys/fs/cgroup/cpu,cpuacct nodev noexec nosuid relatime cpu,cpuacct
+    mkdir /sys/fs/cgroup/cpuset 0755 root root
+    mount cgroup none /sys/fs/cgroup/cpuset nodev noexec nosuid relatime cpuset
+    mkdir /sys/fs/cgroup/devices 0755 root root
+    mount cgroup none /sys/fs/cgroup/devices nodev noexec nosuid relatime devices
+    mkdir /sys/fs/cgroup/blkio 0755 root root
+    mount cgroup none /sys/fs/cgroup/blkio nodev noexec nosuid relatime blkio
+    mkdir /sys/fs/cgroup/systemd 0755 root root
+    mount cgroup none /sys/fs/cgroup/systemd nodev noexec nosuid relatime none,name=systemd
+    write /dev/kmsg "[cgroup_mount] done"
+
 # msm specific files that need to be created on /data
 on post-fs-data
     mkdir /data/vendor/misc 01771 system system

@@ -30,8 +30,10 @@ using android::base::boot_clock;
 #define AUDIO_MOD_BL_FILE        "modules.audio.legacy.blocklist"
 #define AUDIO_AR_MOD_BL_FILE     "modules.audio.ar.blocklist"
 #define AUDIO_AR_VIO_MOD_BL_FILE "modules.audio.ar_vio.blocklist"
+#define AUDIO_LITE_MOD_BL_FILE   "modules.audio.audiolite.blocklist"
 
 #define AUDIO_AR_PROP            "audioreach"
+#define AUDIO_LITE_PROP          "audiolite"
 #define AUDIO_AR_VIO_PROP        "audioreach_vio"
 #define AUDIO_PROP               "ro.boot.audio"
 
@@ -105,6 +107,8 @@ void LoadDlkm::UpdateAudioBlockListFile() {
         audio_bl_file_ = AUDIO_AR_VIO_MOD_BL_FILE;
     } else if (!strncmp(value, AUDIO_AR_PROP, strlen(AUDIO_AR_PROP))) {
         audio_bl_file_ = AUDIO_AR_MOD_BL_FILE;
+    } else if (!strncmp(value, AUDIO_LITE_PROP, strlen(AUDIO_LITE_PROP))) {
+        audio_bl_file_ = AUDIO_LITE_MOD_BL_FILE;
     } else {
         audio_bl_file_ = AUDIO_MOD_BL_FILE;
     }

@@ -1109,7 +1109,7 @@ ifeq ($(TARGET_USES_QCOM_BSP_ATEL),true)
     PRODUCT_PROPERTY_OVERRIDES += persist.radio.multisim.config=dsds
 endif
 
-ifeq ( ,$(filter 12 S 13 T U 14 UpsideDownCake V VanillaIceCream 15 W Baklava 16,$(PLATFORM_VERSION)))
+ifeq ( ,$(filter 12 S 13 T U 14 UpsideDownCake V VanillaIceCream 15 W Baklava 16 CinnamonBun 17,$(PLATFORM_VERSION)))
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     vendor.usb.diag.func.name=diag
 endif

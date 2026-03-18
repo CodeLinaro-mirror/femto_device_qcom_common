@@ -559,8 +559,10 @@ LIBQDMETADATA := libqdMetaData
 ifneq ($(TARGET_USES_NON_LEGACY_POWERHAL), true)
 LIBPOWER := power.qcom
 #LIBPOWER -- Add HIDL Packages
+ifeq ($(filter $(TARGET_BOARD_DERIVATIVE_SUFFIX), _cdccomm _sdvcomm),)
 LIBPOWER += android.hardware.power@1.0-impl
 LIBPOWER += android.hardware.power@1.0-service
+endif
 endif
 
 #LLVM for RenderScript

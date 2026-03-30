@@ -66,7 +66,7 @@ import /vendor/etc/ueventd.qcom.userdebug.rc
 # Firmware directory Path
 # Below macro will be read by uevent and path will
 # be added to search path for firmware loading
-firmware_directories /vendor/firmware_mnt/image/ /vendor/soccp_firmware/image/
+firmware_directories /vendor/firmware_mnt/image/ /vendor/soccp_firmware/image/ /vendor/dcp_firmware/image/
 
 subsystem dma_heap
     devname uevent_devpath
@@ -640,6 +640,9 @@ subsystem mem_buf_vm
 
 # IPA Events
 /dev/ipa_events         0660   radio      radio
+
+#power_state device node
+/dev/power_state           0660   system      system
 
 # Fastrpc domain  sysfs attributes
 /sys/kernel/fastrpc/nsp* name               0444   root     system

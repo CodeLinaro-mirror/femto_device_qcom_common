@@ -38,3 +38,17 @@ on property:ro.boot.usbcontroller=*
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+
+on fs
+    mkdir /firmware 0771 system system
+    write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
+    wait /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix}
+    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
+    start load_adsp
+
+service load_adsp /system/bin/sh /recovery_load_adsp.sh
+    user root
+    group root
+    oneshot
+    disabled
+    seclabel u:r:recovery:s0

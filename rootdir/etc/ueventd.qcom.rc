@@ -134,6 +134,7 @@ subsystem mem_buf_vm
 /dev/btfmcodec_dev        0660   bluetooth  system
 /dev/threadpower          0660   thread_network  system
 /dev/spithrq              0660   thread_network  system
+/dev/ttyHS0               0660   bluetooth  bluetooth
 /dev/glink_pkt_hci_arbiter_chnl           0660   bluetooth  system
 /dev/glink_pkt_bt_socket_hal_chnl         0660   bluetooth  system
 /dev/glink_pkt_bt_gatt_offload_chnl       0660   bluetooth  system

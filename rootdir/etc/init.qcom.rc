@@ -73,6 +73,8 @@ on init
     chown root system /sys/fs/cgroup/memory/bg/tasks
     write /sys/kernel/icnss/wpss_boot 1
     chmod 0660 /sys/fs/cgroup/memory/bg/tasks
+    chown system system  /sys/devices/platform/qcom_power_mode/power_mode
+    chmod 0660  /sys/devices/platform/qcom_power_mode/power_mode
 
 on post-fs
     chmod 0755 /sys/kernel/debug/tracing
@@ -458,11 +460,13 @@ on property:persist.vendor.ssr.restart_level=*
 
 on property:persist.vendor.ssr.enable_ramdumps=1
     write /sys/module/subsystem_restart/parameters/enable_ramdumps 1
+    write /sys/module/qcom_ramdump/parameters/enable_dump_collection 1
     mkdir /data/vendor/ramdump_ssr 770 system system
     start vendor.ss_ramdump
 
 on property:persist.vendor.ssr.enable_ramdumps=0
     write /sys/module/subsystem_restart/parameters/enable_ramdumps 0
+    write /sys/module/qcom_ramdump/parameters/enable_dump_collection 0
 
 on property:persist.vendor.sys.rawdump_copy=1
     write /sys/kernel/dload/emmc_dload 1

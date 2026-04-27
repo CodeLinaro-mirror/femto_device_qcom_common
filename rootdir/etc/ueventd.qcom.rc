@@ -201,6 +201,8 @@ subsystem mem_buf_vm
 /dev/cvp*                 0660   system     camera
 /dev/media*               0660   system     camera
 /dev/v4l-subdev*          0660   system     camera
+/dev/hdmi_bdg_irq_handler 0660   system     camera
+/dev/dp_bdg_irq_handler   0660   system     camera
 /dev/qseecom              0660   system     drmrpc
 /dev/qce                  0660   system     drmrpc
 /dev/smcinvoke            0660   system     drmrpc
@@ -275,6 +277,7 @@ subsystem mem_buf_vm
 /sys/devices/platform/soc/1c00000.qcom,pcie/pci0000:00/0000:00:00.0/0000:01:00.0/net/wlan*/queues/rx-* rps_cpus      0660   system     system
 /dev/spidev0.0            0660   system     audio
 /dev/i2c-7                0660   system     audio
+/dev/msm_lsm_cdev         0660   system     audio
 /dev/msm_camera/*         0660   system     camera
 /dev/gemini/              0660   system     camera
 /dev/mercury0             0660   system     camera
@@ -504,6 +507,7 @@ subsystem mem_buf_vm
 
 # USB Dynamic Disable
 /sys/bus/platform/devices/a600000.ssusb	dynamic_disable	0220	root	usb
+/sys/bus/platform/devices/a600000.hsusb	dynamic_disable	0220	root	usb
 
 # USB autosuspend/wakeup settings
 /sys/bus/usb/devices/*      power/autosuspend          0660  system  usb
@@ -516,6 +520,7 @@ subsystem mem_buf_vm
 
 #USB mode setting
 /sys/bus/platform/devices/a600000.ssusb    mode        0660  system  usb
+/sys/bus/platform/devices/a600000.hsusb    mode        0660  system  usb
 
 #Memory Offline
 /sys/devices/system/memory/memory* state    0660 system system
@@ -667,6 +672,9 @@ subsystem mem_buf_vm
 /sys/devices/platform/soc/soc:qcom,cache-allocation   prefer_gpu_thresh                0660    root system
 
 # QPT
+/sys/devices/virtual/powercap/qpt/qpt\:0      name                  0440    root system
+/sys/devices/virtual/powercap/qpt/qpt\:0      energy_uj             0440    root system
+/sys/devices/virtual/powercap/qpt/qpt\:0      power_uw              0440    root system
 /sys/devices/virtual/powercap/qpt/qpt\:*/*    name                  0440    root system
 /sys/devices/virtual/powercap/qpt/qpt\:*/*    energy_uj             0440    root system
 /sys/devices/virtual/powercap/qpt/qpt\:*/*    power_uw              0440    root system

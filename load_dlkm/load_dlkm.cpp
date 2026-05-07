@@ -39,7 +39,8 @@ LoadDlkm::LoadDlkm() :
   num_threads_(1) {
 }
 
-int LoadDlkm::init() {
+int LoadDlkm::init(ModuleLoadType type) {
+    load_type_ = type;
     // set default modules load file name
     load_file_ = MOD_LOAD_FILE;
     // set default blocklist file name
@@ -63,6 +64,35 @@ std::string LoadDlkm::GetModuleName(const std::string& mod) {
     std::replace(mname.begin(), mname.end(), '-', '_');
 
     return mname;
+}
+
+// Get Vendor Modules list dependent on System modules
+void LoadDlkm::GetSysDepModules() {
+    std::string words;
+    char sysdepvndr_list[PROPERTY_VALUE_MAX] = {0};
+
+    property_get("ro.vendor.qti.sysdep.modlist", sysdepvndr_list, "");
+    //ALOGI("LM : Vendor Modules list sysdep %s ", sysdepvndr_list);
+    if (sysdepvndr_list[0]) {
+       words = sysdepvndr_list;
+       words += ",";
+    }
+
+    sysdepvndr_list[0] = 0;
+    property_get("ro.vendor.qti.sysdep.wlan.modlist", sysdepvndr_list, "");
+    // ALOGI("LM : Vendor Modules wlan list sysdep %s ", sysdepvndr_list);
+    if (sysdepvndr_list[0]) words += sysdepvndr_list;
+
+    std::vector<std::string> wlist = android::base::Split(words, ",");
+    for (const auto& word : wlist) {
+        if (word.empty()) continue;
+
+        // List will have only module name but load file
+        // will have extension, hence append ko
+        std::string mod = word + ".ko";
+        sysdep_list_.emplace(GetModuleName(mod));
+    }
+    ALOGW("Sys Mod dependent Vnd Mod count: %d ", (int)sysdep_list_.size());
 }
 
 // Based on property, get Audio Block list file
@@ -92,7 +122,7 @@ bool LoadDlkm::ParallelLoadEnabled() {
 }
 
 // Load dlkm list in parallel. Max threads configured with num_threads_.
-int LoadDlkm::LoadModules(Modprobe& mprobe) {
+int LoadDlkm::LoadModules(std::unique_ptr<Modprobe>& mprobe) {
     std::vector<std::thread> th_list;
     int i = 0;
     auto mod_load_thread_fn = [&] {
@@ -102,10 +132,15 @@ int LoadDlkm::LoadModules(Modprobe& mprobe) {
             auto &mod = mlist_[i++];
             // Ignore if empty or in ignore list
             if (mod.empty() || ilist_.find(mod) != ilist_.end()) continue;
+            if (load_type_ == VendorDlkm && sysdep_list_.find(mod) != sysdep_list_.end()) {
+                // Access to dfr_mlist_ is protected by same mutex mload_lock_
+                dfr_mlist_.emplace_back(mod);
+                continue;
+            }
             ilist_.emplace(mod); // add to ignore list to avoid duplicates
             lk.unlock();
             // Load entry - insert the module and its dependencies.
-            mprobe.LoadWithAliases(mod, true);
+            mprobe->LoadWithAliases(mod, true);
             lk.lock();
         }
     };
@@ -178,6 +213,7 @@ int LoadDlkm::LoadVndrModules() {
     std::string loadfile_path, bl_file_path;
     int mloaded = 0;
 
+    GetSysDepModules();
     loadfile_path = VENDOR_MODULES_DIR "/";
     loadfile_path.append(load_file_);
 
@@ -198,13 +234,41 @@ int LoadDlkm::LoadVndrModules() {
     }
 
     // Load the modules from list
-    Modprobe mprobe({VENDOR_MODULES_DIR}, load_file_);
-    LoadModules(mprobe);
-    mloaded = mprobe.GetModuleCount();
+    std::vector<std::string> mdirs;
+    mdirs.emplace_back(VENDOR_MODULES_DIR);
+    mprobe_ = std::make_unique<Modprobe>(mdirs, load_file_);
+    LoadModules(mprobe_);
+    mloaded = mprobe_->GetModuleCount();
 
     auto module_elapse_time = std::chrono::duration_cast<std::chrono::milliseconds>(
                 boot_clock::now() - module_start_time);
     ALOGW("LM : Vendor modules(%d) load time %d ", mloaded,
+          (int)module_elapse_time.count());
+
+    return mloaded;
+}
+
+
+int LoadDlkm::LoadDfrVndrModules() {
+    if (!mprobe_) {
+        ALOGE("LM : Error Loading Deferred Vendor modules - no modprobe obj");
+        return 0;
+    }
+    if (dfr_mlist_.empty()) {
+        ALOGW("LM : No deferred vendor list to load!");
+        return 0;
+    }
+    boot_clock::time_point module_start_time = boot_clock::now();
+    int mloaded = mprobe_->GetModuleCount();
+    load_type_ = DeferredVendorDlkm;
+    mlist_ = dfr_mlist_;
+    // Use existing Modprobe
+    LoadModules(mprobe_);
+    mloaded = (mprobe_->GetModuleCount() - mloaded);
+
+    auto module_elapse_time = std::chrono::duration_cast<std::chrono::milliseconds>(
+                boot_clock::now() - module_start_time);
+    ALOGW("LM : Deferred Vendor modules(%d) load time %d ", mloaded,
           (int)module_elapse_time.count());
 
     return mloaded;
@@ -245,9 +309,11 @@ int LoadDlkm::LoadSysModules() {
                 if (access(load_file_path.c_str(), F_OK) == 0 &&
                     CreateModulesList(load_file_path, bl_file_path) > 0) {
                     // Load the modules from the list
-                    Modprobe mprobe({dir_path}, load_file_);
-                    LoadModules(mprobe);
-                    mloaded = mprobe.GetModuleCount();
+                    std::vector<std::string> mdirs;
+                    mdirs.emplace_back(dir_path);
+                    mprobe_ = std::make_unique<Modprobe>(mdirs, load_file_);
+                    LoadModules(mprobe_);
+                    mloaded = mprobe_->GetModuleCount();
                     // Modules loaded from a folder, stop further processing
                     break;
                 }
@@ -274,7 +340,7 @@ void DlkmLogger(android::base::LogId id, android::base::LogSeverity severity,
 
 int main(int argc, char** argv) {
     boot_clock::time_point module_start_time = boot_clock::now();
-    pid_t vpid, spid;
+    pid_t spid;
     int wstatus;
 
     (void)argc;
@@ -284,7 +350,7 @@ int main(int argc, char** argv) {
     if ((spid = fork()) == 0) {
         LoadDlkm smload;
         // Initialize defaults
-        smload.init();
+        smload.init(SystemDlkm);
         // Load System dlkm list
         smload.LoadSysModules();
         exit(0);
@@ -292,19 +358,18 @@ int main(int argc, char** argv) {
         ALOGE("LM : Fork failed - Sys Modules, err %d", errno);
     }
 
-    if ((vpid = fork()) == 0) {
-        LoadDlkm vmload;
-        // Initialize defaults
-        vmload.init();
-        // Load Vendor dlkm list
-        vmload.LoadVndrModules();
-        exit(0);
-    } else if (vpid < 0) {
-        ALOGE("LM : Fork failed - Vendor Modules, err %d", errno);
-    }
+
+
+    LoadDlkm vmload;
+    // Initialize defaults
+    vmload.init(VendorDlkm);
+    // Load Vendor dlkm list
+    vmload.LoadVndrModules();
 
     if (spid > 0) waitpid(spid, &wstatus, 0);
-    if (vpid > 0) waitpid(vpid, &wstatus, 0);
+
+    // Load System dlkm dependent deferred Vendor dlkm list
+    vmload.LoadDfrVndrModules();
 
     // set property to indicate modules loading is completed
     property_set("vendor.all.modules.ready", "1");

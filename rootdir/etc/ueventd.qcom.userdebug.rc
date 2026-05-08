@@ -38,3 +38,14 @@ subsystem ipc_logging
 
 # Q2SPI UWB device
 /dev/q2spiuwbtest    0664    uwb    uwb
+
+#sensors - glink
+/dev/glinkpkt_lpaicp_qsh_1_0         0666  system  system
+/dev/glinkpkt_lpaicp_qsh_1_1         0666  system  system
+/dev/glinkpkt_lpaicp_qsh_1_2         0666  system  system
+/dev/glinkpkt_lpaicp_qsh_1_3         0666  system  system
+/dev/glinkpkt_lpaicp_qsh_1_4         0666  system  system
+/dev/glinkpkt_lpaicp_qsh_1_5         0666  system  system
+/dev/glinkpkt_lpaicp_qsh_1_6         0666  system  system
+/dev/glinkpkt_lpaicp_qsh_1_7         0666  system  system
+/dev/glinkpkt_lpaicp_qsh_1_8         0666  system  system

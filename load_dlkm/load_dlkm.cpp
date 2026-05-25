@@ -72,18 +72,28 @@ std::string LoadDlkm::GetModuleName(const std::string& mod) {
 void LoadDlkm::GetSysDepModules() {
     std::string words;
     char sysdepvndr_list[PROPERTY_VALUE_MAX] = {0};
+    bool add_comma = false;
 
     property_get("ro.vendor.qti.sysdep.modlist", sysdepvndr_list, "");
-    //ALOGI("LM : Vendor Modules list sysdep %s ", sysdepvndr_list);
     if (sysdepvndr_list[0]) {
        words = sysdepvndr_list;
-       words += ",";
+       add_comma = true;
     }
 
     sysdepvndr_list[0] = 0;
     property_get("ro.vendor.qti.sysdep.wlan.modlist", sysdepvndr_list, "");
-    // ALOGI("LM : Vendor Modules wlan list sysdep %s ", sysdepvndr_list);
-    if (sysdepvndr_list[0]) words += sysdepvndr_list;
+    if (sysdepvndr_list[0]) {
+       if (add_comma) words += ",";
+       words += sysdepvndr_list;
+       add_comma = true;
+    }
+
+    sysdepvndr_list[0] = 0;
+    property_get("ro.vendor.qti.sysdep.eth.modlist", sysdepvndr_list, "");
+    if (sysdepvndr_list[0]) {
+       if (add_comma) words += ",";
+       words += sysdepvndr_list;
+    }
 
     std::vector<std::string> wlist = android::base::Split(words, ",");
     for (const auto& word : wlist) {

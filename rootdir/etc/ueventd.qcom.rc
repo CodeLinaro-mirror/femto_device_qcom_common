@@ -640,7 +640,12 @@ subsystem mem_buf_vm
 /sys/kernel/fastrpc/lpass* legacy_name        0444   root     system
 /sys/kernel/fastrpc/lpass* legacy_id          0444   root     system
 
-# QPT
+# QPT v2
 /sys/devices/virtual/powercap/qpt/qpt\:*/*    name                  0440    root system
 /sys/devices/virtual/powercap/qpt/qpt\:*/*    energy_uj             0440    root system
 /sys/devices/virtual/powercap/qpt/qpt\:*/*    power_uw              0440    root system
+
+# QPT v1
+/sys/devices/virtual/powercap/qpt/qpt\:*    name                  0440    root system
+/sys/devices/virtual/powercap/qpt/qpt\:*    energy_uj             0440    root system
+/sys/devices/virtual/powercap/qpt/qpt\:*    power_uw              0440    root system

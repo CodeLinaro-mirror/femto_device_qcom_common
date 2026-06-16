@@ -1092,11 +1092,6 @@ ifneq ($(BOARD_AVB_ENABLE), true)
    $(call inherit-product, build/target/product/verity.mk)
 endif
 
-ifeq ($(TARGET_BUILD_VARIANT),user)
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES+= \
-    ro.adb.secure=1
-endif
-
 # OEM Unlock reporting
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.oem_unlock_supported=1

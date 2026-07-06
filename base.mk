@@ -36,6 +36,7 @@ QCOM_BOARD_PLATFORMS += sdmshrike
 QCOM_BOARD_PLATFORMS += sdm710
 QCOM_BOARD_PLATFORMS += msmnile_au
 QCOM_BOARD_PLATFORMS += gen4
+QCOM_BOARD_PLATFORMS += auto_gen
 QCOM_BOARD_PLATFORMS += gen5
 QCOM_BOARD_PLATFORMS += qcs605
 QCOM_BOARD_PLATFORMS += $(MSMSTEPPE)
@@ -1089,11 +1090,6 @@ ifneq ($(BOARD_AVB_ENABLE), true)
       PRODUCT_VENDOR_VERITY_PARTITION=/dev/block/bootdevice/by-name/vendor
    endif
    $(call inherit-product, build/target/product/verity.mk)
-endif
-
-ifeq ($(TARGET_BUILD_VARIANT),user)
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES+= \
-    ro.adb.secure=1
 endif
 
 # OEM Unlock reporting

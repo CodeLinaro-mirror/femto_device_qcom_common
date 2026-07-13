@@ -457,6 +457,9 @@ subsystem mem_buf_vm
 # any unauthorized access will be blocked by sepolicy
 /sys/devices/platform/soc/a*00000.*susb             mode             0666  root     system
 
+# Usb autosuspend delay access for automotive dwc3 controllers
+/sys/devices/platform/soc/a*00000.*susb             power/autosuspend_delay_ms  0664  root     system
+
 # vm_bms
 /dev/vm_bms               0660   system     system
 /dev/battery_data         0660   system     system

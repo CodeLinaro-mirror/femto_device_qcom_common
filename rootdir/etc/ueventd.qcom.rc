@@ -352,6 +352,7 @@ subsystem mem_buf_vm
 /dev/spidev22.0           0660   system     audio
 /dev/spidev10.0           0660   system     audio
 /dev/virt_sndcard_ctl     0660   system     audio
+/dev/virt-eavb            0660   system     audio
 
 # DVB devices
 /dev/dvb/adapter0/demux*  0440   media       media
@@ -456,6 +457,9 @@ subsystem mem_buf_vm
 # Setting rw permission for 'others' since QtiCarPowerService doesnt run as system.
 # any unauthorized access will be blocked by sepolicy
 /sys/devices/platform/soc/a*00000.*susb             mode             0666  root     system
+
+# Usb autosuspend delay access for automotive dwc3 controllers
+/sys/devices/platform/soc/a*00000.*susb             power/autosuspend_delay_ms  0664  root     system
 
 # vm_bms
 /dev/vm_bms               0660   system     system

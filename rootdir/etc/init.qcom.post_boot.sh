@@ -885,6 +885,14 @@ case "$target" in
 esac
 
 case "$target" in
+    "hamoa" | "hamoa_la")
+		setprop vendor.fastrpc.process.attrs 0
+		setprop vendor.fastrpc.process.rpctimeout 0
+		setprop vendor.fastrpc.process.errcodes 0
+        ;;
+esac
+
+case "$target" in
     "msm7201a_ffa" | "msm7201a_surf" | "msm7627_ffa" | "msm7627_6x" | "msm7627a"  | "msm7627_surf" | \
     "qsd8250_surf" | "qsd8250_ffa" | "msm7630_surf" | "msm7630_1x" | "msm7630_fusion" | "qsd8650a_st1x")
         echo "ondemand" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor

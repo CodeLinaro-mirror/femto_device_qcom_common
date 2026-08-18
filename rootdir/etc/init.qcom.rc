@@ -143,10 +143,8 @@ on boot
     chmod 0660 /sys/module/radio_iris_transport/parameters/fmsmd_set
     chmod 0660 /sys/class/rfkill/rfkill0/state
     chmod 0660 /proc/bluetooth/sleep/proto
-    chown bluetooth net_bt /dev/ttyHS0
     chmod 0660 /sys/module/hci_uart/parameters/ath_lpm
     chmod 0660 /sys/module/hci_uart/parameters/ath_btwrite
-    chmod 0660 /dev/ttyHS0
     chown bluetooth bluetooth /sys/devices/platform/msm_serial_hs.0/clock
     chmod 0660 /sys/devices/platform/msm_serial_hs.0/clock
 
@@ -465,6 +463,12 @@ service vendor.ss_ramdump /system/vendor/bin/subsystem_ramdump
     ioprio rt 4
     disabled
 
+service vendor.modem_crash_capture /vendor/bin/modem_crash_capture
+    class main
+    user system
+    group system log
+    disabled
+
 on property:ro.vendor.iocgrp.config=1
     mkdir /dev/blkio
     mount cgroup none /dev/blkio blkio
@@ -503,6 +507,12 @@ on property:persist.vendor.sys.rawdump_copy=1
 
 on property:persist.vendor.sys.rawdump_copy=0
     write /sys/kernel/dload/emmc_dload 0
+
+on property:persist.vendor.modem_crash_capture.enable=1
+    start vendor.modem_crash_capture
+
+on property:persist.vendor.modem_crash_capture.enable=0
+    stop vendor.modem_crash_capture
 
 on property:sys.boot_completed=1
     write /dev/kmsg "Boot completed "

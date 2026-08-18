@@ -134,6 +134,7 @@ subsystem mem_buf_vm
 /dev/btfmcodec_dev        0660   bluetooth  system
 /dev/threadpower          0660   thread_network  system
 /dev/spithrq              0660   thread_network  system
+/dev/ttyHS0               0660   bluetooth  bluetooth
 /dev/glink_pkt_hci_arbiter_chnl           0660   bluetooth  system
 /dev/glink_pkt_bt_socket_hal_chnl         0660   bluetooth  system
 /dev/glink_pkt_bt_gatt_offload_chnl       0660   bluetooth  system
@@ -201,6 +202,8 @@ subsystem mem_buf_vm
 /dev/cvp*                 0660   system     camera
 /dev/media*               0660   system     camera
 /dev/v4l-subdev*          0660   system     camera
+/dev/hdmi_bdg_irq_handler 0660   system     camera
+/dev/dp_bdg_irq_handler   0660   system     camera
 /dev/qseecom              0660   system     drmrpc
 /dev/qce                  0660   system     drmrpc
 /dev/smcinvoke            0660   system     drmrpc
@@ -275,6 +278,7 @@ subsystem mem_buf_vm
 /sys/devices/platform/soc/1c00000.qcom,pcie/pci0000:00/0000:00:00.0/0000:01:00.0/net/wlan*/queues/rx-* rps_cpus      0660   system     system
 /dev/spidev0.0            0660   system     audio
 /dev/i2c-7                0660   system     audio
+/dev/msm_lsm_cdev         0660   system     audio
 /dev/msm_camera/*         0660   system     camera
 /dev/gemini/              0660   system     camera
 /dev/mercury0             0660   system     camera
@@ -288,6 +292,7 @@ subsystem mem_buf_vm
 #permissions for audio
 /dev/wcd_dsp0_control     0660   system     audio
 /dev/wcd-dsp-glink        0660   system     audio
+/dev/glinkpkt_q6_audio_ctrl   0660   system     audio
 /dev/audio_slimslave      0660   system     audio
 /dev/msm_qcelp            0660   system     audio
 /dev/msm_evrc             0660   system     audio
@@ -504,6 +509,8 @@ subsystem mem_buf_vm
 
 # USB Dynamic Disable
 /sys/bus/platform/devices/a600000.ssusb	dynamic_disable	0220	root	usb
+/sys/bus/platform/devices/a600000.hsusb	dynamic_disable	0220	root	usb
+/sys/bus/platform/devices/4e00000.hsusb	dynamic_disable	0220	root	usb
 
 # USB autosuspend/wakeup settings
 /sys/bus/usb/devices/*      power/autosuspend          0660  system  usb
@@ -516,6 +523,8 @@ subsystem mem_buf_vm
 
 #USB mode setting
 /sys/bus/platform/devices/a600000.ssusb    mode        0660  system  usb
+/sys/bus/platform/devices/a600000.hsusb    mode        0660  system  usb
+/sys/bus/platform/devices/4e00000.hsusb    mode        0660  system  usb
 
 #Memory Offline
 /sys/devices/system/memory/memory* state    0660 system system
@@ -667,6 +676,27 @@ subsystem mem_buf_vm
 /sys/devices/platform/soc/soc:qcom,cache-allocation   prefer_gpu_thresh                0660    root system
 
 # QPT
+/sys/devices/virtual/powercap/qpt/qpt\:0      name                  0440    root system
+/sys/devices/virtual/powercap/qpt/qpt\:0      energy_uj             0440    root system
+/sys/devices/virtual/powercap/qpt/qpt\:0      power_uw              0440    root system
 /sys/devices/virtual/powercap/qpt/qpt\:*/*    name                  0440    root system
 /sys/devices/virtual/powercap/qpt/qpt\:*/*    energy_uj             0440    root system
 /sys/devices/virtual/powercap/qpt/qpt\:*/*    power_uw              0440    root system
+
+#sensors - glink
+/dev/glinkpkt_lmcu_qsh_1_0         0666  system  system
+/dev/glinkpkt_lmcu_qsh_1_1         0666  system  system
+/dev/glinkpkt_lmcu_qsh_1_2         0666  system  system
+/dev/glinkpkt_lmcu_qsh_1_3         0666  system  system
+/dev/glinkpkt_lmcu_qsh_1_4         0666  system  system
+/dev/glinkpkt_lmcu_qsh_1_5         0666  system  system
+/dev/glinkpkt_lmcu_qsh_1_6         0666  system  system
+/dev/glinkpkt_lmcu_qsh_1_7         0666  system  system
+/dev/glinkpkt_lmcu_qsh_1_8         0666  system  system
+
+/dev/glinkpkt_lmcu_qsh_drc_1_0     0660  system  system
+/dev/glinkpkt_lmcu_qsh_drc_1_1     0660  system  system
+/dev/glinkpkt_lmcu_qsh_drc_1_2     0660  system  system
+/dev/glinkpkt_lmcu_qsh_drc_1_3     0660  system  system
+/dev/glinkpkt_lmcu_qsh_drc_1_4     0660  system  system
+/dev/glinkpkt_lmcu_qsh_drc_1_5     0660  system  system

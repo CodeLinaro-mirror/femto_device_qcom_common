@@ -195,6 +195,7 @@ subsystem mem_buf_vm
 /dev/byte-cntr            0660   system    oem_2902
 /dev/mhi_qdss             0660   system    oem_2902
 /sys/class/qdss_bridge/mhi_qdss  mode      0660     system   oem_2902
+/dev/stm-passthrough      0222  system     system
 
 #qg
 /dev/qg                   0660  system     system

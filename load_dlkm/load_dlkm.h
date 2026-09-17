@@ -19,10 +19,12 @@ class LoadDlkm {
   public:
     LoadDlkm();
     int init(ModuleLoadType type);
+    int GetVndrModulesList();
     int LoadVndrModules();
     int LoadDfrVndrModules();
     int LoadSysModules();
-
+    int LoadVndrLastModules(std::mutex& mtx, std::condition_variable& cv,
+                            bool& th_created);
   private:
     std::mutex mload_lock_;
     std::string load_file_;
@@ -33,8 +35,10 @@ class LoadDlkm {
     ModuleLoadType load_type_;
     std::vector<std::string> mlist_;
     std::vector<std::string> dfr_mlist_;
+    std::vector<std::string> last_mlist_;
     std::unordered_set<std::string> ilist_;
     std::unordered_set<std::string> sysdep_list_;
+    std::unordered_set<std::string> lastmod_list_;
     std::unique_ptr<Modprobe> mprobe_;
 
     std::string GetModuleName(const std::string& mod);
@@ -42,7 +46,10 @@ class LoadDlkm {
     bool ParallelLoadEnabled();
     int LoadModules(std::unique_ptr<Modprobe>& mprobe);
     void UpdateIgnoreList(const std::string blocklist_path);
+    int GetModListWithNoDep(const std::string& dep_file,
+         std::unordered_set<std::string>& nodep_list);
     int CreateModulesList(const std::string& load_file,
                           const std::string& bl_file);
     void GetSysDepModules();
+    void GetLastModList();
 };

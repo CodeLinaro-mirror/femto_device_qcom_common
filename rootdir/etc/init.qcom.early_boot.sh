@@ -350,6 +350,10 @@ case "$target" in
                 #scuba APQ
                 setprop vendor.gralloc.disable_ubwc 1
                 ;;
+            473|474)
+		 #disable cdsprpcd daemon for Agatti IOT
+                 setprop vendor.fastrpc.disable.cdsprpcd.daemon 1
+                 ;;
         esac
         ;;
     "sdm710" | "msmpeafowl")

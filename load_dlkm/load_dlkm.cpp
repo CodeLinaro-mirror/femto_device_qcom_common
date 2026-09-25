@@ -15,6 +15,7 @@
 #include <utils/Log.h>
 #include <cutils/properties.h>
 #include <modprobe/modprobe.h>
+#include <algorithm>
 #include <chrono>
 #include <thread>
 #include <vector>
@@ -34,6 +35,7 @@ using android::base::boot_clock;
 #define AUDIO_AR_PROP            "audioreach"
 #define AUDIO_AR_VIO_PROP        "audioreach_vio"
 #define AUDIO_PROP               "ro.boot.audio"
+#define LM_MODLIST_CAP           200
 
 LoadDlkm::LoadDlkm() :
   num_threads_(1) {
@@ -92,7 +94,28 @@ void LoadDlkm::GetSysDepModules() {
         std::string mod = word + ".ko";
         sysdep_list_.emplace(GetModuleName(mod));
     }
-    ALOGW("Sys Mod dependent Vnd Mod count: %d ", (int)sysdep_list_.size());
+    // ALOGW("Sys Mod dependent Vnd Mod count: %d ", (int)sysdep_list_.size());
+}
+
+// Get Vendor Modules list dependent on System modules
+void LoadDlkm::GetLastModList() {
+    std::string words;
+    char vlast_modlist[PROPERTY_VALUE_MAX] = {0};
+
+    property_get("ro.vendor.qti.vlast_modlist", vlast_modlist, "");
+    if (vlast_modlist[0]) {
+       words = vlast_modlist;
+    }
+    std::vector<std::string> wlist = android::base::Split(words, ",");
+    for (const auto& word : wlist) {
+        if (word.empty()) continue;
+
+        // List will have only module name but load file
+        // will have extension, hence append ko
+        std::string mod = word + ".ko";
+        lastmod_list_.emplace(GetModuleName(mod));
+    }
+    // ALOGW("Get Last Vnd Mod count: %d ", (int)lastmod_list_.size());
 }
 
 // Based on property, get Audio Block list file
@@ -132,11 +155,6 @@ int LoadDlkm::LoadModules(std::unique_ptr<Modprobe>& mprobe) {
             auto &mod = mlist_[i++];
             // Ignore if empty or in ignore list
             if (mod.empty() || ilist_.find(mod) != ilist_.end()) continue;
-            if (load_type_ == VendorDlkm && sysdep_list_.find(mod) != sysdep_list_.end()) {
-                // Access to dfr_mlist_ is protected by same mutex mload_lock_
-                dfr_mlist_.emplace_back(mod);
-                continue;
-            }
             ilist_.emplace(mod); // add to ignore list to avoid duplicates
             lk.unlock();
             // Load entry - insert the module and its dependencies.
@@ -181,39 +199,126 @@ void LoadDlkm::UpdateIgnoreList(const std::string blocklist_path) {
 
 }
 
-// Parse load file and store list of modules
-int LoadDlkm::CreateModulesList(const std::string& load_file,
-                 const std::string& bl_file) {
+int LoadDlkm::GetModListWithNoDep(const std::string& dep_file,
+         std::unordered_set<std::string>& nodep_list) {
     std::string lines;
-
-    if (!android::base::ReadFileToString(load_file, &lines, false)) {
+    if (!android::base::ReadFileToString(dep_file, &lines, false)) {
         return -1;
     }
 
-    size_t pos = 0;;
+    size_t pos = 0;
     size_t found;
     while (true) {
         found = lines.find_first_of("\n", pos);
-        std::string mod = lines.substr(pos, found - pos);
-        mlist_.emplace_back(GetModuleName(mod));
+        std::string line = lines.substr(pos, found - pos);
+        // trim spaces, linefeed etc
+        line = android::base::Trim(line);
+        // format: ko_name : [dep ko names]
+        size_t col_pos = line.find(':');
+        if (col_pos != std::string::npos) {
+            // No deps if its end of line
+            if (line.size() == col_pos + 1) {
+                size_t fs_pos = 0;
+                if (line.size() >=2 && line[0] == '/' && line[1] == 'v') { // vendor dlkms
+                    size_t slash_pos = line.rfind('/');
+                    if (slash_pos != std::string::npos) fs_pos = slash_pos + 1;
+                }
+                if (col_pos > fs_pos) {
+                    std::string mod = GetModuleName(line.substr(fs_pos, col_pos-fs_pos));
+                    nodep_list.emplace(mod);
+                }
+            }
+        }
         if (found == lines.npos) break;
         pos = found + 1;
     }
 
+    return 0;
+}
+
+// Parse load file and store list of modules
+int LoadDlkm::CreateModulesList(const std::string& load_file,
+                 const std::string& bl_file) {
+    std::string lines;
+    std::vector<std::string> no_dep_list;
+    if (!android::base::ReadFileToString(load_file, &lines, false)) {
+        return -1;
+    }
+
+    std::unordered_set<std::string> nodep_modlist;
+
+    const std::string expectedExt = ".load";
+    const std::string depExt = ".dep";
+    size_t dot_pos = load_file.rfind('.');
+    // Check dep file from same load file path
+    if (dot_pos != std::string::npos) {
+        std::string currentExt = load_file.substr(dot_pos);
+        if (currentExt == expectedExt) {
+            std::string dep_file = load_file.substr(0, dot_pos) + depExt;
+            GetModListWithNoDep(dep_file, nodep_modlist);
+        }
+    }
+
+    size_t pos = 0;
+    size_t found;
+    std::unique_lock lk(mload_lock_); // Acquire lock
+    mlist_.reserve(LM_MODLIST_CAP);
+
+    const int NODEP_LIST_MAX = 32; // limit the nodep list
+    int no_dep_count = NODEP_LIST_MAX;
+    while (true) {
+        found = lines.find_first_of("\n", pos);
+        std::string mod = GetModuleName(lines.substr(pos, found - pos));
+
+        // Add to defer list in order
+        if (load_type_ == VendorDlkm &&
+            (sysdep_list_.find(mod) != sysdep_list_.end())) {
+            dfr_mlist_.emplace_back(mod);
+        } else if (load_type_ == VendorDlkm &&
+            lastmod_list_.find(mod) != lastmod_list_.end()) {
+            last_mlist_.emplace_back(mod);
+        } else if (nodep_modlist.size() &&
+            nodep_modlist.find(mod) != nodep_modlist.end() && no_dep_count > 0) {
+            no_dep_list.emplace_back(mod);
+            no_dep_count--;
+        } else {
+            mlist_.emplace_back(mod);
+        }
+        if (found == lines.npos) break;
+        pos = found + 1;
+    }
+
+    ALOGW("LM : %d type Modules nodep %d dep %d dfr %d", (int)load_type_,
+            (int)no_dep_list.size(), (int)mlist_.size(), (int)dfr_mlist_.size());
+    if (no_dep_list.size()) {
+        // Insert nodep list at the beginning
+        mlist_.insert(mlist_.begin(),
+           std::make_move_iterator(no_dep_list.begin()),
+           std::make_move_iterator(no_dep_list.end()));
+       no_dep_list.clear();
+    }
+    int count = mlist_.size();
+
+    lk.unlock(); // Reset lock
+
     // Update blocked modules list
     UpdateIgnoreList(bl_file);
 
-    return mlist_.size();
+    return count;
 }
 
 #define VENDOR_MODULES_DIR "/vendor_dlkm/lib/modules"
-int LoadDlkm::LoadVndrModules() {
-    boot_clock::time_point module_start_time = boot_clock::now();
-    std::vector<std::string> mlist;
+int LoadDlkm::GetVndrModulesList() {
     std::string loadfile_path, bl_file_path;
-    int mloaded = 0;
+    int count = 0;
+
+    std::vector<std::string> mdirs;
+    mdirs.emplace_back(VENDOR_MODULES_DIR);
+    mprobe_ = std::make_unique<Modprobe>(mdirs, load_file_);
 
     GetSysDepModules();
+    GetLastModList();
+
     loadfile_path = VENDOR_MODULES_DIR "/";
     loadfile_path.append(load_file_);
 
@@ -221,7 +326,7 @@ int LoadDlkm::LoadVndrModules() {
     bl_file_path.append(bl_file_);
 
     // Get list of modules from load file along with blocked list filtered.
-    if (CreateModulesList(loadfile_path, bl_file_path) <= 0) {
+    if ((count = CreateModulesList(loadfile_path, bl_file_path)) <= 0) {
         ALOGE("LM : Create Vendor Modules list Failed!");
         return 0;
     }
@@ -233,10 +338,14 @@ int LoadDlkm::LoadVndrModules() {
         UpdateIgnoreList(file_path);
     }
 
-    // Load the modules from list
-    std::vector<std::string> mdirs;
-    mdirs.emplace_back(VENDOR_MODULES_DIR);
-    mprobe_ = std::make_unique<Modprobe>(mdirs, load_file_);
+    return count;
+
+}
+int LoadDlkm::LoadVndrModules() {
+    boot_clock::time_point module_start_time = boot_clock::now();
+    int mloaded = 0;
+
+    // Load the modules from mlist
     LoadModules(mprobe_);
     mloaded = mprobe_->GetModuleCount();
 
@@ -247,7 +356,6 @@ int LoadDlkm::LoadVndrModules() {
 
     return mloaded;
 }
-
 
 int LoadDlkm::LoadDfrVndrModules() {
     if (!mprobe_) {
@@ -261,14 +369,50 @@ int LoadDlkm::LoadDfrVndrModules() {
     boot_clock::time_point module_start_time = boot_clock::now();
     int mloaded = mprobe_->GetModuleCount();
     load_type_ = DeferredVendorDlkm;
+    std::unique_lock lk(mload_lock_);
     mlist_ = dfr_mlist_;
-    // Use existing Modprobe
+    lk.unlock();
+
+    // Use existing Modprobe and Ignore List(ilist_)
     LoadModules(mprobe_);
     mloaded = (mprobe_->GetModuleCount() - mloaded);
 
     auto module_elapse_time = std::chrono::duration_cast<std::chrono::milliseconds>(
                 boot_clock::now() - module_start_time);
     ALOGW("LM : Deferred Vendor modules(%d) load time %d ", mloaded,
+          (int)module_elapse_time.count());
+
+    return mloaded;
+}
+
+int LoadDlkm::LoadVndrLastModules(std::mutex& mtx, std::condition_variable& cv,
+                                  bool& th_created) {
+    if (!mprobe_) {
+        ALOGE("LM : Error Loading Last Set of Vendor modules - no modprobe obj");
+        std::unique_lock cv_lk(mtx);
+        th_created = true;
+        cv_lk.unlock();
+        cv.notify_one(); // Fail, notify to unblock.
+        return 0;
+    }
+    boot_clock::time_point module_start_time = boot_clock::now();
+    int mloaded = mprobe_->GetModuleCount();
+    std::unique_lock lk(mload_lock_);
+    mlist_ = last_mlist_;
+    lk.unlock();
+
+    std::unique_lock cv_lk(mtx);
+    th_created = true;
+    cv_lk.unlock();
+    cv.notify_one(); // Notify that thread is created.
+
+    // Use existing Modprobe and Ignore List(ilist_)
+    LoadModules(mprobe_);
+    mloaded = (mprobe_->GetModuleCount() - mloaded);
+
+    auto module_elapse_time = std::chrono::duration_cast<std::chrono::milliseconds>(
+                boot_clock::now() - module_start_time);
+    ALOGW("LM : Last Vendor modules(%d) load time %d ", mloaded,
           (int)module_elapse_time.count());
 
     return mloaded;
@@ -340,44 +484,73 @@ void DlkmLogger(android::base::LogId id, android::base::LogSeverity severity,
 
 int main(int argc, char** argv) {
     boot_clock::time_point module_start_time = boot_clock::now();
-    pid_t spid;
+    pid_t vdpid;
     int wstatus;
 
     (void)argc;
     android::base::InitLogging(argv, DlkmLogger);
     android::base::SetMinimumLogSeverity(android::base::WARNING);
 
-    if ((spid = fork()) == 0) {
-        LoadDlkm smload;
-        // Initialize defaults
-        smload.init(SystemDlkm);
-        // Load System dlkm list
-        smload.LoadSysModules();
-        exit(0);
-    } else if (spid < 0) {
-        ALOGE("LM : Fork failed - Sys Modules, err %d", errno);
-    }
-
-
-
     LoadDlkm vmload;
     // Initialize defaults
     vmload.init(VendorDlkm);
+    // Get Vendor dlkm list
+    vmload.GetVndrModulesList();
+
+    if ((vdpid = fork()) == 0) {
+        pid_t spid;
+        int wstatus;
+        if ((spid = fork()) == 0) {
+            LoadDlkm smload;
+            // Initialize defaults
+            smload.init(SystemDlkm);
+            // Load System dlkm list
+            smload.LoadSysModules();
+            _exit(0);
+        } else if (spid < 0) {
+            ALOGE("LM : Fork failed - Sys Modules, err %d", errno);
+        }
+        // wait for sys modules load complete
+        if (spid > 0) waitpid(spid, &wstatus, 0);
+        // Load Vendor Defered dlkm list
+        vmload.LoadDfrVndrModules();
+        _exit(0);
+    } else if (vdpid < 0) {
+        ALOGE("LM : Fork failed - VndrDfr Modules, err %d", errno);
+    }
+
     // Load Vendor dlkm list
     vmload.LoadVndrModules();
 
-    if (spid > 0) waitpid(spid, &wstatus, 0);
+    if (vdpid > 0) waitpid(vdpid, &wstatus, 0);
 
-    // Load System dlkm dependent deferred Vendor dlkm list
-    vmload.LoadDfrVndrModules();
+    // Load Vendor Last set of modules
+    std::mutex mtx;
+    std::condition_variable cv;
+    bool th_created = false;
+
+    auto lmod_load_thread_fn = [&] {
+        vmload.LoadVndrLastModules(mtx, cv, th_created);
+    };
+    std::thread lmod_th(lmod_load_thread_fn);
+
+    std::unique_lock cv_lk(mtx);
+    cv.wait(cv_lk, [&] { return th_created; }); // wait for thread to start
+
+    auto module_elapse_time0 =
+        std::chrono::duration_cast<std::chrono::milliseconds>(
+        boot_clock::now() - module_start_time);
 
     // set property to indicate modules loading is completed
     property_set("vendor.all.modules.ready", "1");
+    cv_lk.unlock();
+    lmod_th.join(); // wait for thread
 
     auto module_elapse_time =
         std::chrono::duration_cast<std::chrono::milliseconds>(
         boot_clock::now() - module_start_time);
-    ALOGW("LM : All modules load time %dms", (int)module_elapse_time.count());
+    ALOGW("LM : All modules loaded before prop: %dms Total: %dms",
+         (int)module_elapse_time0.count(), (int)module_elapse_time.count());
 
     return 0;
 }

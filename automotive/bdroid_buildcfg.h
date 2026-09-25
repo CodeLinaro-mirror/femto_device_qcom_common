@@ -17,6 +17,11 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Changes from Qualcomm Technologies, Inc. are provided under the following license:
+ *
+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+ * SPDX-License-Identifier: BSD-3-Clause-Clear
  */
 
 #ifndef _BDROID_BUILDCFG_H
@@ -47,13 +52,13 @@
 *
 * SERVICE_CLASS:0x26 (Bit17 - Networking, Bit18 - Rendering, Bit21 - Audio)
 * MAJOR_CLASS:0x04 - Audio/Video
-* MINOR_CLASS:0X08 - Hands-free Device
+* MINOR_CLASS:0x20 - Car Audio
 *
 * Detailed information can be found in below link
 * https://www.bluetooth.com/specifications/assigned-numbers/baseband
 */
 #define BTA_DM_COD \
-  { 0x26, 0x04, 0x08 }
+  { 0x26, 0x04, 0x20 }
 
 /* Set AVRCP discovery timeout as 2.5 seconds */
 #define BTA_AV_RC_DISC_TIME_VAL 2500

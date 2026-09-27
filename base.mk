@@ -796,29 +796,32 @@ endif
 
 PRODUCT_PACKAGES := \
     AccountAndSyncSettings \
-    DeskClock \
     AlarmProvider \
-    Calculator \
-    Calendar \
-    Camera \
     CellBroadcastReceiver \
     CertInstaller \
     DrmProvider \
-    Email \
-    Gallery2 \
-    LatinIME \
-    Music \
     netutils-wrapper-1.0 \
-    Phone \
     Provision \
-    Protips \
-    QuickSearchBox \
     Settings \
     Sync \
     SystemUI \
     Updater \
+    SyncProvider
+
+ifneq ($(TARGET_HAS_QTI_OPTIMIZATIONS), true)
+PRODUCT_PACKAGES += \
+    DeskClock \
+    Calculator \
+    Calendar \
     CalendarProvider \
-    SyncProvider \
+    Camera \
+    Email \
+    Gallery2 \
+    LatinIME \
+    Music \
+    Phone \
+    Protips \
+    QuickSearchBox \
     SoundRecorder \
     IM \
     VoiceDialer \
@@ -827,6 +830,7 @@ PRODUCT_PACKAGES := \
     VideoEditor \
     SnapdragonLauncher \
     QtiDialer
+endif #TARGET_HAS_QTI_OPTIMIZATIONS
 
 ifeq ($(TARGET_HAS_LOW_RAM),true)
     DELAUN := Launcher3QuickStepGo
@@ -906,7 +910,9 @@ PRODUCT_PACKAGES += $(LOC_API)
 PRODUCT_PACKAGES += $(MEDIA_PROFILES)
 PRODUCT_PACKAGES += $(MM_AUDIO)
 PRODUCT_PACKAGES += $(MM_CORE)
+ifneq ($(TARGET_HAS_QTI_OPTIMIZATIONS), true)
 PRODUCT_PACKAGES += $(MM_VIDEO)
+endif #TARGET_HAS_QTI_OPTIMIZATIONS
 PRODUCT_PACKAGES += $(OPENCORE)
 PRODUCT_PACKAGES += $(PPP)
 PRODUCT_PACKAGES += $(PROTOBUF)
@@ -1021,7 +1027,11 @@ endif
 
 ifneq ($(TARGET_ENABLE_QC_AV_ENHANCEMENTS),true)
 PRODUCT_COPY_FILES += \
+ifeq ($(TARGET_HAS_QTI_OPTIMIZATIONS),true)
+    device/qcom/common/media/media_codecs_opt.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
+else
     device/qcom/common/media/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
+endif #TARGET_HAS_QTI_OPTIMIZATIONS
     device/qcom/common/media/media_profiles.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
 endif
 

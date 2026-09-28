@@ -71,6 +71,16 @@ endif
 LOCAL_MODULE_PATH  := $(TARGET_RECOVERY_ROOT_OUT)
 include $(BUILD_PREBUILT)
 
+ifeq ($(TARGET_DEFINES_AXR_CONFIGURATION), true)
+    include $(CLEAR_VARS)
+    LOCAL_MODULE := recovery_load_adsp.sh
+    LOCAL_MODULE_TAGS := optional
+    LOCAL_MODULE_CLASS := ETC
+    LOCAL_SRC_FILES := etc/recovery_load_adsp.sh
+    LOCAL_MODULE_PATH := $(TARGET_RECOVERY_ROOT_OUT)
+    include $(BUILD_PREBUILT)
+endif
+
 include $(CLEAR_VARS)
 LOCAL_MODULE       := init.qcom.factory.rc
 LOCAL_MODULE_TAGS  := optional

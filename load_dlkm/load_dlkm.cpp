@@ -15,6 +15,7 @@
 #include <utils/Log.h>
 #include <cutils/properties.h>
 #include <modprobe/modprobe.h>
+#include <algorithm>
 #include <chrono>
 #include <thread>
 #include <vector>

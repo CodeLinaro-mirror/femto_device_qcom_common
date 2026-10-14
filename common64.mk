@@ -53,6 +53,9 @@ else
 endif
 endif
 
+#Unavailable Features
+PRODUCT_COPY_FILES += \
+    device/qcom/common/unavailable_features.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/unavailable_features.xml
 # whitelisted app
 PRODUCT_COPY_FILES += \
     device/qcom/common/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml

@@ -674,3 +674,6 @@ subsystem mem_buf_vm
 /dev/glinkpkt_lmcu_qsh_drc_1_3     0660  system  system
 /dev/glinkpkt_lmcu_qsh_drc_1_4     0660  system  system
 /dev/glinkpkt_lmcu_qsh_drc_1_5     0660  system  system
+
+# LPAI Display Offload Glink Channel
+/dev/glink_pkt_lpai_display_ctrl   0660  system  system
